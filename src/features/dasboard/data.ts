@@ -6,7 +6,7 @@ export const dashboardCard: DashboardCardProps[] = [
     id: 1,
     title: "Revenue",
     amount: 7265,
-    rate: "+11.01%",
+    rate: "+4.01%",
 
     duration: "from last month",
     amountIcon: DollarSign,
@@ -15,7 +15,7 @@ export const dashboardCard: DashboardCardProps[] = [
     id: 2,
     title: "Total Users",
     amount: 12671,
-    rate: "+11.01%",
+    rate: "+1.01%",
 
     duration: "from last month",
     amountIcon: DollarSign,
@@ -24,7 +24,7 @@ export const dashboardCard: DashboardCardProps[] = [
     id: 3,
     title: "New Users",
     amount: 156,
-    rate: "+11.01%",
+    rate: "+5.01%",
 
     duration: "from last month",
     amountIcon: DollarSign,
@@ -33,7 +33,7 @@ export const dashboardCard: DashboardCardProps[] = [
     id: 4,
     title: "Active Bundles",
     amount: 318,
-    rate: "-11.01%",
+    rate: "-6.01%",
 
     duration: "from last month",
     amountIcon: DollarSign,

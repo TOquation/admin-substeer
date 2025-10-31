@@ -2,9 +2,13 @@ import React from "react";
 import { dashboardCard } from "../data";
 import { TrendingDown, TrendingUp } from "lucide-react";
 
-const DashboardCard = () => {
+const DashboardCard: React.FC<{
+  className?: string;
+}> = ({ className }) => {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div
+      className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 w-full ${className}`}
+    >
       {dashboardCard.map((cards, index) => {
         const AmountIcon = cards.amountIcon;
         const tone = index % 2 === 0 ? "bg-green-100" : "bg-green-200";
@@ -23,7 +27,7 @@ const DashboardCard = () => {
               {cards.amount.toLocaleString()}
             </h1>
             <div
-              className={`${rateColor} flex gap-2 text-[0.8rem] items-center`}
+              className={`${rateColor} flex gap-2 flex-wrap text-[0.8rem] items-center`}
             >
               <span>{cards.rate}</span>
               <span className="">

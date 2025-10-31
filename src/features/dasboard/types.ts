@@ -6,6 +6,5 @@ export interface DashboardCardProps {
   amount: number;
   amountIcon: ComponentType<{ className: string; strokeWidth: number }>;
   rate: string;
-
   duration: string;
 }
