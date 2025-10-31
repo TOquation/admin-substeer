@@ -3,7 +3,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
-@theme inline {
+@theme {
+  /* --breakpoint-*: initial; */
+  --breakpoint-3xl: 1500px;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -113,6 +116,10 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --custom-color: oklch(0.6 0.2 150);
+}
+
+html {
+  font-size: 14.5px;
 }
 
 @layer base {
