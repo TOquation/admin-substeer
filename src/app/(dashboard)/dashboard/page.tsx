@@ -1,4 +1,3 @@
-import SingleUserPage from "@/app/users/[username]/page";
 import { Button } from "@/components/ui/button";
 import DashboardCard from "@/features/dasboard/components/dashboard-card";
 import { ChevronDown } from "lucide-react";
