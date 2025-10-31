@@ -13,6 +13,7 @@ import {
   SlashSquare,
   Sun,
   User,
+  Star,
 } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
@@ -28,16 +29,24 @@ interface HeaderProps {
 const Header = ({ onToggleLeft, onToggleRight }: HeaderProps) => {
   return (
     <nav className="p-4 flex items-center justify-between gap-4  sticky top-0  z-10 ">
-      {/* LEFT TRIGGER */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="size-7 shrink-0"
-        onClick={onToggleLeft}
-      >
-        <PanelLeft />
-        <span className="sr-only">Toggle Left Sidebar</span>
-      </Button>
+      <div className="flex items-center gap-3">
+        {/* LEFT TRIGGER */}
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-7 shrink-0"
+          onClick={onToggleLeft}
+        >
+          <PanelLeft />
+          <span className="sr-only">Toggle Left Sidebar</span>
+        </Button>
+
+        <Button variant="ghost" size="icon" className="size-7 shrink-0">
+          <Star />
+        </Button>
+
+        <h3>Dashboard</h3>
+      </div>
 
       {/* RIGHT SIDE ITEMS */}
 

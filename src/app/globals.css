@@ -1,10 +1,10 @@
-@import "tailwindcss";
+@import "tailwindcss ()";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* --breakpoint-*: initial; */
+  /* breakpoints */
   --breakpoint-3xl: 1500px;
 
   --color-background: var(--background);
