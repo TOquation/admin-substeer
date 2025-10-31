@@ -1,7 +1,7 @@
 const Homepage = () => {
   return (
     <div className="">
-      <h1>good one</h1>
+      <h1 className="bg-side">good one</h1>
     </div>
   );
 };

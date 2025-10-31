@@ -8,47 +8,68 @@ import {
   Search,
   Settings,
   Sidebar,
+  PanelLeft,
+  PanelRight,
   SlashSquare,
   Sun,
   User,
 } from "lucide-react";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
-import { SidebarTrigger } from "../ui/sidebar";
+
+import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 
-const Header = () => {
-  return (
-    <nav className="p-4 flex items-center justify-between sticky top-0 bg-background z-10">
-      {/* LEFT */}
-      <SidebarTrigger />
+interface HeaderProps {
+  onToggleLeft: () => void;
+  onToggleRight: () => void;
+}
 
-      {/* RIGHT */}
-      <div className="flex items-center space-x-8">
-        <div className="flex rounded-full items-center bg-gray-100 px-2">
-          <Search className="text-gray-600 w-4 h-4" />
-          <Input
-            className="border-0 outline-none ring-0 focus-visible:ring-0 focus-visible:outline-none focus-visible:border-0  rounded-none placeholder:text-gray-400"
-            placeholder="Search"
-          />
-          <SlashSquare className="text-gray-600 w-4 h-4" />
+const Header = ({ onToggleLeft, onToggleRight }: HeaderProps) => {
+  return (
+    <nav className="p-4 flex items-center justify-between gap-4  sticky top-0  z-10 ">
+      {/* LEFT TRIGGER */}
+      <Button
+        variant="ghost"
+        size="icon"
+        className="size-7 shrink-0"
+        onClick={onToggleLeft}
+      >
+        <PanelLeft />
+        <span className="sr-only">Toggle Left Sidebar</span>
+      </Button>
+
+      {/* RIGHT SIDE ITEMS */}
+
+      <div className="flex items-center gap-6 shrink-0">
+        {/* SEARCH BAR - Takes up remaining space */}
+        <div className="flex-1 max-w-[16rem]">
+          <div className="flex rounded-full items-center bg-gray-100 px-2">
+            <Search className="text-gray-600 w-4 h-4" />
+            <Input
+              className="border-0 outline-none ring-0 focus-visible:ring-0 focus-visible:outline-none focus-visible:border-0 rounded-none placeholder:text-gray-400"
+              placeholder="Search"
+            />
+            <SlashSquare className="text-gray-600 w-4 h-4" />
+          </div>
         </div>
 
         <div className="flex gap-4 items-center">
-          <History className="w-4 h-4" />
-          <Bell className="w-4 h-4" />
-          <SidebarTrigger />
+          <History className="w-4 h-4 cursor-pointer" />
+          <Bell className="w-4 h-4 cursor-pointer" />
+
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-7"
+            onClick={onToggleRight}
+          >
+            <PanelRight />
+            <span className="sr-only">Toggle Right Sidebar</span>
+          </Button>
         </div>
 
-        <div className="cursor-pointe flex items-center gap-2 ">
+        <div className="cursor-pointer flex items-center gap-2">
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>

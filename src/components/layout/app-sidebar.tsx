@@ -26,7 +26,6 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-  SidebarSeparator,
 } from "../ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
@@ -70,25 +69,70 @@ const items = [
   },
 ];
 
-const AppSidebar = () => {
+const LeftSidebar = () => {
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="py-4">
+      <SidebarHeader className="border-b border-gray-200">
         <SidebarMenu>
+          {/* Logo - Always visible */}
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
-              <Link href="/">
-                <Image src="/logo.svg" alt="logo" width={20} height={20} />
-                <span>Lama Dev</span>
+            <SidebarMenuButton asChild size="lg" className="h-auto py-4">
+              <Link href="/" className="flex items-center">
+                <Image
+                  src="/images/logo-main.svg"
+                  alt="logo"
+                  width={36}
+                  height={36}
+                  className="group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 transition-all"
+                />
+                <div className="font-bold text-xl">
+                  Sub<span className="font-normal">steer</span>
+                </div>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarSeparator />
+
       <SidebarContent>
+        {/* Favorites Section - Hidden when collapsed */}
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <div className="py-4 px-4 group-data-[collapsible=icon]:hidden">
+            {/* Tabs */}
+            <div className="flex gap-6 justify-between text-sm text-gray-500 mb-4">
+              <button className="hover:text-gray-900 transition-colors font-medium">
+                Favorites
+              </button>
+              <button className="hover:text-gray-900 transition-colors">
+                Recently
+              </button>
+            </div>
+
+            {/* Menu Items */}
+            <div className="space-y-2">
+              {/* Overview */}
+              <Link
+                href="#"
+                className="flex items-center gap-2 text-gray-900 py-1 hover:bg-gray-100 rounded-md  transition-colors"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0"></div>
+                <span className="text-sm font-medium">Overview</span>
+              </Link>
+
+              {/* Projects */}
+              <Link
+                href="#"
+                className="flex items-center gap-2 text-gray-900 py-1 hover:bg-gray-100 rounded-md  transition-colors"
+              >
+                <div className="w-1.5 h-1.5 rounded-full bg-green-400 shrink-0"></div>
+                <span className="text-sm font-medium">Projects</span>
+              </Link>
+            </div>
+          </div>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Substeer</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -107,6 +151,7 @@ const AppSidebar = () => {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
         <SidebarGroup>
           <SidebarGroupLabel>Projects</SidebarGroupLabel>
           <SidebarGroupAction>
@@ -133,6 +178,7 @@ const AppSidebar = () => {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
         {/* COLLAPSABLE */}
         <Collapsible defaultOpen className="group/collapsible">
           <SidebarGroup>
@@ -166,6 +212,7 @@ const AppSidebar = () => {
             </CollapsibleContent>
           </SidebarGroup>
         </Collapsible>
+
         {/* NESTED */}
         <SidebarGroup>
           <SidebarGroupLabel>Nested Items</SidebarGroupLabel>
@@ -201,6 +248,7 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
@@ -223,4 +271,4 @@ const AppSidebar = () => {
   );
 };
 
-export default AppSidebar;
+export default LeftSidebar;
