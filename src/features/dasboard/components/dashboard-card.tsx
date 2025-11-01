@@ -16,7 +16,7 @@ const DashboardCard: React.FC<{
           ? "text-red-400"
           : "text-[#018141]";
         return (
-          <div key={cards.id} className={`rounded-xl p-4 space-y-2.5 ${tone}`}>
+          <div key={cards.id} className={`rounded-xl p-3 space-y-2.5 ${tone}`}>
             <h3>{cards.title}</h3>
             <h1 className="font-bold text-2xl tracking-wide items-center flex">
               {cards.title === "Revenue" ? (

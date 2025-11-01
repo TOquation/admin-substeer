@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Home,
   User2,
@@ -28,6 +30,7 @@ import {
 } from "../ui/sidebar";
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -43,65 +46,77 @@ import {
 const menuItems = [
   {
     title: "Dashboard",
-    url: "/",
+    url: "/dashboard",
     icon: Home,
-    isActive: true,
   },
   {
     title: "Users",
-    url: "#",
+    url: "/users",
     icon: Users,
     subItems: [
-      { title: "Free Users", url: "#" },
-      { title: "Subscribers", url: "#" },
-      { title: "Active", url: "#" },
-      { title: "Inactive", url: "#" },
+      { title: "Free Users", url: "/user/free" },
+      { title: "Subscribers", url: "/users/subscribers" },
+      { title: "Active", url: "/users/active" },
+      { title: "Inactive", url: "/users/inactive" },
     ],
   },
   {
     title: "Integration",
-    url: "#",
+    url: "/integration",
     icon: Puzzle,
   },
   {
     title: "Marketplace",
-    url: "#",
+    url: "/marketplace",
     icon: Store,
   },
   {
     title: "Support",
-    url: "#",
+    url: "/support",
     icon: HeadphonesIcon,
     subItems: [
-      { title: "New Ticket", url: "#", badge: 99 },
-      { title: "Sales", url: "#", badge: 9 },
-      { title: "Security", url: "#", badge: 9 },
-      { title: "Flagged", url: "#", badge: 9 },
+      { title: "New Ticket", url: "/support/new", badge: 99 },
+      { title: "Sales", url: "/support/sales", badge: 9 },
+      { title: "Security", url: "/support/security", badge: 9 },
+      { title: "Flagged", url: "/support/flagged", badge: 9 },
     ],
   },
   {
     title: "Analytics",
-    url: "#",
+    url: "/analytics",
     icon: BarChart3,
   },
   {
     title: "Developer tools",
-    url: "#",
+    url: "/developer-tools",
     icon: Code2,
   },
   {
     title: "Admins",
-    url: "#",
+    url: "/admins",
     icon: UserCog,
     subItems: [
-      { title: "All Admins", url: "#" },
-      { title: "Roles", url: "#" },
-      { title: "Review", url: "#", badge: 9 },
+      { title: "All Admins", url: "/admins/all" },
+      { title: "Roles", url: "/admins/roles" },
+      { title: "Review", url: "/admins/review", badge: 9 },
     ],
   },
 ];
 
 const LeftSidebar = () => {
+  const pathname = usePathname();
+
+  // Helper function to check if a route is active
+  const isActiveRoute = (url: string, hasSubItems?: boolean) => {
+    if (url === "/") {
+      return pathname === "/";
+    }
+    if (hasSubItems) {
+      return pathname.startsWith(url);
+    }
+    return pathname === url;
+  };
+
   return (
     <Sidebar collapsible="icon" className="border-r">
       <SidebarHeader className="border-b border-gray-200">
@@ -144,7 +159,7 @@ const LeftSidebar = () => {
             <div className="space-y-2">
               {/* Overview */}
               <Link
-                href="#"
+                href="/overview"
                 className="flex items-center gap-2 text-gray-900 py-1 hover:bg-gray-100 rounded-md transition-colors"
               >
                 <div className="w-2 h-2 rounded-full bg-green-400 shrink-0"></div>
@@ -153,7 +168,7 @@ const LeftSidebar = () => {
 
               {/* Projects */}
               <Link
-                href="#"
+                href="/projects"
                 className="flex items-center gap-2 text-gray-900 py-1 hover:bg-gray-100 rounded-md transition-colors"
               >
                 <div className="w-2 h-2 rounded-full bg-green-400 shrink-0"></div>
@@ -175,7 +190,7 @@ const LeftSidebar = () => {
                   // Collapsible menu item with subitems
                   <Collapsible
                     key={item.title}
-                    defaultOpen={false}
+                    defaultOpen={isActiveRoute(item.url, true)}
                     className="group/collapsible"
                   >
                     <SidebarMenuItem>
@@ -183,6 +198,7 @@ const LeftSidebar = () => {
                         <SidebarMenuButton
                           tooltip={item.title}
                           className="w-full"
+                          isActive={isActiveRoute(item.url, true)}
                         >
                           <item.icon className="!w-4 !h-4" />
                           <span>{item.title}</span>
@@ -193,7 +209,10 @@ const LeftSidebar = () => {
                         <SidebarMenuSub>
                           {item.subItems.map((subItem) => (
                             <SidebarMenuSubItem key={subItem.title}>
-                              <SidebarMenuSubButton asChild>
+                              <SidebarMenuSubButton
+                                asChild
+                                isActive={pathname === subItem.url}
+                              >
                                 <Link
                                   href={subItem.url}
                                   className="flex items-center justify-between"
@@ -220,9 +239,9 @@ const LeftSidebar = () => {
                     <SidebarMenuButton
                       asChild
                       tooltip={item.title}
-                      isActive={item.isActive}
+                      isActive={isActiveRoute(item.url)}
                       className={
-                        item.isActive
+                        isActiveRoute(item.url)
                           ? "bg-gray-900 text-white hover:bg-gray-900 hover:text-white"
                           : ""
                       }

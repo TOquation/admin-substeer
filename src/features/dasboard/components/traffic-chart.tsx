@@ -15,7 +15,7 @@ const TrafficByLocation: React.FC<{ className?: string }> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col rounded-2xl bg-[#F9FAFB] p-6 w-full ${className}`}
+      className={`flex flex-col rounded-2xl h-full bg-[#F9FAFB] p-6 w-full ${className}`}
     >
       <h2 className="mb-4 text-lg font-semibold text-gray-900">
         Traffic by Location

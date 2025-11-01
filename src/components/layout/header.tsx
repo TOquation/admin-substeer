@@ -70,7 +70,7 @@ const Header = ({ onToggleLeft, onToggleRight }: HeaderProps) => {
           <Button
             variant="ghost"
             size="icon"
-            className="size-7 hidden md:block"
+            className="size-7 hidden md:flex"
             onClick={onToggleRight}
           >
             <PanelRight />
