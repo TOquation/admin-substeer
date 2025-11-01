@@ -119,20 +119,23 @@ const LeftSidebar = () => {
 
   return (
     <Sidebar collapsible="icon" className="border-r">
-      <SidebarHeader className="border-b border-gray-200">
+      <SidebarHeader className="border-b border-gray-200 transition-all duration-300 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-[1.12rem]">
         <SidebarMenu>
-          {/* Logo - Always visible */}
           <SidebarMenuItem>
-            <SidebarMenuButton asChild size="lg" className="h-auto py-4">
-              <Link href="/" className="flex items-center">
+            <SidebarMenuButton
+              asChild
+              size="lg"
+              className="h-auto py-[0.45rem] group-data-[collapsible=icon]:p-3 group-data-[collapsible=icon]:justify-center transition-all duration-300"
+            >
+              <Link href="/" className="flex items-center gap-2 transition-all">
                 <Image
                   src="/images/logo-main.svg"
                   alt="logo"
                   width={34}
                   height={34}
-                  className="group-data-[collapsible=icon]:w-8 group-data-[collapsible=icon]:h-8 transition-all"
+                  className="transition-all group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:h-10"
                 />
-                <h3 className="font-bold text-2xl">
+                <h3 className="font-bold text-2xl transition-all group-data-[collapsible=icon]:hidden">
                   Sub<span className="font-medium">steer</span>
                 </h3>
               </Link>
