@@ -28,7 +28,7 @@ interface HeaderProps {
 
 const Header = ({ onToggleLeft, onToggleRight }: HeaderProps) => {
   return (
-    <nav className="p-4 flex items-center justify-between gap-4  sticky top-0  z-10 ">
+    <nav className="p-4 flex items-center justify-between gap-4 bg-white border-gray-200 border-b sticky top-0  z-10 ">
       <div className="flex items-center gap-3">
         {/* LEFT TRIGGER */}
         <Button
@@ -50,9 +50,9 @@ const Header = ({ onToggleLeft, onToggleRight }: HeaderProps) => {
 
       {/* RIGHT SIDE ITEMS */}
 
-      <div className="flex items-center gap-6 shrink-0">
+      <div className=" items-center gap-6 flex">
         {/* SEARCH BAR - Takes up remaining space */}
-        <div className="flex-1 max-w-[16rem]">
+        <div className="flex-1 max-w-[16rem] xl:block hidden">
           <div className="flex rounded-full items-center bg-gray-100 px-2">
             <Search className="text-gray-600 w-4 h-4" />
             <Input
@@ -63,14 +63,14 @@ const Header = ({ onToggleLeft, onToggleRight }: HeaderProps) => {
           </div>
         </div>
 
-        <div className="flex gap-4 items-center">
-          <History className="w-4 h-4 cursor-pointer" />
-          <Bell className="w-4 h-4 cursor-pointer" />
+        <div className="flex gap-4 items-center ">
+          <History className="w-4 h-4 cursor-pointer hidden xl:block" />
+          <Bell className="w-4 h-4 cursor-pointer hidden xl:block" />
 
           <Button
             variant="ghost"
             size="icon"
-            className="size-7"
+            className="size-7 hidden md:block"
             onClick={onToggleRight}
           >
             <PanelRight />
@@ -83,7 +83,7 @@ const Header = ({ onToggleLeft, onToggleRight }: HeaderProps) => {
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col">
+          <div className="xl:flex flex-col hidden">
             <span className="text-sm">Andrew Smith</span>
             <span className="text-xs">support</span>
           </div>

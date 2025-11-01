@@ -85,9 +85,7 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
   };
 
   return (
-    <div
-      className={`w-full h-[360px] rounded-2xl bg-[#F9FAFB] p-6 ${className}`}
-    >
+    <div className="w-full h-[420px] rounded-2xl bg-[#F9FAFB] p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold text-gray-900">

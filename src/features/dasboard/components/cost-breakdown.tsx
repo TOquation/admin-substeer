@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   BarChart,
   Bar,
@@ -10,7 +10,6 @@ import {
   Cell,
 } from "recharts";
 
-// Chart data
 const data = [
   { name: "Hosting", short: "Host.", value: 18, color: "#93C5FD" },
   { name: "API Fees", short: "API", value: 30, color: "#5EEAD4" },
@@ -19,23 +18,30 @@ const data = [
   { name: "Development", short: "Dev.", value: 25, color: "#4ADE80" },
 ];
 
-const CostBreakDown: React.FC<{ className: string }> = ({ className }) => {
-  const [width, setWidth] = useState<number>(
-    typeof window !== "undefined" ? window.innerWidth : 1200
-  );
+const CostBreakDown: React.FC<{ className?: string }> = ({
+  className = "",
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(1200);
   const [shortLabels, setShortLabels] = useState(false);
 
+  // Resize observer tracks actual chart container width (not window)
   useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => window.removeEventListener("resize", handleResize);
+    if (!containerRef.current) return;
+
+    const observer = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+    });
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
   }, []);
 
+  // Decide when to use short labels based on available width
   useEffect(() => {
-    // Use shortened labels below ~640px width
-    setShortLabels(width < 640);
-  }, [width]);
+    // threshold ~550px → tight space for text labels
+    setShortLabels(containerWidth < 550);
+  }, [containerWidth]);
 
   const formattedData = data.map((item) => ({
     ...item,
@@ -43,7 +49,10 @@ const CostBreakDown: React.FC<{ className: string }> = ({ className }) => {
   }));
 
   return (
-    <div className={`w-full rounded-2xl bg-[#F9F9FA] p-6 ${className}`}>
+    <div
+      ref={containerRef}
+      className={`w-full rounded-2xl bg-[#F9F9FA] p-6 ${className}`}
+    >
       {/* Header */}
       <h2 className="mb-6 text-lg font-bold text-gray-800">Cost Breakdown</h2>
 
@@ -55,24 +64,26 @@ const CostBreakDown: React.FC<{ className: string }> = ({ className }) => {
             margin={{ top: 10, right: 10, left: -30, bottom: 20 }}
             barCategoryGap="20%"
           >
-            {/* No CartesianGrid — clean background */}
             <XAxis
               dataKey="label"
               axisLine={false}
               tickLine={false}
+              interval={0}
               tick={{
                 fill: "#9CA3AF",
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: 400,
+                textAnchor: "middle",
               }}
             />
+
             <YAxis
               tickFormatter={(value) => `${value}K`}
               axisLine={false}
               tickLine={false}
               tick={{
                 fill: "#9CA3AF",
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: 400,
               }}
               domain={[0, 35]}

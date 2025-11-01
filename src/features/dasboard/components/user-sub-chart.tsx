@@ -13,6 +13,9 @@ import {
 } from "recharts";
 import type { TooltipProps } from "recharts";
 
+// --------------------------------------
+// Chart Data
+// --------------------------------------
 const data = [
   { month: "Jan", thisYear: 8000, lastYear: 6000 },
   { month: "Feb", thisYear: 15000, lastYear: 18000 },
@@ -28,6 +31,9 @@ const data = [
   { month: "Dec", thisYear: 35000, lastYear: 26000 },
 ];
 
+// --------------------------------------
+// Tooltip Component
+// --------------------------------------
 const CustomTooltip = ({
   active,
   payload,
@@ -48,19 +54,24 @@ const CustomTooltip = ({
   );
 };
 
-const UserSubscriptionChart: React.FC<{ className: string }> = ({
-  className,
+// --------------------------------------
+// Main Chart Component
+// --------------------------------------
+const UserSubscriptionChart: React.FC<{ className?: string }> = ({
+  className = "",
 }) => {
   const [targetMonth, setTargetMonth] = useState("Jun");
   const [activeMonth, setActiveMonth] = useState("Jun");
 
   const activeData = data.find((d) => d.month === activeMonth);
 
+  // Smooth animation for indicator
   useEffect(() => {
     const animation = setTimeout(() => setActiveMonth(targetMonth), 150);
     return () => clearTimeout(animation);
   }, [targetMonth]);
 
+  // Responsive month label formatter
   const formatMonthLabel = (month: string) => {
     if (typeof window !== "undefined" && window.innerWidth < 640) {
       return month.charAt(0);
@@ -68,6 +79,7 @@ const UserSubscriptionChart: React.FC<{ className: string }> = ({
     return month;
   };
 
+  // Handle chart click
   const handleChartClick = (state: any) => {
     if (state?.activeLabel) {
       setTargetMonth(state.activeLabel);
@@ -76,8 +88,9 @@ const UserSubscriptionChart: React.FC<{ className: string }> = ({
 
   return (
     <div
-      className={`w-full h-[360px] rounded-2xl bg-[#F9FAFB] p-6 ${className}`}
+      className={`w-full h-[500px] rounded-2xl bg-[#F9FAFB] p-6 ${className}`}
     >
+      {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-bold text-gray-900">Total Users</h2>
         <div className="flex items-center gap-4 text-sm text-gray-600">
@@ -92,25 +105,41 @@ const UserSubscriptionChart: React.FC<{ className: string }> = ({
         </div>
       </div>
 
+      {/* Chart */}
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={data}
           onClick={handleChartClick}
           margin={{ top: 20, right: 0, left: -30, bottom: 30 }}
         >
-          {/* ✅ Shadow filter under thisYear line */}
-          <defs>
-            <filter id="shadow" x="-20%" y="-20%" width="160%" height="400%">
-              <feDropShadow
-                dx="0"
-                dy="40"
-                stdDeviation="25"
-                floodColor="#22c55e"
-                floodOpacity="0.25"
-              />
-            </filter>
-          </defs>
+          {/* Vertical indicator */}
+          <ReferenceLine
+            x={activeMonth}
+            stroke="#111827"
+            strokeWidth={1}
+            ifOverflow="extendDomain"
+          />
 
+          {/* Circle indicator */}
+          {activeData && (
+            <ReferenceDot
+              x={activeData.month}
+              y={activeData.thisYear}
+              r={4.3}
+              fill="#fff"
+              stroke="#111827"
+              strokeWidth={2}
+              isFront
+            />
+          )}
+
+          {/* Tooltip */}
+          <Tooltip
+            content={<CustomTooltip />}
+            cursor={{ stroke: "transparent" }}
+          />
+
+          {/* X-Axis */}
           <XAxis
             dataKey="month"
             axisLine={false}
@@ -118,6 +147,8 @@ const UserSubscriptionChart: React.FC<{ className: string }> = ({
             tick={{ fill: "#9CA3AF", fontSize: 13 }}
             tickFormatter={formatMonthLabel}
           />
+
+          {/* Y-Axis */}
           <YAxis
             axisLine={false}
             tickLine={false}
@@ -127,7 +158,7 @@ const UserSubscriptionChart: React.FC<{ className: string }> = ({
             tick={{ fill: "#9CA3AF", fontSize: 13 }}
           />
 
-          {/* ✅ Lines */}
+          {/* Lines */}
           <Line
             type="monotone"
             dataKey="lastYear"
@@ -141,36 +172,9 @@ const UserSubscriptionChart: React.FC<{ className: string }> = ({
             type="monotone"
             dataKey="thisYear"
             stroke="#111827"
-            strokeWidth={2.5}
+            strokeWidth={2}
             dot={false}
-            opacity={0.9}
-            filter="url(#shadow)" // 👈 shadow applied here
-          />
-
-          {/* ✅ Vertical line indicator */}
-          <ReferenceLine
-            x={activeMonth}
-            stroke="#111827"
-            strokeWidth={1}
-            ifOverflow="extendDomain"
-          />
-
-          {/* ✅ Circle indicator */}
-          {activeData && (
-            <ReferenceDot
-              x={activeData.month}
-              y={activeData.thisYear}
-              r={4.3}
-              fill="#fff"
-              stroke="#111827"
-              strokeWidth={2}
-              isFront
-            />
-          )}
-
-          <Tooltip
-            content={<CustomTooltip />}
-            cursor={{ stroke: "transparent" }}
+            opacity={0.6}
           />
         </LineChart>
       </ResponsiveContainer>
