@@ -17,7 +17,7 @@ import {
 const RightSidebar = () => {
   return (
     <Sidebar className="" side="right">
-      <SidebarHeader>
+      <SidebarHeader className="">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>

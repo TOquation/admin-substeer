@@ -119,7 +119,11 @@ const LeftSidebar = () => {
 
   return (
     <Sidebar collapsible="icon" className="border-r">
-      <SidebarHeader className="border-b border-gray-200 transition-all duration-300 group-data-[collapsible=icon]:px-2 group-data-[collapsible=icon]:py-[1.12rem]">
+      <SidebarHeader
+        className="border-b xl:pb-[0.5rem] pb-[0.24rem] bg-white border-gray-200  transition-all duration-300 group-data-[collapsible=icon]:px-2 xl:group-data-[collapsible=icon]:py-[1.14rem] 
+      group-data-[collapsible=icon]:py-[1rem]
+      xl:group-data-[collapsible=icon]:pb-[1.11rem]"
+      >
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
@@ -144,7 +148,7 @@ const LeftSidebar = () => {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent>
+      <SidebarContent className=" xl:group-data-[collapsible=icon]:bg-white xl:group-data-[collapsible=icon]: bg-white">
         {/* Favorites Section - Hidden when collapsed */}
         <SidebarGroup>
           <div className="px-4 pt-4  group-data-[collapsible=icon]:hidden">
@@ -187,7 +191,7 @@ const LeftSidebar = () => {
             Menu
           </SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
+            <SidebarMenu className="group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:flex-col group-data-[collapsible=icon]:gap-4">
               {menuItems.map((item) =>
                 item.subItems ? (
                   // Collapsible menu item with subitems
@@ -262,7 +266,7 @@ const LeftSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter>
+      <SidebarFooter className="bg-white">
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>

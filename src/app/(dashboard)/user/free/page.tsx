@@ -9,6 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import ExampleOne from "@/features/users/components/example1";
 
 const Frees = () => {
   return (
@@ -31,6 +32,8 @@ const Frees = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+
+      {/* <ExampleOne /> */}
     </div>
   );
 };
