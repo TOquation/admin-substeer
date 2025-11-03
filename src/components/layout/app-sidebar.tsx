@@ -54,10 +54,8 @@ const menuItems = [
     url: "/users",
     icon: Users,
     subItems: [
-      { title: "Free Users", url: "/user/free" },
+      { title: "Free", url: "/user/free" },
       { title: "Subscribers", url: "/users/subscribers" },
-      { title: "Active", url: "/users/active" },
-      { title: "Inactive", url: "/users/inactive" },
     ],
   },
   {
