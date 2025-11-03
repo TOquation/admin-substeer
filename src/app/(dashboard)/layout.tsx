@@ -16,7 +16,7 @@ export default function DashBoardLayout({
   const [rightOpen, setRightOpen] = useState(true);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex fixed inset-0">
       <SidebarProvider className="" open={leftOpen} onOpenChange={setLeftOpen}>
         <LeftSidebar />
       </SidebarProvider>
@@ -27,7 +27,7 @@ export default function DashBoardLayout({
           onToggleLeft={() => setLeftOpen(!leftOpen)}
           onToggleRight={() => setRightOpen(!rightOpen)}
         />
-        <div className="overflow-y-auto max-h-[calc(100vh-1rem)]">
+        <div className="overflow-y-auto h-full max-h-[calc(100vh-4rem)]">
           {children}
         </div>
       </main>

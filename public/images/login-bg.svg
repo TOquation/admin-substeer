@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="1024" viewBox="0 0 1440 1024" fill="none">
+<g clip-path="url(#clip0_2473_16097)">
+<path d="M0 24C0 10.7452 10.7452 0 24 0H1416C1429.25 0 1440 10.7452 1440 24V1000C1440 1013.25 1429.25 1024 1416 1024H24C10.7451 1024 0 1013.25 0 1000V24Z" fill="white"/>
+<path d="M0 0H1439.91V1024.42H0V0Z" fill="#D9D9D9"/>
+<g filter="url(#filter0_f_2473_16097)">
+<circle cx="-1.21024e-05" cy="20" r="324.52" transform="rotate(-45 -1.21024e-05 20)" fill="#1DFC56"/>
+</g>
+<g filter="url(#filter1_f_2473_16097)">
+<circle cx="139.579" cy="1050.24" r="385.705" transform="rotate(-45 139.579 1050.24)" fill="#371AFF"/>
+</g>
+<g filter="url(#filter2_f_2473_16097)">
+<circle cx="1450.84" cy="906.835" r="595.267" transform="rotate(-45 1450.84 906.835)" fill="#1DFC56"/>
+</g>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</g>
+<defs>
+<filter id="filter0_f_2473_16097" x="-1036.12" y="-1016.12" width="2072.24" height="2072.24" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="355.8" result="effect1_foregroundBlur_2473_16097"/>
+</filter>
+<filter id="filter1_f_2473_16097" x="-966.425" y="-55.7643" width="2212.01" height="2212.01" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="360.15" result="effect1_foregroundBlur_2473_16097"/>
+</filter>
+<filter id="filter2_f_2473_16097" x="-344.032" y="-888.032" width="3589.73" height="3589.73" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="599.8" result="effect1_foregroundBlur_2473_16097"/>
+</filter>
+<clipPath id="clip0_2473_16097">
+<path d="M0 24C0 10.7452 10.7452 0 24 0H1416C1429.25 0 1440 10.7452 1440 24V1000C1440 1013.25 1429.25 1024 1416 1024H24C10.7451 1024 0 1013.25 0 1000V24Z" fill="white"/>
+</clipPath>
+<clipPath id="clip1_2473_16097">
+<rect x="515" y="528.988" width="16" height="16" rx="2" fill="white"/>
+</clipPath>
+</defs>
+</svg>

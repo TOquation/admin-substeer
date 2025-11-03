@@ -122,7 +122,7 @@ const LeftSidebar = () => {
       <SidebarHeader
         className="border-b xl:pb-[0.5rem] pb-[0.24rem] bg-white border-gray-200  transition-all duration-300 group-data-[collapsible=icon]:px-2 xl:group-data-[collapsible=icon]:py-[1.14rem] 
       group-data-[collapsible=icon]:py-[1rem]
-      xl:group-data-[collapsible=icon]:pb-[1.11rem]"
+      xl:group-data-[collapsible=icon]:pb-[1.11rem] "
       >
         <SidebarMenu>
           <SidebarMenuItem>
@@ -150,8 +150,8 @@ const LeftSidebar = () => {
 
       <SidebarContent className=" xl:group-data-[collapsible=icon]:bg-white xl:group-data-[collapsible=icon]: bg-white">
         {/* Favorites Section - Hidden when collapsed */}
-        <SidebarGroup>
-          <div className="px-4 pt-4  group-data-[collapsible=icon]:hidden">
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <div className="px-4 pt-3">
             {/* Tabs */}
             <div className="flex gap-6 text-sm text-gray-500 mb-4  justify-between">
               <button className="hover:text-gray-900 transition-colors font-medium">
@@ -186,7 +186,7 @@ const LeftSidebar = () => {
         </SidebarGroup>
 
         {/* Main Menu */}
-        <SidebarGroup>
+        <SidebarGroup className="group-data-[collapsible=icon]:mt-2">
           <SidebarGroupLabel className="text-xs text-gray-400 uppercase mb-2 group-data-[collapsible=icon]:hidden">
             Menu
           </SidebarGroupLabel>

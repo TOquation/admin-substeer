@@ -1,10 +1,34 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import {
+  Fahkwang,
+  Fredoka,
+  Geist,
+  Geist_Mono,
+  Inter,
+  Roboto,
+} from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+});
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+const roboto = Roboto({
+  variable: "--font-roboto",
+  subsets: ["latin"],
+});
+// const fredoka = Fredoka({
+//   variable: "--font-fredoka",
+//   subsets: ["latin"],
+// });
+const fahkwang = Fahkwang({
+  variable: "--font-fahkwang",
+  subsets: ["latin"],
+  weight: "200",
 });
 
 const geistMono = Geist_Mono({
@@ -28,7 +52,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${roboto.variable} ${fahkwang.variable}  antialiased`}
       >
         <div className="">{children}</div>
       </body>
