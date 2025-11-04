@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import {
   ChevronUp,
@@ -26,6 +27,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import ScrollBar from "@/components/custom-ui/scrollbar";
 
 type Status = "Active" | "Inactive" | "Pending" | "Suspended";
 
@@ -193,17 +195,29 @@ const statusStyles: Record<Status, string> = {
 export default function UsersDataTable() {
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(6);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
   const totalRows = 140;
   const totalPages = Math.ceil(totalRows / rowsPerPage);
 
-  // Paginate users - show only current page
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
   const paginatedUsers = mockUsers.slice(startIndex, endIndex);
+
+  // Dynamic spacing based on rows per page
+  const getRowSpacing = () => {
+    if (rowsPerPage === 5) return "py-4";
+    if (rowsPerPage === 8) return "py-4";
+    return "py-3"; // for 10
+  };
+
+  const getHeaderSpacing = () => {
+    if (rowsPerPage === 5) return "py-3";
+    if (rowsPerPage === 8) return "py-3";
+    return "py-2.5";
+  };
 
   const toggleSelectAll = () => {
     if (selectedUsers.size === paginatedUsers.length) {
@@ -234,11 +248,11 @@ export default function UsersDataTable() {
 
   const SortIcon = ({ column }: { column: string }) => {
     if (sortColumn !== column)
-      return <ChevronUp className="w-4 h-4 text-gray-400" />;
+      return <ChevronUp className="w-3.5 h-3.5 text-gray-400" />;
     return sortDirection === "asc" ? (
-      <ChevronUp className="w-4 h-4 text-gray-700" />
+      <ChevronUp className="w-3.5 h-3.5 text-gray-700" />
     ) : (
-      <ChevronDown className="w-4 h-4 text-gray-700" />
+      <ChevronDown className="w-3.5 h-3.5 text-gray-700" />
     );
   };
 
@@ -274,16 +288,15 @@ export default function UsersDataTable() {
   };
 
   return (
-    <div className="w-full bg-white rounded-lg shadow-sm border border-gray-200 flex flex-col">
-      {/* Table wrapper with horizontal scroll */}
-      <div className="overflow-x-auto flex-1">
+    <div className="w-full  flex flex-col overflow-hidden">
+      <div className="overflow-x-auto  flex-1">
         <div className="inline-block min-w-full align-middle">
           {/* Fixed Header */}
-          <div className="overflow-hidden border-b border-gray-200">
+          <div className="overflow-hidden border-t border-b border-gray-200">
             <table className="min-w-full">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="w-12 px-6 py-3 text-left">
+                  <th className={`w-10 px-4 ${getHeaderSpacing()} text-left`}>
                     <Checkbox
                       checked={
                         selectedUsers.size === paginatedUsers.length &&
@@ -292,40 +305,52 @@ export default function UsersDataTable() {
                       onCheckedChange={toggleSelectAll}
                     />
                   </th>
-                  <th className="px-6 py-3 text-left min-w-[250px]">
+                  <th
+                    className={`px-5 ${getHeaderSpacing()} text-left min-w-[240px]`}
+                  >
                     <button
                       onClick={() => handleSort("name")}
-                      className="flex items-center gap-2 text-xs font-medium text-gray-700 uppercase tracking-wider hover:text-gray-900 whitespace-nowrap"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-700 uppercase tracking-wide hover:text-gray-900 whitespace-nowrap"
                     >
                       Full Name
                       <SortIcon column="name" />
                     </button>
                   </th>
-                  <th className="px-6 py-3 text-left min-w-[120px]">
+                  <th
+                    className={`px-5 ${getHeaderSpacing()} text-left min-w-[110px]`}
+                  >
                     <button
                       onClick={() => handleSort("status")}
-                      className="flex items-center gap-2 text-xs font-medium text-gray-700 uppercase tracking-wider hover:text-gray-900 whitespace-nowrap"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-700 uppercase tracking-wide hover:text-gray-900 whitespace-nowrap"
                     >
                       Status
                       <SortIcon column="status" />
                     </button>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider min-w-[140px] whitespace-nowrap">
+                  <th
+                    className={`px-5 ${getHeaderSpacing()} text-left text-[11px] font-semibold text-gray-700 uppercase tracking-wide min-w-[120px] whitespace-nowrap`}
+                  >
                     Subscriptions
                   </th>
-                  <th className="px-6 py-3 text-left min-w-[140px]">
+                  <th
+                    className={`px-5 ${getHeaderSpacing()} text-left min-w-[130px]`}
+                  >
                     <button
                       onClick={() => handleSort("joined")}
-                      className="flex items-center gap-2 text-xs font-medium text-gray-700 uppercase tracking-wider hover:text-gray-900 whitespace-nowrap"
+                      className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-700 uppercase tracking-wide hover:text-gray-900 whitespace-nowrap"
                     >
                       Joined Date
                       <SortIcon column="joined" />
                     </button>
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider min-w-[120px] whitespace-nowrap">
+                  <th
+                    className={`px-5 ${getHeaderSpacing()} text-left text-[11px] font-semibold text-gray-700 uppercase tracking-wide min-w-[110px] whitespace-nowrap`}
+                  >
                     Last Active
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider min-w-[80px] whitespace-nowrap">
+                  <th
+                    className={`px-5 ${getHeaderSpacing()} text-left text-[11px] font-semibold text-gray-700 uppercase tracking-wide min-w-[70px] whitespace-nowrap`}
+                  >
                     Actions
                   </th>
                 </tr>
@@ -334,101 +359,119 @@ export default function UsersDataTable() {
           </div>
 
           {/* Scrollable Body */}
-          <div className="overflow-y-auto max-h-[500px]">
-            <table className="min-w-full">
-              <tbody className="bg-white divide-y divide-gray-200">
-                {paginatedUsers.map((user) => (
-                  <tr
-                    key={user.id}
-                    className="hover:bg-gray-50 transition-colors"
-                  >
-                    <td className="w-12 px-6 py-4">
-                      <Checkbox
-                        checked={selectedUsers.has(user.id)}
-                        onCheckedChange={() => toggleSelectUser(user.id)}
-                      />
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap min-w-[250px]">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-xl flex-shrink-0">
-                          {user.avatar}
-                        </div>
-                        <div>
-                          <div className="text-sm font-medium text-gray-900">
-                            {user.name}
-                          </div>
-                          <div className="text-sm text-gray-500">
-                            {user.email}
-                          </div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap min-w-[120px]">
-                      <span
-                        className={`inline-flex px-3 py-1 text-xs font-medium rounded-full ${
-                          statusStyles[user.status]
-                        }`}
+          <ScrollBar className="" thumbShortness={0.3}>
+            <div
+              className="overflow-y-auto custom-scroll"
+              style={{ maxHeight: "calc(90vh - 220px)" }}
+            >
+              <table className="min-w-full">
+                <tbody className="bg-white">
+                  {paginatedUsers.map((user, index) => (
+                    <tr
+                      key={user.id}
+                      className={`hover:bg-gray-50 transition-colors ${
+                        index !== paginatedUsers.length - 1
+                          ? "border-b border-gray-200"
+                          : ""
+                      }`}
+                    >
+                      <td className={`w-10 px-4 ${getRowSpacing()}`}>
+                        <Checkbox
+                          checked={selectedUsers.has(user.id)}
+                          onCheckedChange={() => toggleSelectUser(user.id)}
+                        />
+                      </td>
+                      <td
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[240px]`}
                       >
-                        {user.status}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 min-w-[140px]">
-                      {user.subscriptions}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 min-w-[140px]">
-                      {user.joinedDate}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 min-w-[120px]">
-                      {user.lastActive}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 min-w-[80px]">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="h-8 w-8"
-                          >
-                            <MoreVertical className="h-4 w-4" />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                          <DropdownMenuItem>View details</DropdownMenuItem>
-                          <DropdownMenuItem>Edit user</DropdownMenuItem>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem className="text-red-600">
-                            Delete user
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-lg flex-shrink-0">
+                            {user.avatar}
+                          </div>
+                          <div>
+                            <div className="text-[13px] font-medium text-gray-900">
+                              {user.name}
+                            </div>
+                            <div className="text-[12px] text-gray-500">
+                              {user.email}
+                            </div>
+                          </div>
+                        </div>
+                      </td>
+                      <td
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[110px]`}
+                      >
+                        <span
+                          className={`inline-flex px-2.5 py-0.5 text-[11px] font-medium rounded-full ${
+                            statusStyles[user.status]
+                          }`}
+                        >
+                          {user.status}
+                        </span>
+                      </td>
+                      <td
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-900 min-w-[120px]`}
+                      >
+                        {user.subscriptions}
+                      </td>
+                      <td
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-900 min-w-[130px]`}
+                      >
+                        {user.joinedDate}
+                      </td>
+                      <td
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-500 min-w-[110px]`}
+                      >
+                        {user.lastActive}
+                      </td>
+                      <td
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-500 min-w-[70px]`}
+                      >
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7"
+                            >
+                              <MoreVertical className="h-3.5 w-3.5" />
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuItem>View details</DropdownMenuItem>
+                            <DropdownMenuItem>Edit user</DropdownMenuItem>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuItem className="text-red-600">
+                              Delete user
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </ScrollBar>
         </div>
       </div>
 
-      {/* Pagination - Mobile Responsive */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 px-4 sm:px-6 py-4 border-t border-gray-200">
-        {/* Rows per page - Left side */}
-        <div className="flex items-center gap-2 text-sm">
+      {/* Pagination */}
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 sm:px-5 py-3 border-t border-gray-200">
+        <div className="flex items-center gap-2 text-[13px]">
           <span className="text-gray-700 whitespace-nowrap">Rows per page</span>
           <Select
             value={rowsPerPage.toString()}
             onValueChange={(value) => setRowsPerPage(Number(value))}
           >
-            <SelectTrigger className="w-[70px] h-9">
+            <SelectTrigger className="w-[65px] h-8 text-[13px]">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="6">6</SelectItem>
+              <SelectItem value="5">5</SelectItem>
+              <SelectItem value="8">8</SelectItem>
               <SelectItem value="10">10</SelectItem>
-              <SelectItem value="25">25</SelectItem>
-              <SelectItem value="50">50</SelectItem>
-              <SelectItem value="100">100</SelectItem>
             </SelectContent>
           </Select>
           <span className="text-gray-700 whitespace-nowrap hidden sm:inline">
@@ -436,35 +479,33 @@ export default function UsersDataTable() {
           </span>
         </div>
 
-        {/* Page Navigation - Right side */}
-        <div className="flex items-center gap-1">
-          {/* First page button - hidden on mobile */}
+        <div className="flex items-center gap-0.5">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setCurrentPage(1)}
             disabled={currentPage === 1}
-            className="hidden sm:flex h-8 w-8"
+            className="hidden sm:flex h-7 w-7"
           >
-            <ChevronsLeft className="h-4 w-4" />
+            <ChevronsLeft className="h-3.5 w-3.5" />
           </Button>
-
-          {/* Previous page button */}
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setCurrentPage(Math.max(1, currentPage - 1))}
             disabled={currentPage === 1}
-            className="h-8 w-8"
+            className="h-7 w-7"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-3.5 w-3.5" />
           </Button>
 
-          {/* Page numbers */}
-          <div className="flex items-center gap-1">
+          <div className="flex items-center">
             {getPageNumbers().map((page, idx) =>
               page === "..." ? (
-                <span key={`ellipsis-${idx}`} className="px-2 text-gray-500">
+                <span
+                  key={`ellipsis-${idx}`}
+                  className="px-1 text-gray-500 text-[13px]"
+                >
                   ...
                 </span>
               ) : (
@@ -473,7 +514,7 @@ export default function UsersDataTable() {
                   variant={currentPage === page ? "default" : "ghost"}
                   size="icon"
                   onClick={() => setCurrentPage(page as number)}
-                  className={`h-8 w-8 ${
+                  className={`h-7 w-7 text-[13px] ${
                     currentPage === page
                       ? "bg-green-500 hover:bg-green-600"
                       : ""
@@ -485,7 +526,6 @@ export default function UsersDataTable() {
             )}
           </div>
 
-          {/* Next page button */}
           <Button
             variant="ghost"
             size="icon"
@@ -493,20 +533,18 @@ export default function UsersDataTable() {
               setCurrentPage(Math.min(totalPages, currentPage + 1))
             }
             disabled={currentPage === totalPages}
-            className="h-8 w-8"
+            className="h-7 w-7"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-3.5 w-3.5" />
           </Button>
-
-          {/* Last page button - hidden on mobile */}
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setCurrentPage(totalPages)}
             disabled={currentPage === totalPages}
-            className="hidden sm:flex h-8 w-8"
+            className="hidden sm:flex h-7 w-7"
           >
-            <ChevronsRight className="h-4 w-4" />
+            <ChevronsRight className="h-3.5 w-3.5" />
           </Button>
         </div>
       </div>
