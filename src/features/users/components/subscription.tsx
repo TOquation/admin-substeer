@@ -153,11 +153,7 @@ export default function SubscriptionManager() {
                     </td>
                     <td className="py-3 px-2 sm:py-4 sm:px-4">
                       <div
-                        className={`text-xs sm:text-sm whitespace-nowrap ${
-                          sub.nextPayment === "Paused"
-                            ? "text-gray-900 font-medium"
-                            : "text-gray-600"
-                        }`}
+                        className={`text-xs sm:text-sm whitespace-nowrap text-gray-600}`}
                       >
                         {sub.nextPayment}
                       </div>
