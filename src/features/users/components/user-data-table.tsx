@@ -28,6 +28,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import ScrollBar from "@/components/custom-ui/scrollbar";
+import { useRouter } from "next/navigation";
 
 type Status = "Active" | "Inactive" | "Pending" | "Suspended";
 
@@ -286,6 +287,11 @@ export default function UsersDataTable() {
 
     return pages;
   };
+  const router = useRouter();
+
+  const handleUserProfile = () => {
+    router.push("/user/free/profile");
+  };
 
   return (
     <div className="w-full  flex flex-col overflow-hidden">
@@ -368,8 +374,9 @@ export default function UsersDataTable() {
                 <tbody className="bg-white">
                   {paginatedUsers.map((user, index) => (
                     <tr
+                      onClick={handleUserProfile}
                       key={user.id}
-                      className={`hover:bg-gray-50 transition-colors ${
+                      className={`hover:bg-gray-50 transition-colors cursor-pointer ${
                         index !== paginatedUsers.length - 1
                           ? "border-b border-gray-200"
                           : ""
@@ -384,7 +391,7 @@ export default function UsersDataTable() {
                       <td
                         className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[240px]`}
                       >
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 ">
                           <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-lg flex-shrink-0">
                             {user.avatar}
                           </div>

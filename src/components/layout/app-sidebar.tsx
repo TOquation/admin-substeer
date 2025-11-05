@@ -55,7 +55,7 @@ const menuItems = [
     icon: Users,
     subItems: [
       { title: "Free", url: "/user/free" },
-      { title: "Subscribers", url: "/users/subscribers" },
+      { title: "Subscribers", url: "/user/subscribers" },
     ],
   },
   {
