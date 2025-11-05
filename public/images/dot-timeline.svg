@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+<rect width="12" height="12" fill="#F0F0F0"/>
+<g clip-path="url(#clip0_2459_2799)">
+<path d="M-594 -589C-594 -602.255 -583.255 -613 -570 -613H822C835.255 -613 846 -602.255 846 -589V363C846 376.255 835.255 387 822 387H-570C-583.255 387 -594 376.255 -594 363V-589Z" fill="white"/>
+<mask id="path-2-inside-1_2459_2799" fill="white">
+<path d="M0 -454H538V353H0V-454Z"/>
+</mask>
+<path d="M0 -454V-453H538V-454V-455H0V-454Z" fill="#CACACA" mask="url(#path-2-inside-1_2459_2799)"/>
+<g clip-path="url(#clip1_2459_2799)">
+<circle opacity="0.12" cx="6" cy="6" r="9" fill="#FF4C51"/>
+<circle cx="6" cy="6" r="6" fill="#FF4C51"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_2459_2799">
+<path d="M-594 -589C-594 -602.255 -583.255 -613 -570 -613H822C835.255 -613 846 -602.255 846 -589V363C846 376.255 835.255 387 822 387H-570C-583.255 387 -594 376.255 -594 363V-589Z" fill="white"/>
+</clipPath>
+<clipPath id="clip1_2459_2799">
+<rect y="-54" width="538" height="407" rx="6" fill="white"/>
+</clipPath>
+</defs>
+</svg>

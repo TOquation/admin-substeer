@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { useDualSidebar } from "@/contexts/dual-sidebar-context";
 
 const UserProfile = () => {
-  const { leftOpen } = useDualSidebar();
+  const { leftOpen, rightOpen } = useDualSidebar();
   return (
     <div className=" py-8 flex flex-col gap-7 border-t-2 border-gray-200">
       {/* user image */}
@@ -36,7 +36,8 @@ const UserProfile = () => {
             <div
               className={cn(
                 "bg-[#D9FBE5] p-2.5  rounded-md flex items-center justify-center",
-                leftOpen ? "xl:p-1" : "xl:p-3"
+                leftOpen ? "xl:p-1" : "xl:p-3",
+                rightOpen ? "xl:p-1" : "xl:p-3"
               )}
             >
               <profile.icon className="w-5 h-5 text-gray-700" />

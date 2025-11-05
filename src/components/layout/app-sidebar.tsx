@@ -118,7 +118,7 @@ const LeftSidebar = () => {
   return (
     <Sidebar collapsible="icon" className="border-r">
       <SidebarHeader
-        className="border-b xl:pb-[0.5rem] pb-[0.24rem] bg-white border-gray-200  transition-all duration-300 group-data-[collapsible=icon]:px-2 xl:group-data-[collapsible=icon]:py-[1.14rem] 
+        className="border-b xl:pb-[0.6rem] pb-[0.24rem] bg-white border-gray-200  transition-all duration-300 group-data-[collapsible=icon]:px-2 xl:group-data-[collapsible=icon]:py-[1.14rem] 
       group-data-[collapsible=icon]:py-[1rem]
       xl:group-data-[collapsible=icon]:pb-[1.11rem] "
       >

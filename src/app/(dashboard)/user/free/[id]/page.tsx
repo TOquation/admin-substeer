@@ -14,7 +14,6 @@ import UserProfile from "@/features/users/components/user-profile";
 import SubscriptionManager from "@/features/users/components/subscription";
 import { cn } from "@/lib/utils";
 import { useDualSidebar } from "@/contexts/dual-sidebar-context";
-import ActivityTimeline from "@/features/users/components/activity-timeline";
 
 const Profile = () => {
   const router = useRouter();
@@ -22,7 +21,7 @@ const Profile = () => {
     router.back();
   };
 
-  const { leftOpen } = useDualSidebar();
+  const { leftOpen, rightOpen } = useDualSidebar();
 
   return (
     <div className="px-4">
@@ -92,7 +91,8 @@ const Profile = () => {
         <div
           className={cn(
             "xl:overflow-y-hidden",
-            leftOpen ? "xl:w-[38%]" : "xl:w-[28%]"
+            leftOpen ? "xl:w-[38%]" : "xl:w-[30%]",
+            rightOpen ? "xl:w-[40%]" : "xl:w-[30%]"
           )}
         >
           <div className="xl:overflow-auto  xl:max-h-[calc(90vh-1rem)] pb-8 pt-12">
@@ -103,12 +103,12 @@ const Profile = () => {
         <div
           className={cn(
             "xl:overflow-y-hidden",
-            leftOpen ? "xl:w-[62%]" : "xl:w-[72%]"
+            leftOpen ? "xl:w-[62%]" : "xl:w-[70%]",
+            rightOpen ? "xl:w-[60%]" : "xl:w-[70%]"
           )}
         >
           <div className="overflow-auto xl:max-h-[calc(90vh-1rem)] pb-8">
             <SubscriptionManager />
-            <ActivityTimeline />
           </div>
         </div>
       </div>

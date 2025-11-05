@@ -12,3 +12,13 @@ export interface UserProfileProps {
   amount: number;
   title: string;
 }
+
+//timeline user activity
+export interface ActivityTimelineProps {
+  bgColor: string;
+  title: string;
+  subtitleTop: string;
+  subtitleBottom: string;
+  duration: string;
+  src?: string;
+}
