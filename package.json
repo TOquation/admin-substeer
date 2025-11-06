@@ -42,6 +42,7 @@
     "simplebar-react": "^3.3.2",
     "tailwind-merge": "^3.2.0",
     "tw-animate-css": "^1.2.5",
+    "vaul": "^1.1.2",
     "zod": "^3.24.2"
   },
   "devDependencies": {

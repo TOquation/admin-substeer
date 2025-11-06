@@ -417,7 +417,7 @@ export default function UsersDataTable() {
                         </span>
                       </td>
                       <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-900 min-w-[120px]`}
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-900s min-w-[120px]`}
                       >
                         {user.subscriptions}
                       </td>

@@ -28,7 +28,7 @@ interface HeaderProps {
 
 const Header = ({ onToggleLeft, onToggleRight }: HeaderProps) => {
   return (
-    <nav className="p-4 flex items-center justify-between gap-4 bg-white border-gray-200 border-b sticky top-0  z-10 ">
+    <nav className="p-4 flex items-center justify-between gap-4 bg-white border-gray-200 border-b sticky top-0  z-30 ">
       <div className="flex items-center gap-3">
         {/* LEFT TRIGGER */}
         <Button
