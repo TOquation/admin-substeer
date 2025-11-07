@@ -60,29 +60,32 @@ const Overview: React.FC<OverviewProps> = ({
               <Separator className="w-full flex-shrink-0" />
 
               <div className="relative w-full px-6">
-                <div className="overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent max-w-[calc(100%-0.5rem)] ">
-                  <div className="min-w-max flex gap-2">
-                    <TabsList className="flex gap-2 bg-white p-0 m-0 border-none shadow-none">
-                      {tabsData.map((trigger) => (
-                        <TabsTrigger
-                          key={trigger.id}
-                          value={trigger.title}
-                          className="text-sm whitespace-nowrap focus-visible:ring-0 focus-visible:outline-none focus-visible:border-0 bg-transparent data-[state=active]:shadow-none data-[state=active]:border-none cursor-pointer"
-                        >
-                          {trigger.title}
-                        </TabsTrigger>
-                      ))}
-                    </TabsList>
-                  </div>
+                <div className="overflow-x-auto  scrollbar-thin scrollbar-thumb-gray-300  scrollbar-track-transparent max-w-[calc(100%-0.5rem)] ">
+                  <TabsList className="flex gap-2 min-w-max bg-white border-none shadow-none">
+                    {tabsData.map((trigger) => (
+                      <TabsTrigger
+                        key={trigger.id}
+                        value={trigger.title}
+                        className="text-sm whitespace-nowrap focus-visible:ring-0 focus-visible:outline-none focus-visible:border-0 bg-transparent data-[state=active]:shadow-none data-[state=active]:border-none cursor-pointer"
+                      >
+                        {trigger.title}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
                 </div>
               </div>
               <Separator className="w-full flex-shrink-0" />
 
               <div className="flex-1 min-h-0 overflow-y-auto px-6 pb-6 scrollbar-thin">
-                <TabsContent
-                  value="overview"
-                  className="space-y-4"
-                ></TabsContent>
+                <TabsContent value="overview" className="space-y-4">
+                  {/* Long content — will now fully scroll */}
+                  {Array.from({ length: 50 }).map((_, i) => (
+                    <p key={i}>
+                      Line {i + 1}: Lorem ipsum dolor sit amet consectetur
+                      adipisicing elit. Quisquam, molestiae.
+                    </p>
+                  ))}
+                </TabsContent>
 
                 <TabsContent value="password"></TabsContent>
               </div>
