@@ -7,16 +7,16 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
+import { OverviewProps } from "../types";
+import Image from "next/image";
 
-interface OverviewProps {
-  open: boolean;
-  setOpen: (open: boolean) => void;
-}
-
-const Overview: React.FC<OverviewProps> = ({ open, setOpen }) => {
+const Overview: React.FC<OverviewProps> = ({
+  open,
+  setOpen,
+  selectedIntegration,
+}) => {
   return (
     <div>
       <Sheet open={open} onOpenChange={setOpen}>
@@ -26,7 +26,17 @@ const Overview: React.FC<OverviewProps> = ({ open, setOpen }) => {
           onInteractOutside={(e) => e.preventDefault()}
         >
           <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
+            <SheetTitle className="flex gap-2 items-center">
+              {selectedIntegration && (
+                <Image
+                  src={selectedIntegration.icon}
+                  alt="logo"
+                  width={20}
+                  height={20}
+                  unoptimized
+                />
+              )}
+            </SheetTitle>
             <SheetDescription>
               This action cannot be undone. This will permanently delete your
               account and remove your data from our servers.

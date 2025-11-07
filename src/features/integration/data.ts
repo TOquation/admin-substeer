@@ -1,6 +1,7 @@
 // integration data card
 
-import { IntegrationCardProps } from "./types";
+import Integration from "@/app/(dashboard)/integration/page";
+import { IntegralProps, IntegrationCardProps } from "./types";
 
 export const intCard: IntegrationCardProps[] = [
   {
@@ -32,5 +33,75 @@ export const intCard: IntegrationCardProps[] = [
     title: "Total Api Calls",
     titleColor: "text-gray-800",
     subtitle: 61864,
+  },
+];
+
+// Integration table data
+export const integrations: IntegralProps[] = [
+  {
+    id: 1,
+    service: "Stripe",
+    icon: "https://cdn.simpleicons.org/slack",
+    iconBg: "bg-blue-600",
+    type: "Payment",
+    status: "Success",
+    latency: "250ms",
+    errors: 0,
+    uptime: "99.9%",
+  },
+  {
+    id: 2,
+    service: "Slack",
+    icon: "https://cdn.simpleicons.org/slack",
+    iconBg: "",
+    type: "Bank link",
+    status: "Success",
+    latency: "310ms",
+    errors: 3,
+    uptime: "99.9%",
+  },
+  {
+    id: 3,
+    service: "Google",
+    icon: "https://cdn.simpleicons.org/google",
+    iconBg: "",
+    type: "Subscription",
+    status: "Failed",
+    latency: "420ms",
+    errors: 45,
+    uptime: "99.9%",
+  },
+  {
+    id: 4,
+    service: "AWS",
+    icon: "https://cdn.simpleicons.org/google",
+    iconBg: "bg-gray-900",
+    type: "AI Assist",
+    status: "Warning",
+    latency: "200",
+    errors: 10,
+    uptime: "99.9%",
+  },
+  {
+    id: 5,
+    service: "AWS",
+    icon: "https://cdn.simpleicons.org/google",
+    iconBg: "bg-gray-900",
+    type: "AI Assist",
+    status: "Warning",
+    latency: "200",
+    errors: 10,
+    uptime: "99.9%",
+  },
+  {
+    id: 6,
+    service: "AWS",
+    icon: "https://cdn.simpleicons.org/slack",
+    iconBg: "bg-gray-900",
+    type: "AI Assist",
+    status: "Warning",
+    latency: "200",
+    errors: 10,
+    uptime: "99.9%",
   },
 ];

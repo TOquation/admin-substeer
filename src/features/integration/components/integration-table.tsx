@@ -1,38 +1,18 @@
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { Search, MoreVertical } from "lucide-react";
+import { IntegrationProps } from "../types";
+import { integrations } from "../data";
 
-interface IntegrationProps {
-  setOpen: (open: boolean) => void;
-}
-
-const IntegrationsTable = ({ setOpen }: IntegrationProps) => {
-  interface IntegrationProps {
-    id: number;
-    service: string;
-    icon: string;
-    iconBg: string;
-    type: string;
-    status: "Success" | "Failed" | "Warning";
-    latency: string;
-    errors: number;
-    uptime: string;
-  }
-
+const IntegrationsTable = ({
+  setOpen,
+  setSelectedIntegration,
+}: IntegrationProps) => {
   interface ModalProps {
     id: number;
     link: string;
@@ -54,75 +34,6 @@ const IntegrationsTable = ({ setOpen }: IntegrationProps) => {
     {
       id: 4,
       link: "Disconnect",
-    },
-  ];
-
-  const integrations: IntegrationProps[] = [
-    {
-      id: 1,
-      service: "Stripe",
-      icon: "https://cdn.simpleicons.org/slack",
-      iconBg: "bg-blue-600",
-      type: "Payment",
-      status: "Success",
-      latency: "250ms",
-      errors: 0,
-      uptime: "99.9%",
-    },
-    {
-      id: 2,
-      service: "Slack",
-      icon: "https://cdn.simpleicons.org/slack",
-      iconBg: "",
-      type: "Bank link",
-      status: "Success",
-      latency: "310ms",
-      errors: 3,
-      uptime: "99.9%",
-    },
-    {
-      id: 3,
-      service: "Google",
-      icon: "https://cdn.simpleicons.org/google",
-      iconBg: "",
-      type: "Subscription",
-      status: "Failed",
-      latency: "420ms",
-      errors: 45,
-      uptime: "99.9%",
-    },
-    {
-      id: 4,
-      service: "AWS",
-      icon: "https://cdn.simpleicons.org/google",
-      iconBg: "bg-gray-900",
-      type: "AI Assist",
-      status: "Warning",
-      latency: "200",
-      errors: 10,
-      uptime: "99.9%",
-    },
-    {
-      id: 5,
-      service: "AWS",
-      icon: "https://cdn.simpleicons.org/google",
-      iconBg: "bg-gray-900",
-      type: "AI Assist",
-      status: "Warning",
-      latency: "200",
-      errors: 10,
-      uptime: "99.9%",
-    },
-    {
-      id: 6,
-      service: "AWS",
-      icon: "https://cdn.simpleicons.org/slack",
-      iconBg: "bg-gray-900",
-      type: "AI Assist",
-      status: "Warning",
-      latency: "200",
-      errors: 10,
-      uptime: "99.9%",
     },
   ];
 
@@ -260,12 +171,15 @@ const IntegrationsTable = ({ setOpen }: IntegrationProps) => {
                                 <MoreVertical className="h-5 w-5 text-gray-600" />
                               </DropdownMenuTrigger>
                               <DropdownMenuContent className="w-48" align="end">
-                                {modalData.map((modal, index) => {
+                                {modalData.map((modal, mIndex) => {
                                   return (
                                     <DropdownMenuItem
-                                      onClick={() => setOpen(true)}
+                                      onClick={() => {
+                                        setOpen(true);
+                                        setSelectedIntegration(integration);
+                                      }}
                                       className={`${
-                                        index === modalData.length - 1
+                                        mIndex === modalData.length - 1
                                           ? "text-red-800"
                                           : ""
                                       }`}

@@ -11,14 +11,17 @@
 // };
 
 // export default Form;
-
+"use client";
 import { Input } from "@/components/ui/input";
-import React from "react";
+import { Eye } from "lucide-react";
+import React, { useState } from "react";
 
 const Form = () => {
+  const [hide, setHide] = useState(false);
+
   return (
     <div className="bg-blue-600 min-h-screen flex justify-center items-center">
-      <div className="bg-white rounded-4xl h-64 max-w-md w-full p-4  px-8">
+      <div className="bg-white rounded-4xl min-h-64 max-w-md w-full p-4  px-8">
         <h1 className="text-center font-fredoka font-bold text-lg mb-4">
           <span>Welcome back</span>
           <br />
@@ -34,12 +37,28 @@ const Form = () => {
             placeholder="Email"
             type="email"
           />
-          <Input
-            className="text-black placeholder:text-gray-400 rounded-full p-4 mt-4 "
-            placeholder="password"
-            type="password"
-          />
+
+          <div className="relative">
+            <Input
+              className="text-black placeholder:text-gray-400 rounded-full p-4 mt-4 "
+              placeholder="password"
+              type="password"
+            />
+            <Eye className="absolute top-1/2 w-5 h-5 -translate-y-1/2 right-4" />
+          </div>
         </div>
+
+        <div className="flex justify-between items-center mt-4 font-normal text-sm text-gray-400 mb-4">
+          <label>
+            {" "}
+            <input type="checkbox" /> Remember me
+          </label>
+          <div className="text-indigo-600">Forgot password</div>
+        </div>
+
+        <button className="bg-green-400 text-center p-3 w-full rounded-full cursor-pointer">
+          log in
+        </button>
       </div>
     </div>
   );
