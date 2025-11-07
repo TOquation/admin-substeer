@@ -2,6 +2,7 @@
 
 import Integration from "@/app/(dashboard)/integration/page";
 import { IntegralProps, IntegrationCardProps, TabsProps } from "./types";
+import { TabsContentProps } from "@radix-ui/react-tabs";
 
 export const intCard: IntegrationCardProps[] = [
   {
@@ -115,18 +116,18 @@ export const tabsData: TabsProps[] = [
   },
   {
     id: 2,
-    title: "Credentials",
+    title: "credentials",
   },
   {
     id: 3,
-    title: "Performance",
+    title: "performance",
   },
   {
     id: 4,
-    title: "Logs",
+    title: "logs",
   },
   {
     id: 5,
-    title: "Settings",
+    title: "settings",
   },
 ];
