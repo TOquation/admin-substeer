@@ -59,7 +59,7 @@ const Overview: React.FC<OverviewProps> = ({
 
           {selectedIntegration && (
             <Tabs
-              defaultValue="overview"
+              defaultValue={tabsData[0]?.title || "overview"}
               className="flex flex-col mt-[1.5rem] gap-1 flex-1 min-h-0"
             >
               <Separator className="w-full flex-shrink-0" />
@@ -71,7 +71,7 @@ const Overview: React.FC<OverviewProps> = ({
                       <TabsTrigger
                         key={trigger.id}
                         value={trigger.title}
-                        className="text-sm whitespace-nowrap focus-visible:ring-0 focus-visible:outline-none focus-visible:border-0 bg-transparent data-[state=active]:shadow-none data-[state=active]:border-none cursor-pointer data-[state=active]:bg-transparent text-gray-500"
+                        className="text-sm whitespace-nowrap focus-visible:ring-0 focus-visible:outline-none focus-visible:border-0 bg-transparent data-[state=active]:shadow-none data-[state=active]:border-none cursor-pointer data-[state=active]:bg-transparent text-gray-500 data-[state=active]:text-black"
                       >
                         {trigger.title}
                       </TabsTrigger>
