@@ -14,9 +14,12 @@ const Integration = () => {
     useState<IntegralProps | null>(null);
 
   return (
-    <div className="pb-8 space-y-2 ">
-      <IntegrationHeader title="Integrations" subtitle="Integration" />
-      <div className="space-y-4 pt-[5rem]">
+    <div className="pb-4 flex flex-col space-y-2 overflow-hidden h-full">
+      <div className="shrink-0">
+        <IntegrationHeader title="Integrations" subtitle="Integration" />
+      </div>
+
+      <div className="space-y-4 flex-1 pt-4 overflow-y-auto">
         <IntegrationCard />
         <IntegrationsTable
           setSelectedIntegration={setSelectedIntegration}
