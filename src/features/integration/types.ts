@@ -31,3 +31,9 @@ export interface OverviewProps {
   setOpen: (open: boolean) => void;
   selectedIntegration: IntegralProps | null;
 }
+
+//tabs props
+export interface TabsProps {
+  id: number;
+  title: string;
+}

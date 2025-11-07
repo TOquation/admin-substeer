@@ -1,7 +1,7 @@
 // integration data card
 
 import Integration from "@/app/(dashboard)/integration/page";
-import { IntegralProps, IntegrationCardProps } from "./types";
+import { IntegralProps, IntegrationCardProps, TabsProps } from "./types";
 
 export const intCard: IntegrationCardProps[] = [
   {
@@ -103,5 +103,30 @@ export const integrations: IntegralProps[] = [
     latency: "200",
     errors: 10,
     uptime: "99.9%",
+  },
+];
+
+//tabs data
+
+export const tabsData: TabsProps[] = [
+  {
+    id: 1,
+    title: "overview",
+  },
+  {
+    id: 2,
+    title: "Credentials",
+  },
+  {
+    id: 3,
+    title: "Performance",
+  },
+  {
+    id: 4,
+    title: "Logs",
+  },
+  {
+    id: 5,
+    title: "Settings",
   },
 ];
