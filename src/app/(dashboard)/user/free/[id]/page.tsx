@@ -12,8 +12,6 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import UserProfile from "@/features/users/components/user-profile";
 import SubscriptionManager from "@/features/users/components/subscription";
-import { cn } from "@/lib/utils";
-import { useDualSidebar } from "@/contexts/dual-sidebar-context";
 
 const Profile = () => {
   const router = useRouter();
@@ -21,16 +19,9 @@ const Profile = () => {
     router.back();
   };
 
-  const { leftOpen, rightOpen } = useDualSidebar();
-
   return (
-    <div className="px-4">
-      <div
-        className={cn(
-          "flex fixed left-0 px-4 right-0 top-[4rem] bg-white items-center gap-3",
-          leftOpen ? "xl:left-[16rem]" : "xl:left-[3rem]"
-        )}
-      >
+    <div className="px-4 h-[calc(100vh-5rem)] w-full flex flex-col overflow-hidden">
+      <div className="flex items-center gap-2 py-4 w-full">
         <div
           onClick={handleBack}
           className="p-1.5 rounded-full border border-gray-300 cursor-pointer bg-gray-50"
@@ -38,7 +29,7 @@ const Profile = () => {
           <ArrowLeft className="w-6 h-6 text-gray-600" />
         </div>
 
-        <div className="flex-shrink-0 py-4">
+        <div className="flex-shrink-0">
           <h1 className="text-base font-bold">Free Users</h1>
           <Breadcrumb>
             <BreadcrumbList>
@@ -87,29 +78,13 @@ const Profile = () => {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4 xl:flex-row w-full">
-        <div
-          className={cn(
-            "xl:overflow-y-hidden",
-            leftOpen ? "xl:w-[38%]" : "xl:w-[30%]",
-            rightOpen ? "xl:w-[40%]" : "xl:w-[30%]"
-          )}
-        >
-          <div className="xl:overflow-auto  xl:max-h-[calc(90vh-1rem)] pb-8 pt-12">
-            <UserProfile />
-          </div>
+      <div className=" flex-1 flex overflow-y-auto flex-col xl:flex-row gap-4 xl:gap-6 xl:overflow-hidden pb-8 xl:pb-0">
+        <div className="xl:overflow-y-auto xl:shrink-0">
+          <UserProfile />
         </div>
 
-        <div
-          className={cn(
-            "xl:overflow-y-hidden",
-            leftOpen ? "xl:w-[62%]" : "xl:w-[70%]",
-            rightOpen ? "xl:w-[60%]" : "xl:w-[70%]"
-          )}
-        >
-          <div className="overflow-auto xl:max-h-[calc(90vh-1rem)] pb-8">
-            <SubscriptionManager />
-          </div>
+        <div className="xl:overflow-y-auto w-full">
+          <SubscriptionManager />
         </div>
       </div>
     </div>

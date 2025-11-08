@@ -1,13 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { OverviewProps } from "../types";
+import { IntegralProps, OverviewProps } from "../types";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
@@ -97,7 +97,9 @@ const Overview: React.FC<OverviewProps> = ({
                     ) : tabContent.title === "settings" ? (
                       <Settings />
                     ) : (
-                      <OverviewContent />
+                      <OverviewContent
+                        selectedIntegration={selectedIntegration}
+                      />
                     )}
                   </TabsContent>
                 ))}

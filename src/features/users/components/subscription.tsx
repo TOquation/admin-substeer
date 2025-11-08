@@ -86,7 +86,7 @@ export default function SubscriptionManager() {
   ];
 
   return (
-    <div className=" w-full xl:pb-8 xl:pt-14">
+    <div className=" w-full xl:pb-8">
       <div className="flex flex-col space-y-12 pr-4">
         <div className="bg-white overflow-hidden">
           <div className="p-4 border-t-2 border-gray-200">
@@ -122,7 +122,7 @@ export default function SubscriptionManager() {
                     }`}
                   >
                     <td className="py-3 px-3 sm:py-4 sm:px-4">
-                      <div className="flex items-center gap-2 sm:gap-3">
+                      <div className="flex items-center gap-2 sm:gap-3 ">
                         <div className="w-8 h-8  rounded flex items-center justify-center flex-shrink-0">
                           <Image
                             height={32}

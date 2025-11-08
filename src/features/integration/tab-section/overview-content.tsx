@@ -1,11 +1,8 @@
 import React from "react";
+import { IntegralProps } from "../types";
 
 interface OverviewStatusProps {
-  id: number;
-  title: string;
-  subtitle: string | number;
-  bgColor?: string;
-  textColor?: string;
+  selectedIntegration: IntegralProps;
 }
 
 interface QuickStatsProps {
@@ -28,32 +25,34 @@ const quickStats: QuickStatsProps[] = [
   },
 ];
 
-const overviewStatus: OverviewStatusProps[] = [
-  {
-    id: 1,
-    title: "Status",
-    subtitle: "Success",
-    bgColor: "bg-green-100",
-    textColor: "text-green-500",
-  },
-  {
-    id: 2,
-    title: "Uptime",
-    subtitle: "99.9%",
-  },
-  {
-    id: 3,
-    title: "Status",
-    subtitle: "145ms",
-  },
-  {
-    id: 4,
-    title: "Total API Calls",
-    subtitle: 12345,
-  },
-];
+const OverviewContent: React.FC<OverviewStatusProps> = ({
+  selectedIntegration,
+}) => {
+  const overviewStatus = [
+    {
+      id: 1,
+      title: "Status",
+      subtitle: selectedIntegration?.status || "—",
+      bgColor: "bg-green-100",
+      textColor: "text-green-500",
+    },
+    {
+      id: 2,
+      title: "Uptime",
+      subtitle: selectedIntegration?.uptime || "—",
+    },
+    {
+      id: 3,
+      title: "Latency",
+      subtitle: selectedIntegration?.latency || "—",
+    },
+    {
+      id: 4,
+      title: "Total API Calls",
+      subtitle: 12345,
+    },
+  ];
 
-const OverviewContent = () => {
   return (
     <div className="flex flex-col gap-6 pb-6 lg:pb-10">
       <div className="grid grid-cols-2 gap-6 rounded-xl py-6 bg-white px-4">
