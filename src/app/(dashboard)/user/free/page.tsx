@@ -4,7 +4,7 @@ import UserHeader from "@/features/users/components/user-header";
 
 const Frees = () => {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-[calc(100vh-5rem)] overflow-hidden">
       {/* Fixed header section - non-scrollable */}
       <UserHeader title="Free Users" subtitle="Free" />
 

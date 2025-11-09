@@ -29,169 +29,8 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import ScrollBar from "@/components/custom-ui/scrollbar";
 import { useRouter } from "next/navigation";
-
-type Status = "Active" | "Inactive" | "Pending" | "Suspended";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  status: Status;
-  subscriptions: number;
-  joinedDate: string;
-  lastActive: string;
-  avatar: string;
-}
-
-const mockUsers: User[] = [
-  {
-    id: "1",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Active",
-    subscriptions: 3,
-    joinedDate: "Mar. 12, 2023",
-    lastActive: "1min ago",
-    avatar: "👨",
-  },
-  {
-    id: "2",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Inactive",
-    subscriptions: 4,
-    joinedDate: "Jun. 27, 2022",
-    lastActive: "1mon ago",
-    avatar: "👨",
-  },
-  {
-    id: "3",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Active",
-    subscriptions: 4,
-    joinedDate: "Jan. 8, 2024",
-    lastActive: "4d ago",
-    avatar: "👨",
-  },
-  {
-    id: "4",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Pending",
-    subscriptions: 4,
-    joinedDate: "Oct. 5, 2021",
-    lastActive: "10d ago",
-    avatar: "👩",
-  },
-  {
-    id: "5",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Suspended",
-    subscriptions: 4,
-    joinedDate: "Feb. 19, 2023",
-    lastActive: "3mon ago",
-    avatar: "👨",
-  },
-  {
-    id: "6",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Active",
-    subscriptions: 4,
-    joinedDate: "Aug. 30, 2022",
-    lastActive: "1w ago",
-    avatar: "👩",
-  },
-  {
-    id: "7",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Active",
-    subscriptions: 4,
-    joinedDate: "Apr. 23, 2024",
-    lastActive: "4h ago",
-    avatar: "👨",
-  },
-  {
-    id: "8",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Pending",
-    subscriptions: 4,
-    joinedDate: "Nov. 14, 2020",
-    lastActive: "2mon ago",
-    avatar: "👨",
-  },
-  {
-    id: "9",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Suspended",
-    subscriptions: 4,
-    joinedDate: "Jul. 6, 2023",
-    lastActive: "3h ago",
-    avatar: "👩",
-  },
-  {
-    id: "10",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Inactive",
-    subscriptions: 4,
-    joinedDate: "Dec. 31, 2021",
-    lastActive: "4mon ago",
-    avatar: "👩",
-  },
-  {
-    id: "11",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Active",
-    subscriptions: 4,
-    joinedDate: "Aug. 10, 2024",
-    lastActive: "15min ago",
-    avatar: "👨",
-  },
-  {
-    id: "12",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Active",
-    subscriptions: 4,
-    joinedDate: "Aug. 10, 2024",
-    lastActive: "15min ago",
-    avatar: "👨",
-  },
-  {
-    id: "13",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Pending",
-    subscriptions: 4,
-    joinedDate: "Aug. 10, 2024",
-    lastActive: "15min ago",
-    avatar: "👩",
-  },
-  {
-    id: "14",
-    name: "John Smith",
-    email: "john.smith@gmail.com",
-    status: "Active",
-    subscriptions: 4,
-    joinedDate: "Aug. 10, 2024",
-    lastActive: "15min ago",
-    avatar: "👨",
-  },
-];
-
-const statusStyles: Record<Status, string> = {
-  Active: "bg-green-100 text-green-700",
-  Inactive: "bg-gray-100 text-gray-700",
-  Pending: "bg-blue-100 text-blue-700",
-  Suspended: "bg-orange-100 text-orange-700",
-};
+import { mockUsers, StatusStyles } from "../data";
+import Image from "next/image";
 
 export default function UsersDataTable() {
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
@@ -289,8 +128,8 @@ export default function UsersDataTable() {
   };
   const router = useRouter();
 
-  const handleUserProfile = () => {
-    router.push("/user/free/profile");
+  const handleUserProfile = (id: string) => {
+    router.push(`/user/free/profile?id=${id}`);
   };
 
   return (
@@ -374,7 +213,7 @@ export default function UsersDataTable() {
                 <tbody className="bg-white">
                   {paginatedUsers.map((user, index) => (
                     <tr
-                      onClick={handleUserProfile}
+                      onClick={() => handleUserProfile(user.id)}
                       key={user.id}
                       className={`hover:bg-gray-50 transition-colors cursor-pointer ${
                         index !== paginatedUsers.length - 1
@@ -392,8 +231,15 @@ export default function UsersDataTable() {
                         className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[240px]`}
                       >
                         <div className="flex items-center gap-3 ">
-                          <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center text-lg flex-shrink-0">
-                            {user.avatar}
+                          <div>
+                            <Image
+                              src={user?.imgUrl || "/images/man.png"}
+                              alt="user"
+                              height={32}
+                              width={32}
+                              className="rounded-full"
+                              unoptimized
+                            />
                           </div>
                           <div>
                             <div className="text-[13px] font-medium text-gray-900">
@@ -409,9 +255,9 @@ export default function UsersDataTable() {
                         className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[110px]`}
                       >
                         <span
-                          className={`inline-flex px-2.5 py-0.5 text-[11px] font-medium rounded-full ${
-                            statusStyles[user.status]
-                          }`}
+                          className={`inline-flex px-2.5 py-0.5 text-[11px] font-medium rounded-full ${StatusStyles(
+                            user.status
+                          )}`}
                         >
                           {user.status}
                         </span>

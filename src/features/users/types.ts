@@ -22,3 +22,18 @@ export interface ActivityTimelineProps {
   duration: string;
   src?: string;
 }
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  status: "Active" | "Inactive" | "Pending" | "Suspended";
+  subscriptions: number;
+  joinedDate: string;
+  lastActive: string;
+  imgUrl?: string;
+  role?: string;
+  country?: string;
+  taxId?: string;
+  phone?: string;
+}
