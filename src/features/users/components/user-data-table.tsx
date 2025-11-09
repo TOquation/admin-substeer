@@ -159,7 +159,6 @@ export default function UsersDataTable() {
                       className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-700 uppercase tracking-wide hover:text-gray-900 whitespace-nowrap"
                     >
                       Full Name
-                      <SortIcon column="name" />
                     </button>
                   </th>
                   <th
@@ -170,7 +169,6 @@ export default function UsersDataTable() {
                       className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-700 uppercase tracking-wide hover:text-gray-900 whitespace-nowrap"
                     >
                       Status
-                      <SortIcon column="status" />
                     </button>
                   </th>
                   <th
@@ -186,7 +184,6 @@ export default function UsersDataTable() {
                       className="flex items-center gap-1.5 text-[11px] font-semibold text-gray-700 uppercase tracking-wide hover:text-gray-900 whitespace-nowrap"
                     >
                       Joined Date
-                      <SortIcon column="joined" />
                     </button>
                   </th>
                   <th
@@ -255,10 +252,10 @@ export default function UsersDataTable() {
                         </div>
                       </td>
                       <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[110px]`}
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap  min-w-[110px]`}
                       >
                         <span
-                          className={`inline-flex px-2.5 py-0.5 text-[11px] font-medium rounded-full ${StatusStyles(
+                          className={`inline-flex px-2.5 py-0.5 text-[11px] font-medium rounded-sm ${StatusStyles(
                             user.status
                           )}`}
                         >
@@ -266,7 +263,7 @@ export default function UsersDataTable() {
                         </span>
                       </td>
                       <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-900s min-w-[120px]`}
+                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-center text-gray-900s min-w-[120px]`}
                       >
                         {user.subscriptions}
                       </td>
