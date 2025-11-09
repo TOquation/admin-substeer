@@ -143,6 +143,7 @@ export default function UsersDataTable() {
                 <tr>
                   <th className={`w-10 px-4 ${getHeaderSpacing()} text-left`}>
                     <Checkbox
+                      className="cursor-pointer border border-gray-800"
                       checked={
                         selectedUsers.size === paginatedUsers.length &&
                         paginatedUsers.length > 0
@@ -223,6 +224,8 @@ export default function UsersDataTable() {
                     >
                       <td className={`w-10 px-4 ${getRowSpacing()}`}>
                         <Checkbox
+                          className="cursor-pointer border border-gray-800"
+                          onClick={(e) => e.stopPropagation()}
                           checked={selectedUsers.has(user.id)}
                           onCheckedChange={() => toggleSelectUser(user.id)}
                         />
@@ -318,7 +321,7 @@ export default function UsersDataTable() {
             value={rowsPerPage.toString()}
             onValueChange={(value) => setRowsPerPage(Number(value))}
           >
-            <SelectTrigger className="w-[65px] h-8 text-[13px]">
+            <SelectTrigger className="w-[50px] py-1 text-[13px] cursor-pointer px-1.5">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
