@@ -28,7 +28,7 @@ const MarketCard = () => {
           <div
             onClick={() => handleMarketCard(market.category)}
             key={market.id}
-            className="flex flex-col rounded-xl relative overflow-hidden  text-white cursor-pointer"
+            className="flex flex-col rounded-xl relative overflow-hidden   text-white cursor-pointer"
           >
             <div className="bg-[url('/market-card.svg')] bg-cover bg-no-repeat w-full bg-left z-10 h-full absolute inset-0" />
             {/* Image section */}
@@ -36,7 +36,10 @@ const MarketCard = () => {
             <div className="relative z-20 text-gray-800 flex flex-col p-4 justify-between h-full">
               {/* Menu icon */}
               <div className="flex justify-end pt-3">
-                <MoreVertical className="w-5 h-5 text-gray-700 cursor-pointer" />
+                <MoreVertical
+                  onClick={(e) => e.stopPropagation()}
+                  className="w-5 h-5 text-gray-700 cursor-pointer "
+                />
               </div>
               {/* Title + Category */}
               <div className="pt-2">
