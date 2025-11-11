@@ -28,32 +28,40 @@ const MarketCard = () => {
           <div
             onClick={() => handleMarketCard(market.category)}
             key={market.id}
-            className="flex flex-col rounded-xl relative overflow-hidden   text-white cursor-pointer"
+            className="flex flex-col rounded-xl relative overflow-hidden cursor-pointer bg-gray-400/30 p-2"
           >
-            <div className="bg-[url('/market-card.svg')] bg-cover bg-no-repeat w-full bg-left z-10 h-full absolute inset-0" />
-            {/* Image section */}
+            <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-gray-200 to-transparent z-10" />
 
-            <div className="relative z-20 text-gray-800 flex flex-col p-4 justify-between h-full">
-              {/* Menu icon */}
-              <div className="flex justify-end pt-3">
-                <MoreVertical
-                  onClick={(e) => e.stopPropagation()}
-                  className="w-5 h-5 text-gray-700 cursor-pointer "
-                />
-              </div>
-              {/* Title + Category */}
-              <div className="pt-2">
-                <span className="inline-block text-xs px-2 py-0.5 bg-gray-200/80 rounded-md font-fredoka text-gray-700 font-medium mb-1">
-                  {market.title}
-                </span>
-                <h4 className="text-sm font-semibold leading-tight font-inter">
-                  {market.category}
-                </h4>
+            <div className="relative h-24 w-full overflow-hidden">
+              {/* Background image */}
+              <div className="absolute inset-0 bg-[url('/marketplace.jpg')] bg-cover bg-center rounded-xl" />
+              {/* Overlay gradient + subtle blur */}
+              <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/40 to-transparent" />
+
+              {/* Foreground content (icon + title) */}
+              <div className="relative z-10 text-gray-800 flex flex-col p-4 justify-between h-full">
+                {/* Menu icon */}
+                <div className="flex justify-end pt-1">
+                  <MoreVertical
+                    onClick={(e) => e.stopPropagation()}
+                    className="w-5 h-5 text-gray-700 cursor-pointer"
+                  />
+                </div>
+
+                {/* Title + Category */}
+                <div className="pt-2">
+                  <span className="inline-block text-xs px-2 py-0.5 bg-gray-300 rounded-md font-fredoka text-gray-700 font-medium mb-1">
+                    {market.title}
+                  </span>
+                  <h4 className="text-sm font-semibold leading-tight font-inter">
+                    {market.category}
+                  </h4>
+                </div>
               </div>
             </div>
 
-            {/* Info section */}
-            <div className=" px-4 pb-2 space-y-2 relative z-20">
+            {/* === Info section (no bg image) === */}
+            <div className="p-3 space-y-2 relative z-20 bg-tansparent backdrop-blur-[1px]">
               {/* Price and status */}
               <div className="flex items-center justify-between">
                 <div>
@@ -87,36 +95,30 @@ const MarketCard = () => {
                 <div className="text-xs text-gray-500 leading-tight">
                   <p className="font-normal font-fredoka">Partner/Source:</p>
                   <p className="flex items-center gap-1 font-fredoka">
-                    {market.partners.map((label, index) => {
-                      return (
-                        <span key={label.label}>
-                          {index === market.partners.length - 1 ? (
-                            label.label
-                          ) : (
-                            <span>{label.label},</span>
-                          )}
-                        </span>
-                      );
-                    })}
+                    {market.partners.map((label, index) => (
+                      <span key={label.label}>
+                        {index === market.partners.length - 1
+                          ? label.label
+                          : `${label.label}, `}
+                      </span>
+                    ))}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-0.5">
-                  {market.partners.map((url, index) => {
-                    return (
-                      <div key={url.label}>
-                        <Image
-                          key={index}
-                          src={url.url}
-                          alt={`logo_${index + 1}`}
-                          height={12}
-                          width={12}
-                          className="rounded-sm object-contain"
-                          unoptimized
-                        />
-                      </div>
-                    );
-                  })}
+                  {market.partners.map((url, index) => (
+                    <div key={url.label}>
+                      <Image
+                        key={index}
+                        src={url.url}
+                        alt={`logo_${index + 1}`}
+                        height={12}
+                        width={12}
+                        className="rounded-sm object-contain"
+                        unoptimized
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
