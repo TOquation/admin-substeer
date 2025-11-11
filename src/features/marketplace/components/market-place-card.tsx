@@ -6,9 +6,14 @@ import { MoreVertical } from "lucide-react";
 import Image from "next/image";
 import { useDualSidebar } from "@/contexts/dual-sidebar-context";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 const MarketCard = () => {
   const { leftOpen, rightOpen } = useDualSidebar();
+  const router = useRouter();
+  const handleMarketCard = (category: string) => {
+    router.push(`/marketplace/bundle-details?category=${category}`);
+  };
   return (
     <div
       className={cn(
@@ -21,8 +26,9 @@ const MarketCard = () => {
       {marketCard.map((market) => {
         return (
           <div
+            onClick={() => handleMarketCard(market.category)}
             key={market.id}
-            className="flex flex-col rounded-xl relative overflow-hidden  text-white"
+            className="flex flex-col rounded-xl relative overflow-hidden  text-white cursor-pointer"
           >
             <div className="bg-[url('/market-card.svg')] bg-cover bg-no-repeat w-full bg-left z-10 h-full absolute inset-0" />
             {/* Image section */}

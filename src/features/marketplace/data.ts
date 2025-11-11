@@ -4,7 +4,7 @@ export const marketCard: MarketCardProps[] = [
   {
     id: 1,
     title: "work",
-    category: "Productivity Suite",
+    category: "Education",
     amount: "$4,900/month",
     status: "Active",
     partners: [
@@ -16,7 +16,7 @@ export const marketCard: MarketCardProps[] = [
   {
     id: 2,
     title: "work",
-    category: "Productivity Suite",
+    category: "Movies 'n Chill",
     amount: "$4,900/month",
     status: "Pending",
     partners: [
@@ -40,7 +40,7 @@ export const marketCard: MarketCardProps[] = [
   {
     id: 4,
     title: "work",
-    category: "Productivity Suite",
+    category: "Entertainment",
     amount: "$4,900/month",
     status: "Active",
     partners: [
