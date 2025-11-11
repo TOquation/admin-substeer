@@ -12,12 +12,13 @@
 
 // export default Form;
 "use client";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Eye } from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 import React, { useState } from "react";
 
 const Form = () => {
-  const [hide, setHide] = useState(false);
+  const [hide, setHide] = useState(true);
 
   return (
     <div className="bg-blue-600 min-h-screen flex justify-center items-center">
@@ -44,7 +45,18 @@ const Form = () => {
               placeholder="password"
               type="password"
             />
-            <Eye className="absolute top-1/2 w-5 h-5 -translate-y-1/2 right-4" />
+
+            {hide ? (
+              <Eye
+                onClick={() => setHide(false)}
+                className="absolute top-1/2 w-5 h-5 -translate-y-1/2 right-4"
+              />
+            ) : (
+              <EyeOff
+                onClick={() => setHide(true)}
+                className="absolute top-1/2 w-5 h-5 -translate-y-1/2 right-4"
+              />
+            )}
           </div>
         </div>
 

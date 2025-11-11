@@ -16,7 +16,11 @@ const Integration = () => {
   return (
     <div className="pb-4 flex flex-col space-y-2 overflow-hidden h-full">
       <div className="shrink-0">
-        <IntegrationHeader title="Integrations" subtitle="Integration" />
+        <IntegrationHeader
+          home="Users"
+          title="Integrations"
+          subtitle="Integration"
+        />
       </div>
 
       <div className="space-y-4 flex-1 pt-4 overflow-y-auto">

@@ -20,7 +20,7 @@ const UserHeader: React.FC<{ title: string; subtitle: string }> = ({
     <div>
       <div className="flex justify-between items-center pr-4">
         <div className="flex-shrink-0 px-4 py-4 bg-white">
-          <h1 className="text-base font-bold">{title}</h1>
+          <h1 className="text-base font-medium">{title}</h1>
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>

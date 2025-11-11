@@ -311,7 +311,7 @@ export default function UsersDataTable() {
       </div>
 
       {/* Pagination */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-4 sm:px-5 py-3 border-t border-gray-200">
+      <div className="flex flex-row items-center justify-between gap-3 px-4 sm:px-5 py-3 border-t border-gray-200">
         <div className="flex items-center gap-2 text-[13px]">
           <span className="text-gray-700 whitespace-nowrap">Rows per page</span>
           <Select

@@ -79,7 +79,7 @@ export const integrations: IntegralProps[] = [
     iconBg: "bg-gray-900",
     type: "AI Assist",
     status: "Warning",
-    latency: "200",
+    latency: "200ms",
     errors: 10,
     uptime: "99.9%",
   },
@@ -90,7 +90,7 @@ export const integrations: IntegralProps[] = [
     iconBg: "bg-gray-900",
     type: "AI Assist",
     status: "Warning",
-    latency: "200",
+    latency: "200ms",
     errors: 10,
     uptime: "99.9%",
   },
@@ -101,8 +101,19 @@ export const integrations: IntegralProps[] = [
     iconBg: "bg-gray-900",
     type: "AI Assist",
     status: "Warning",
-    latency: "200",
+    latency: "200ms",
     errors: 10,
+    uptime: "99.9%",
+  },
+  {
+    id: 7,
+    service: "AWS",
+    icon: "https://cdn.simpleicons.org/slack",
+    iconBg: "bg-gray-900",
+    type: "AI Engineer",
+    status: "Success",
+    latency: "600ms",
+    errors: 50,
     uptime: "99.9%",
   },
 ];
@@ -131,3 +142,17 @@ export const tabsData: TabsProps[] = [
     title: "settings",
   },
 ];
+
+// bgcolor
+export const getStatusStyles = (status: string) => {
+  switch (status) {
+    case "Success":
+      return "bg-green-100 text-green-700";
+    case "Failed":
+      return "bg-red-100 text-red-700";
+    case "Warning":
+      return "bg-yellow-100 text-yellow-700";
+    default:
+      return "bg-gray-100 text-gray-700";
+  }
+};

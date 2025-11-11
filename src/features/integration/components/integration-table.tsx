@@ -7,7 +7,7 @@ import {
 
 import { Search, MoreVertical } from "lucide-react";
 import { IntegrationProps } from "../types";
-import { integrations } from "../data";
+import { getStatusStyles, integrations } from "../data";
 
 const IntegrationsTable = ({
   setOpen,
@@ -36,19 +36,6 @@ const IntegrationsTable = ({
       link: "Disconnect",
     },
   ];
-
-  const getStatusStyles = (status: string) => {
-    switch (status) {
-      case "Success":
-        return "bg-green-100 text-green-700";
-      case "Failed":
-        return "bg-red-100 text-red-700";
-      case "Warning":
-        return "bg-yellow-100 text-yellow-700";
-      default:
-        return "bg-gray-100 text-gray-700";
-    }
-  };
 
   return (
     <div className="w-full px-4">

@@ -1,5 +1,6 @@
 import React from "react";
 import { IntegralProps } from "../types";
+import { getStatusStyles } from "../data";
 
 interface OverviewStatusProps {
   selectedIntegration: IntegralProps;
@@ -10,21 +11,6 @@ interface QuickStatsProps {
   details: string | number;
 }
 
-const quickStats: QuickStatsProps[] = [
-  {
-    info: "Last sync",
-    details: "2 minutes ago",
-  },
-  {
-    info: "Error Count",
-    details: 0,
-  },
-  {
-    info: "Success Rate",
-    details: "99.9%",
-  },
-];
-
 const OverviewContent: React.FC<OverviewStatusProps> = ({
   selectedIntegration,
 }) => {
@@ -32,24 +18,38 @@ const OverviewContent: React.FC<OverviewStatusProps> = ({
     {
       id: 1,
       title: "Status",
-      subtitle: selectedIntegration?.status || "—",
-      bgColor: "bg-green-100",
-      textColor: "text-green-500",
+      subtitle: selectedIntegration.status,
+      bgColor: getStatusStyles(selectedIntegration.status),
     },
     {
       id: 2,
       title: "Uptime",
-      subtitle: selectedIntegration?.uptime || "—",
+      subtitle: selectedIntegration.uptime,
     },
     {
       id: 3,
       title: "Latency",
-      subtitle: selectedIntegration?.latency || "—",
+      subtitle: selectedIntegration.latency,
     },
     {
       id: 4,
       title: "Total API Calls",
       subtitle: 12345,
+    },
+  ];
+
+  const quickStats: QuickStatsProps[] = [
+    {
+      info: "Last sync",
+      details: "2 minutes ago",
+    },
+    {
+      info: "Error Count",
+      details: selectedIntegration.errors,
+    },
+    {
+      info: "Success Rate",
+      details: selectedIntegration.uptime,
     },
   ];
 
@@ -64,9 +64,9 @@ const OverviewContent: React.FC<OverviewStatusProps> = ({
                 <span>{status.subtitle}</span>
               ) : status.subtitle.toLocaleString().includes("ms") ? (
                 <span>{status.subtitle}</span>
-              ) : status.bgColor && status.textColor ? (
+              ) : status.bgColor ? (
                 <span
-                  className={`${status.bgColor} ${status.textColor} w-fit rounded-md px-3 py-0.5`}
+                  className={`${status.bgColor} w-fit rounded-md px-3 py-0.5`}
                 >
                   {status.subtitle}
                 </span>
@@ -87,7 +87,16 @@ const OverviewContent: React.FC<OverviewStatusProps> = ({
               className="bg-white flex justify-between items-center mt-4 rounded-sm py-3 px-4"
             >
               <span className="font-normal text-gray-800">{stats.info}</span>
-              <span>{stats.details}</span>
+              <span
+                className={`${
+                  stats.info.includes("Error") && selectedIntegration.errors > 0
+                    ? "text-red-600"
+                    : "text-gray-800"
+                }`}
+              >
+                {" "}
+                {stats.details}
+              </span>
             </div>
           ))}
         </div>
