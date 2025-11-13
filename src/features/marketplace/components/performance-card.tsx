@@ -150,7 +150,7 @@ const PerformanceCard = () => {
 
                     <div className="flex items-center justify-between">
                       <h4 className="text-sm text-gray-700">{item.title}</h4>
-                      <p className=" text-gray-500 text-xs">
+                      <div className=" text-gray-500 text-xs">
                         {item.trends.includes("+") ? (
                           <div className="text-green-900 flex items-center gap-0.5">
                             <span>
@@ -167,7 +167,7 @@ const PerformanceCard = () => {
                             <span> {item.trends}</span>
                           </div>
                         )}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>
