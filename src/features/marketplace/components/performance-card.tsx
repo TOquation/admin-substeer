@@ -5,6 +5,8 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  TrendingDown,
+  TrendingUp,
   Wallet,
   WalletMinimal,
 } from "lucide-react";
@@ -60,6 +62,22 @@ const performance: PerformanceProps[] = [
     title: "Orders",
     trends: "-2% than last month",
   },
+  {
+    id: 5,
+    amount: 320,
+    icon: WalletMinimal,
+    duration: "3 months",
+    title: "Revenue",
+    trends: "-2% than last month",
+  },
+  {
+    id: 6,
+    amount: 320,
+    icon: WalletMinimal,
+    duration: "3 months",
+    title: "Orders",
+    trends: "-2% than last month",
+  },
 ];
 
 const PerformanceCard = () => {
@@ -95,33 +113,67 @@ const PerformanceCard = () => {
 
         {/* Carousel items */}
         <CarouselContent className="mt-6 flex -ml-0">
-          {performance.map((item, index) => (
-            <CarouselItem
-              key={item.id}
-              className="basis-full w-full  sm:basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/2 pl-2"
-            >
-              <div
-                className={cn(
-                  "py-6 px-4 rounded-2xl flex justify-between  h-full",
-                  index % 2 === 0 ? "bg-green-200" : "bg-green-300"
-                )}
+          {performance.map((item, index) => {
+            return (
+              <CarouselItem
+                key={item.id}
+                className="basis-full w-full  sm:basis-full md:basis-1/2 lg:basis-1/2 xl:basis-1/2 pl-2"
               >
-                <div className="flex gap-2 items-center">
-                  <div className="bg-green-200 rounded-full p-2 w-fit">
-                    <item.icon className="w-6 h-6" />
+                <div
+                  className={cn(
+                    "py-6 px-4 rounded-2xl flex gap-3 items-center h-full",
+                    index % 2 === 0 ? "bg-green-200" : "bg-green-300"
+                  )}
+                >
+                  <div
+                    className={` ${
+                      index % 2 === 0 ? "bg-blue-500" : "bg-orange-500"
+                    } rounded-full p-2 w-fit`}
+                  >
+                    <item.icon className="w-6 h-6 text-white" />
                   </div>
-                  <div>
-                    <h2 className="text-lg font-semibold">{item.amount}</h2>
-                    <h4 className="text-sm text-gray-700">{item.title}</h4>
+
+                  <div className="flex  flex-col flex-1">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-lg font-semibold">
+                        {item.title === "Revenue"
+                          ? item.amount.toLocaleString("en-US", {
+                              style: "currency",
+                              currency: "USD",
+                              maximumFractionDigits: 0,
+                              minimumFractionDigits: 0,
+                            })
+                          : item.amount}
+                      </h2>
+                      <p className=" text-gray-600 text-sm">{item.duration}</p>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <h4 className="text-sm text-gray-700">{item.title}</h4>
+                      <p className=" text-gray-500 text-xs">
+                        {item.trends.includes("+") ? (
+                          <div className="text-green-900 flex items-center gap-0.5">
+                            <span>
+                              {" "}
+                              <TrendingUp className="w-3 h-3" />
+                            </span>
+                            <span> {item.trends}</span>
+                          </div>
+                        ) : (
+                          <div className="text-red-900 flex items-center gap-0.5">
+                            <span>
+                              <TrendingDown className="w-3 h-3" />
+                            </span>
+                            <span> {item.trends}</span>
+                          </div>
+                        )}
+                      </p>
+                    </div>
                   </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-sm text-gray-600">{item.duration}</p>
-                  <p className="text-xs text-gray-500">{item.trends}</p>
-                </div>
-              </div>
-            </CarouselItem>
-          ))}
+              </CarouselItem>
+            );
+          })}
         </CarouselContent>
       </Carousel>
     </div>
