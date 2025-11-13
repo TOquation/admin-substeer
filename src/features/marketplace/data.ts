@@ -12,6 +12,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/banner-1.jpg",
   },
   {
     id: 2,
@@ -24,6 +25,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/banner-2.jpg",
   },
   {
     id: 3,
@@ -36,6 +38,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/banner-1.jpg",
   },
   {
     id: 4,
@@ -48,6 +51,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/marketplace.jpg",
   },
   {
     id: 5,
@@ -60,6 +64,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/banner-2.jpg",
   },
   {
     id: 6,
@@ -72,6 +77,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/marketplace.jpg",
   },
   {
     id: 7,
@@ -84,6 +90,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/marketplace.jpg",
   },
   {
     id: 8,
@@ -96,6 +103,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/banner-1.jpg",
   },
   {
     id: 9,
@@ -108,6 +116,7 @@ export const marketCard: MarketCardProps[] = [
       { label: "netflix", url: "https://cdn.simpleicons.org/netflix" },
       { label: "dropbox", url: "https://cdn.simpleicons.org/dropbox" },
     ],
+    bannerUrl: "/banner-2.jpg",
   },
 ];
 

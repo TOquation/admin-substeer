@@ -11,8 +11,8 @@ import { useRouter } from "next/navigation";
 const MarketCard = () => {
   const { leftOpen, rightOpen } = useDualSidebar();
   const router = useRouter();
-  const handleMarketCard = (category: string) => {
-    router.push(`/marketplace/bundle-details?category=${category}`);
+  const handleMarketCard = (id: number) => {
+    router.push(`/marketplace/bundle-details?id=${id}`);
   };
   return (
     <div
@@ -26,7 +26,7 @@ const MarketCard = () => {
       {marketCard.map((market) => {
         return (
           <div
-            onClick={() => handleMarketCard(market.category)}
+            onClick={() => handleMarketCard(market.id)}
             key={market.id}
             className="flex flex-col rounded-xl relative overflow-hidden cursor-pointer bg-gray-400/30 p-2"
           >
@@ -34,7 +34,10 @@ const MarketCard = () => {
 
             <div className="relative h-24 w-full overflow-hidden">
               {/* Background image */}
-              <div className="absolute inset-0 bg-[url('/marketplace.jpg')] bg-cover bg-center rounded-xl" />
+              <div
+                style={{ backgroundImage: `url(${market.bannerUrl})` }}
+                className="absolute inset-0 bg-cover bg-center rounded-xl"
+              />
               {/* Overlay gradient + subtle blur */}
               <div className="absolute inset-0 bg-gradient-to-t from-white/60 via-white/40 to-transparent" />
 
@@ -50,7 +53,7 @@ const MarketCard = () => {
 
                 {/* Title + Category */}
                 <div className="pt-2">
-                  <span className="inline-block text-xs px-2 py-0.5 bg-gray-300 rounded-md font-fredoka text-gray-700 font-medium mb-1">
+                  <span className="inline-block text-xs px-2 py-0.5 bg-gray-200/80 rounded-md font-fredoka text-gray-700 font-medium mb-1">
                     {market.title}
                   </span>
                   <h4 className="text-sm font-semibold leading-tight font-inter">

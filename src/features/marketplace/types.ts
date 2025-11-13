@@ -10,4 +10,5 @@ export interface MarketCardProps {
   amount: string;
   status: "Active" | "Pending" | "Draft";
   partners: MarketPartnerr[];
+  bannerUrl?: string;
 }
