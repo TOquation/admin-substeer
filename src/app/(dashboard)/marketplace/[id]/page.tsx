@@ -120,6 +120,76 @@ const products: ProductProps[] = [
       { id: 3, title: "Note:", subtitle: "Email, Drive, Docs" },
     ],
   },
+  {
+    id: 5,
+    label: "Google space",
+    url: "https://cdn.simpleicons.org/Slack",
+    services: [
+      {
+        id: 1,
+        title: "plan:",
+        subtitle: "Pro Plan",
+      },
+      { id: 2, title: "price:", subtitle: "$8/mo" },
+      { id: 3, title: "Note:", subtitle: "Email, Drive, Docs" },
+    ],
+  },
+  {
+    id: 6,
+    label: "Google space",
+    url: "https://cdn.simpleicons.org/Slack",
+    services: [
+      {
+        id: 1,
+        title: "plan:",
+        subtitle: "Pro Plan",
+      },
+      { id: 2, title: "price:", subtitle: "$8/mo" },
+      { id: 3, title: "Note:", subtitle: "Email, Drive, Docs" },
+    ],
+  },
+  {
+    id: 7,
+    label: "Google space",
+    url: "https://cdn.simpleicons.org/Slack",
+    services: [
+      {
+        id: 1,
+        title: "plan:",
+        subtitle: "Pro Plan",
+      },
+      { id: 2, title: "price:", subtitle: "$8/mo" },
+      { id: 3, title: "Note:", subtitle: "Email, Drive, Docs" },
+    ],
+  },
+  {
+    id: 8,
+    label: "Google space",
+    url: "https://cdn.simpleicons.org/Slack",
+    services: [
+      {
+        id: 1,
+        title: "plan:",
+        subtitle: "Pro Plan",
+      },
+      { id: 2, title: "price:", subtitle: "$8/mo" },
+      { id: 3, title: "Note:", subtitle: "Email, Drive, Docs" },
+    ],
+  },
+  {
+    id: 9,
+    label: "Google space",
+    url: "https://cdn.simpleicons.org/Slack",
+    services: [
+      {
+        id: 1,
+        title: "plan:",
+        subtitle: "Pro Plan",
+      },
+      { id: 2, title: "price:", subtitle: "$8/mo" },
+      { id: 3, title: "Note:", subtitle: "Email, Drive, Docs" },
+    ],
+  },
 ];
 
 const logStatusColor = (color: string) => {
@@ -230,61 +300,49 @@ const BundleDetail = () => {
           <section className="">
             <Separator className="h-0.5 bg-gray-400" />
             <div className="my-4 flex gap-6">
-              <div className=" w-[60%]">
+              <div className="w-[60%]">
                 <h2 className="font-fredoka text-lg mb-4">
                   Product / Services
                 </h2>
-                <div className="flex justify-between overflow-y-auto max-h-56">
-                  {/* left-services */}
-                  <div>
-                    <div className="flex flex-col justify-between h-full">
-                      {products.map((product) => {
-                        return (
-                          <div
-                            key={product.id}
-                            className="flex flex-col space-y-1"
-                          >
-                            <Image
-                              src={
-                                product.url ? product.url : "/marketplace.jpg"
-                              }
-                              alt="logo"
-                              height={16}
-                              width={16}
-                              unoptimized
-                            />
-                            <h3 className="text-sm">{product.label}</h3>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
 
-                  {/* right */}
-                  <div className="flex flex-col gap-3 justify-between">
-                    {products.map((product) => {
-                      return (
-                        <div key={product.id}>
-                          {/* plans  */}
-                          <div className="grid-cols-3 grid">
-                            {product.services.map((service) => {
-                              return (
-                                <div
-                                  key={service.id}
-                                  className="text-sm space-y-1"
-                                >
-                                  <h3 className="text-xs font-fredoka">
-                                    {service.title}
-                                  </h3>
-                                  <p>{service.subtitle}</p>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
+                <div className="flex flex-col gap-4 w-full overflow-y-auto max-h-56">
+                  {products.map((product) => (
+                    <div
+                      key={product.id}
+                      className="grid grid-cols-6 items-center text-black pb-2 gap-4"
+                    >
+                      {/* Column 1: Product icon + name */}
+                      <div className="flex  flex-col gap-1 col-span-2">
+                        <Image
+                          src={product.url || "/marketplace.jpg"}
+                          alt={product.label}
+                          width={16}
+                          height={16}
+                          unoptimized
+                          className="rounded-sm"
+                        />
+                        <h2 className="text-sm">{product.label}</h2>
+                      </div>
+
+                      {/* Column 2: Plan */}
+                      <div className="flex flex-col text-sm">
+                        <h3>plan:</h3>
+                        <p className=" ">{product.services[0].subtitle}</p>
+                      </div>
+
+                      {/* Column 3: Price */}
+                      <div className="flex flex-col  text-sm">
+                        <h3>price:</h3>
+                        <p className="">{product.services[1].subtitle}</p>
+                      </div>
+
+                      {/* Column 4: Note */}
+                      <div className="flex col-span-2 flex-col text-sm">
+                        <h3>Note:</h3>
+                        <p className="">{product.services[2].subtitle}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
