@@ -1,15 +1,22 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import MarketHeader from "@/features/marketplace/components/marketplace-header";
+import PerformanceCard from "@/features/marketplace/components/performance-card";
+import { SalesGrowth } from "@/features/marketplace/components/sales-growth-chart";
 import { marketCard, marketStatus } from "@/features/marketplace/data";
+import { cn } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import {
   ArrowLeft,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Home,
   Mail,
   MoreVertical,
+  Wallet,
+  WalletMinimal,
 } from "lucide-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
@@ -117,7 +124,7 @@ const products: ProductProps[] = [
 
 const logStatusColor = (color: string) => {
   switch (color) {
-    case "Edited":
+    case "Editehd":
       return "bg-red-400";
     case "Published":
       return "bg-indigo-400";
@@ -196,7 +203,7 @@ const BundleDetail = () => {
           </div>
         </div>
 
-        <div className="px-6 space-y-8">
+        <div className="px-6 space-y-6">
           {/* description + price */}
           <section className="flex justify-between">
             <h3 className="flex-1/2">
@@ -224,7 +231,7 @@ const BundleDetail = () => {
             <Separator className="h-0.5 bg-gray-400" />
             <div className="my-4 flex gap-6">
               <div className=" w-[60%]">
-                <h2 className="font-fredoka text-sm mb-4">
+                <h2 className="font-fredoka text-lg mb-4">
                   Product / Services
                 </h2>
                 <div className="flex justify-between overflow-y-auto max-h-56">
@@ -284,7 +291,7 @@ const BundleDetail = () => {
               <Separator className=" w-[1.4px] bg-gray-400 self-stretch" />
 
               <div className="flex-1">
-                <h2 className="font-fredoka text-sm mb-4">Activity log</h2>
+                <h2 className="font-fredoka text-lg mb-4">Activity log</h2>
                 <div className="flex flex-col gap-4 overflow-y-auto max-h-56">
                   {/* timeline */}
                   {activityLog.map((activity) => {
@@ -318,23 +325,10 @@ const BundleDetail = () => {
             </div>
             <Separator className="h-0.5 bg-gray-400" />
           </section>
+
           <section>
-            <div className="flex justify-between items-center">
-              {/* left triggeer */}
-              <div className="p-1 rounded-lg border border-gray-400">
-                {" "}
-                <ChevronLeft className="w-6 h-6 text-gray-400" />
-              </div>
-
-              {/* month dropdown */}
-              <div>k</div>
-
-              {/* right trigger */}
-              <div className="p-1 rounded-lg border border-gray-400">
-                {" "}
-                <ChevronRight className="w-6 h-6 text-gray-400" />
-              </div>
-            </div>
+            <PerformanceCard />
+            <SalesGrowth />
           </section>
         </div>
       </div>
