@@ -73,10 +73,8 @@ const menuItems = [
     url: "/support",
     icon: HeadphonesIcon,
     subItems: [
-      { title: "New Ticket", url: "/support/new", badge: 99 },
-      { title: "Sales", url: "/support/sales", badge: 9 },
-      { title: "Security", url: "/support/security", badge: 9 },
-      { title: "Flagged", url: "/support/flagged", badge: 9 },
+      { title: "New Message", url: "/support/new-message", badge: 20 },
+      { title: "New Tickets", url: "/support/new-tickets", badge: 20 },
     ],
   },
   {
@@ -224,10 +222,8 @@ const LeftSidebar = () => {
                                 >
                                   <span>{subItem.title}</span>
                                   {subItem.badge && (
-                                    <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-xs font-medium text-white">
-                                      {subItem.badge > 99
-                                        ? "99+"
-                                        : subItem.badge}
+                                    <span className="ml-auto  !h-6 inline-flex !w-6 items-center justify-center rounded-full bg-red-500  text-xs font-medium text-white">
+                                      {subItem.badge > 9 ? "9+" : subItem.badge}
                                     </span>
                                   )}
                                 </Link>

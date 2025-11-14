@@ -112,7 +112,7 @@ const PerformanceCard = () => {
         </div>
 
         {/* Carousel items */}
-        <CarouselContent className="mt-6 flex -ml-0">
+        <CarouselContent className="mt-6 flex ml-0">
           {performance.map((item, index) => {
             return (
               <CarouselItem
