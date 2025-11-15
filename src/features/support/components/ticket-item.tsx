@@ -1,73 +1,120 @@
+// ticket-item.tsx
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { MessageCircleWarning, MessageSquare } from "lucide-react";
-import { log } from "node:console";
+import { MessageSquare } from "lucide-react";
 import React, { useState } from "react";
+import { TicketType } from "../types";
 
 interface TicketItemsProps {
-  title: string;
-  duration: string;
-  msgId: string;
-  user: string;
+  onSelect: (ticket: TicketType) => void;
 }
 
 const getInitials = (name: string) => name.charAt(0).toUpperCase();
 
-const initialTickets: TicketItemsProps[] = [
+const initialTickets: TicketType[] = [
   {
     title: "New email template creation",
     duration: "2 hrs ago",
     user: "Leks",
     msgId: "MSG-00123",
+    email: "leks@hotmail.com",
+    content: [
+      "Rem illo quasi. Veritatis recusandae enim ratione eos distinctio. Amet consectetur asperiores 😂 sit qui itaque. Illo est dolorum doloribus vitae eligendi optio maiores explicabo.",
+      "Consequatur ad ipsam sed quos fugiat in unde est. Dolorum totam nemo nesciunt cum laboriosam nulla. Alias voluptatius alias voluptatem fugiat repudiandae alias eius praesentium. Reiciendis illo atque non. Aut labore explicabo. Modi quaerat distinctio eaque harum possimus omnis.",
+    ],
+    attachments: [
+      {
+        id: "a6de7279-3216-44...",
+        preview: "/doc-1.svg",
+        size: "12 KB",
+      },
+      {
+        id: "-44b6-826f-7cd51...",
+        preview: "/doc-2.svg",
+        size: "14 KB",
+      },
+      {
+        id: "16-44b6-826f-7cd...",
+        preview: "/doc-3.svg",
+        size: "8 KB",
+      },
+    ],
   },
-
   {
-    title: "New email template creation",
-    duration: "2 hrs ago",
+    title: "Account access problem",
+    duration: "3 hrs ago",
     user: "Mezie",
-    msgId: "MSG-00123",
+    msgId: "MSG-00124",
+    email: "mezie.tech@gmail.com",
+    content: [
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+      "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+    ],
+    attachments: [],
   },
   {
-    title: "New email template creation",
-    duration: "2 hrs ago",
+    title: "Feature request for dashboard",
+    duration: "5 hrs ago",
     user: "Leks",
-    msgId: "MSG-00123",
+    msgId: "MSG-00125",
+    email: "leks.dev@outlook.com",
+    content: [
+      "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+      "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    ],
+    attachments: [
+      {
+        id: "fe234-5678-90ab...",
+        preview: "/doc-3.svg",
+        size: "20 KB",
+      },
+    ],
   },
   {
-    title: "New email template creation",
-    duration: "2 hrs ago",
+    title: "Billing inquiry",
+    duration: "1 day ago",
     user: "Mezie",
-    msgId: "MSG-00123",
+    msgId: "MSG-00126",
+    email: "mezie.business@yahoo.com",
+    content: [
+      "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.",
+      "Totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.",
+    ],
+    attachments: [
+      {
+        id: "xyz-1234-abcd...",
+        preview: "/doc-1.svg",
+        size: "15 KB",
+      },
+      {
+        id: "klm-5678-efgh...",
+        preview: "/doc-2.svg",
+        size: "18 KB",
+      },
+    ],
   },
 ];
 
-const TicketItems = () => {
-  console.log(initialTickets.length);
-
+const TicketItems = ({ onSelect }: TicketItemsProps) => {
   const [masterChecked, setMasterChecked] = useState(false);
-
   const [checkedItems, setCheckedItems] = useState<boolean[]>(
     Array(initialTickets.length).fill(false)
   );
 
-  // toggle master → toggle all items
   const handleMasterToggle = (checked: boolean) => {
     setMasterChecked(checked);
     setCheckedItems(Array(initialTickets.length).fill(checked));
   };
 
-  // toggle a single item
   const handleItemToggle = (index: number, checked: boolean) => {
     const updated = [...checkedItems];
     updated[index] = checked;
     setCheckedItems(updated);
 
-    // if any item is unchecked → master becomes false
     if (!checked) {
       setMasterChecked(false);
     } else {
-      // if all items are checked → master becomes true
       const allChecked = updated.every((x) => x === true);
       setMasterChecked(allChecked);
     }
@@ -75,27 +122,27 @@ const TicketItems = () => {
 
   return (
     <div className="py-4 font-fredoka">
-      {/* header */}
-      <div className="flex px-4 justify-between items-center gap-19 text-base text-gray-400 mb-4">
-        <div className="flex items-center justify-start">
-          <Checkbox
-            className="border-gray-500 cursor-pointer"
-            checked={masterChecked}
-            onCheckedChange={(checked: boolean) => handleMasterToggle(checked)}
-          />
-        </div>
+      {/* Header */}
+      <div className="flex px-4 justify-between items-center text-base text-gray-400 mb-4">
+        <Checkbox
+          className="border-gray-500 cursor-pointer"
+          checked={masterChecked}
+          onCheckedChange={(checked: boolean) => handleMasterToggle(checked)}
+        />
 
-        <div className="flex-1 flex text-sm justify-between">
+        <div className="flex-1 flex text-sm justify-between ml-4">
           <h3>Title</h3>
           <p>Status</p>
         </div>
       </div>
 
-      <div className="space-y-4 overflow-y-auto pb-12 max-h-[calc(90vh-8.5rem)] ">
+      {/* List */}
+      <div className="space-y-4 overflow-y-auto pb-12 max-h-[calc(90vh-8.5rem)]">
         {initialTickets.map((ticket, index) => (
           <div
             key={index}
-            className="flex bg-gray-50 py-4 border-l-black border-l-6 rounded-l-sm pl-2.5 pr-4 justify-between items-center"
+            onClick={() => onSelect(ticket)}
+            className="flex bg-gray-50 py-4 border-l-black border-l-6 rounded-l-sm pl-2.5 pr-4 justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors"
           >
             <div className="flex items-center flex-1 gap-3">
               <Checkbox
@@ -104,10 +151,11 @@ const TicketItems = () => {
                 onCheckedChange={(checked: boolean) =>
                   handleItemToggle(index, checked)
                 }
+                onClick={(e) => e.stopPropagation()}
               />
 
               <div className="flex items-center flex-1 gap-6">
-                <div className="place-content-center grid text-green-400 font-semibold bg-black rounded-sm h-10 w-10 text-lg ">
+                <div className="place-content-center grid text-green-400 font-semibold bg-black rounded-sm h-10 w-10 text-lg">
                   {getInitials(ticket.user)}
                 </div>
 
@@ -121,17 +169,18 @@ const TicketItems = () => {
 
                   <div className="flex items-center space-x-6 text-xs text-gray-400">
                     <p className="inline-flex items-center space-x-1">
-                      <MessageSquare className="h-3 w-3 " />
-                      <span className="">{ticket.user}</span>
+                      <MessageSquare className="h-3 w-3" />
+                      <span>{ticket.user}</span>
                     </p>
 
-                    <div className="h-[0.35rem] w-[0.35rem] rounded-full bg-gray-400"></div>
+                    <div className="h-[0.35rem] w-[0.35rem] rounded-full bg-gray-400" />
 
                     <p>{ticket.duration}</p>
                   </div>
                 </div>
               </div>
             </div>
+
             <p className="text-red-600 text-sm">New</p>
           </div>
         ))}
