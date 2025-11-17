@@ -1,13 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, ChevronLeft, Lightbulb, Calendar } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronLeft,
+  Lightbulb,
+  Calendar,
+  ArrowLeft,
+} from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRouter } from "next/navigation";
 
 type HeaderVariant = "ticket-detail" | "tickets-list" | "conversations-list";
 
@@ -23,7 +30,6 @@ interface SupportHeaderProps {
   subtitle?: string;
   count?: number;
   filters?: FilterButton[];
-  onBack?: () => void;
 }
 
 const SupportHeader = ({
@@ -32,9 +38,12 @@ const SupportHeader = ({
   subtitle,
   count,
   filters = [],
-  onBack,
 }: SupportHeaderProps) => {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const router = useRouter();
+  const handleBack = () => {
+    router.back();
+  };
 
   // Default content based on variant
   const getDefaultContent = () => {
@@ -104,13 +113,13 @@ const SupportHeader = ({
   // Ticket Detail Header (with back button)
   if (variant === "ticket-detail") {
     return (
-      <div className="flex items-center gap-4 p-4">
+      <div className="flex items-center gap-3">
         <button
-          onClick={onBack}
-          className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-300 hover:bg-gray-50 transition-colors"
+          onClick={handleBack}
+          className="flex items-center justify-center p-2 rounded-full border border-gray-400 cursor-pointer hover:bg-gray-50 transition-colors"
           aria-label="Go back"
         >
-          <ChevronLeft className="w-5 h-5 text-gray-700" />
+          <ArrowLeft className="w-6 h-6 text-gray-800" />
         </button>
         <div>
           <h1 className="text-lg font-semibold text-gray-900">
