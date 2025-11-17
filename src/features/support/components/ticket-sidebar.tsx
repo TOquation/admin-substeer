@@ -1,9 +1,18 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import { NewTicketsProps } from "../types";
 import { ChevronDown } from "lucide-react";
 import { getPriorityColor } from "../data";
 
-interface selectedIdProps {
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+
+interface TicketSideBarProps {
   selectedId: NewTicketsProps;
 }
 
@@ -24,16 +33,23 @@ interface Sla {
   }[];
 }
 
+/** ----------------------------------------------------
+ *  FIX:
+ *  Only allow DROPDOWN for specific keys that are safe:
+ *  status | priority | assignedTo
+ * ---------------------------------------------------- */
+type DropdownKeys = "status" | "priority" | "assignedTo";
+
 interface TicketDropdown {
   title: string;
-  key: keyof NewTicketsProps;
+  key: DropdownKeys;
   isPriority?: boolean;
 }
 
 const ticketDropdown: TicketDropdown[] = [
-  { title: "status", key: "status" },
-  { title: "assigned to:", key: "assignedTo" },
-  { title: "priority", key: "priority", isPriority: true },
+  { title: "Status", key: "status" },
+  { title: "Assigned To", key: "assignedTo" },
+  { title: "Priority", key: "priority", isPriority: true },
 ];
 
 const contact: Contact[] = [
@@ -60,82 +76,106 @@ const sla: Sla[] = [
   },
 ];
 
-const TicketSideBar = ({ selectedId }: selectedIdProps) => {
+const statusOptions = ["Open", "In-Progress", "Resolved", "Closed"];
+const priorityOptions = ["Low", "Medium", "High"];
+const assignedOptions = ["Mark Probert", "Admin", "Unassigned"];
+
+const TicketSideBar = ({ selectedId }: TicketSideBarProps) => {
+  const [localData, setLocalData] = useState(selectedId);
+
+  const updateField = (key: DropdownKeys, value: string) => {
+    setLocalData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const getOptions = (key: DropdownKeys) => {
+    if (key === "status") return statusOptions;
+    if (key === "priority") return priorityOptions;
+    if (key === "assignedTo") return assignedOptions;
+    return [];
+  };
+
   return (
     <div className="p-3 rounded-lg space-y-3">
-      <div>
-        {contact.map((section, idx) => (
-          <div key={idx} className="rounded-md bg-white p-3 space-y-2">
-            {/* Section Title */}
-            <h1 className="font-semibold text-sm">{section.mainTitle}</h1>
+      {/* CONTACT SECTION */}
+      {contact.map((section, idx) => (
+        <div key={idx} className="rounded-md bg-white p-3 space-y-2">
+          <h1 className="font-semibold text-sm">{section.mainTitle}</h1>
 
-            <div className="space-y-2">
-              {section.details.map((detail, index) => (
-                <div key={index} className="flex flex-col">
-                  {/* Static label */}
-                  <p className="text-xs text-gray-500">{detail.title}</p>
-
-                  {/* Dynamic data from selectedId */}
-                  <span className="text-sm font-medium">
-                    {String(selectedId[detail.key])}
-                  </span>
-                </div>
-              ))}
+          {section.details.map((detail, i) => (
+            <div key={i} className="flex flex-col">
+              <p className="text-xs text-gray-500">{detail.title}</p>
+              <span className="text-sm font-medium">
+                {String(localData[detail.key])}
+              </span>
             </div>
-          </div>
-        ))}
-      </div>
-      <div>
-        {sla.map((sla, index) => {
-          return (
-            <div key={index} className="rounded-md bg-white p-3 space-y-2">
-              <h3 className="font-semibold text-sm">{sla.mainTitle}</h3>
-              <div className="space-y-2">
-                {sla.details.map((detail, index) => {
-                  return (
-                    <div key={index} className="">
-                      <p className="text-sm text-gray-400">
-                        {detail.subTitle}{" "}
-                        <span className="text-xs text-slate-900 ml-1.5">
-                          {detail.isEdit && "Edit"}
-                        </span>
-                      </p>
-                      <div className="flex items-center gap-1 text-xs">
-                        <div className="h-1.5 w-1.5 rounded-full bg-green-500 shrink-0"></div>
-                        <span className="text-cyan-400">{detail.date}</span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      ))}
 
-      <div className="bg-white p-3 space-y-2 rounded-md text-sm">
-        {ticketDropdown.map((option, index) => {
-          return (
-            <div key={index}>
-              <h3 className="text-xs text-gray-500">{option.title}</h3>
-              <div className="flex items-center font-medium text-slate-900 justify-between">
-                {option.isPriority ? (
-                  <div className="flex items-center gap-1">
-                    <div
-                      className={`h-2.5 w-2.5 rounded-xs ${
-                        getPriorityColor(selectedId.priority).dot
-                      }`}
-                    ></div>
-                    <span>{String(selectedId[option.key])}</span>
-                  </div>
-                ) : (
-                  <span>{String(selectedId[option.key])}</span>
+      {/* SLA SECTION */}
+      {sla.map((section, idx) => (
+        <div key={idx} className="rounded-md bg-white p-3 space-y-2">
+          <h3 className="font-semibold text-sm">{section.mainTitle}</h3>
+
+          {section.details.map((detail, i) => (
+            <div key={i}>
+              <p className="text-sm text-gray-400">
+                {detail.subTitle}{" "}
+                {detail.isEdit && (
+                  <span className="text-xs text-slate-900 ml-1.5">Edit</span>
                 )}
-
-                <span>
-                  <ChevronDown className="w-4 h-4" />
-                </span>
+              </p>
+              <div className="flex items-center gap-1 text-xs">
+                <div className="h-1.5 w-1.5 rounded-full bg-green-500 shrink-0" />
+                <span className="text-cyan-400">{detail.date}</span>
               </div>
+            </div>
+          ))}
+        </div>
+      ))}
+
+      {/* DROPDOWN SECTION */}
+      <div className="bg-white p-3 space-y-2 rounded-md text-sm">
+        {ticketDropdown.map((option, idx) => {
+          const dropdownItems = getOptions(option.key);
+
+          return (
+            <div key={idx}>
+              <h3 className="text-xs text-gray-500">{option.title}</h3>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <div className="flex items-center justify-between font-medium text-slate-900 cursor-pointer">
+                    {option.isPriority ? (
+                      <div className="flex items-center gap-1">
+                        <div
+                          className={`h-2.5 w-2.5 rounded-xs ${
+                            getPriorityColor(localData.priority).dot
+                          }`}
+                        ></div>
+                        <span>{localData[option.key]}</span>
+                      </div>
+                    ) : (
+                      <span>{localData[option.key]}</span>
+                    )}
+                    <ChevronDown className="w-4 h-4" />
+                  </div>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent className="w-40">
+                  {dropdownItems.map((item, i) => (
+                    <DropdownMenuItem
+                      key={i}
+                      onClick={() => updateField(option.key, item)}
+                    >
+                      {item}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           );
         })}
