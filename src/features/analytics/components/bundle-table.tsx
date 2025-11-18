@@ -78,13 +78,16 @@ export default function BundleTable() {
               <th className="py-4 px-6 font-medium text-sm text-gray-900">
                 Bundle Name
               </th>
-              <th className="py-4 px-6 font-medium text-sm text-gray-900">
+              <th className="py-4 px-6 font-medium text-sm text-gray-900 relative">
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-6 bg-gray-300"></div>
                 Subscribers
               </th>
-              <th className="py-4 px-6 font-medium text-sm text-gray-900">
+              <th className="py-4 px-6 font-medium text-sm text-gray-900 relative">
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-6 bg-gray-300"></div>
                 Revenue
               </th>
-              <th className="py-4 px-6 font-medium text-sm text-gray-900">
+              <th className="py-4 px-6 font-medium text-sm text-gray-900 relative">
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-px h-6 bg-gray-300"></div>
                 Trend
               </th>
             </tr>

@@ -60,7 +60,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} ${roboto.variable} ${fahkwang.variable} ${fredoka.variable}  antialiased`}
       >
-        <div className="">{children}</div>
+        <div className="font-fredoka">{children}</div>
       </body>
     </html>
   );

@@ -135,7 +135,7 @@ const LeftSidebar = () => {
                   height={34}
                   className="transition-all group-data-[collapsible=icon]:w-10 group-data-[collapsible=icon]:h-10"
                 />
-                <h3 className="font-bold text-2xl transition-all group-data-[collapsible=icon]:hidden">
+                <h3 className="font-medium text-2xl transition-all group-data-[collapsible=icon]:hidden">
                   Sub<span className="font-medium">steer</span>
                 </h3>
               </Link>
