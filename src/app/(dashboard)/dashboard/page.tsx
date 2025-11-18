@@ -9,10 +9,10 @@ import React from "react";
 
 const Dashboard = () => {
   return (
-    <div className="p-4">
+    <div className="p-4 h-[calc(100vh-4.5rem)] overflow-hidden flex flex-col font-fredoka">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="font-bold text-lg">Overview</h2>
+          <h2 className="font-medium text-lg">Overview</h2>
           <h4 className="font-medium text-gray-400 text-sm">
             Here is what is happening with Substeer
           </h4>
@@ -26,7 +26,7 @@ const Dashboard = () => {
       </div>
 
       {/* cards */}
-      <div className="mt-4 grid grid-cols-1 xl:grid-col-6 gap-6 xl:gap-4 w-full items-stretch">
+      <div className="mt-4 flex-1 overflow-y-auto grid grid-cols-1 xl:grid-col-6 gap-6 xl:gap-4 w-full items-stretch">
         <DashboardCard className="col-span-6" />
         <div className="flex flex-col xl:flex-row col-span-6 gap-6 xl:gap-4 justify-between items-stretch">
           <CostBreakDown />

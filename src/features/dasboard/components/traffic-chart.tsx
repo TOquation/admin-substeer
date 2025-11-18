@@ -17,7 +17,7 @@ const TrafficByLocation: React.FC<{ className?: string }> = ({
     <div
       className={`flex flex-col rounded-2xl h-full bg-[#F9FAFB] p-6 w-full ${className}`}
     >
-      <h2 className="mb-4 text-lg font-semibold text-gray-900">
+      <h2 className="mb-4 text-lg font-medium text-gray-900">
         Traffic by Location
       </h2>
 
@@ -61,7 +61,7 @@ const TrafficByLocation: React.FC<{ className?: string }> = ({
               />
               <span className="text-gray-900">{item.name}</span>
             </div>
-            <span className="font-semibold text-gray-900">{item.value}%</span>
+            <span className="font-medium text-gray-900">{item.value}%</span>
           </div>
         ))}
       </div>

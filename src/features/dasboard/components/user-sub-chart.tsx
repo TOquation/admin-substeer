@@ -92,7 +92,7 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900">Total Users</h2>
+        <h2 className="text-lg font-medium text-gray-900">Total Users</h2>
         <div className="flex items-center gap-4 text-sm text-gray-600">
           <div className="flex items-center gap-1">
             <span className="h-2 w-2 rounded-full bg-[#111827]" />

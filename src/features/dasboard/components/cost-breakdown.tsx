@@ -54,7 +54,7 @@ const CostBreakDown: React.FC<{ className?: string }> = ({
       className={`w-full rounded-2xl bg-[#F9F9FA] p-6 ${className}`}
     >
       {/* Header */}
-      <h2 className="mb-6 text-lg font-bold text-gray-800">Cost Breakdown</h2>
+      <h2 className="mb-6 text-lg font-medium text-gray-800">Cost Breakdown</h2>
 
       {/* Chart */}
       <div className="h-[240px] sm:h-[280px] md:h-[320px]">

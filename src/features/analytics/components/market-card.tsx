@@ -15,9 +15,7 @@ const market = {
 
 const MarketCard = ({ className = "" }: { className?: string }) => {
   return (
-    <div
-      className={`${className} flex flex-col   relative   cursor-pointer  p-2`}
-    >
+    <div className={`${className} flex flex-col relative p-2`}>
       <div className="absolute inset-0 bg-gradient-to-t rounded-xl from-white via-white to-transparent z-10" />
 
       <div className="relative h-30 w-full overflow-hidden">

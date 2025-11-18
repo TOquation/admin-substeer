@@ -18,7 +18,7 @@ const DashboardCard: React.FC<{
         return (
           <div key={cards.id} className={`rounded-xl p-3 space-y-2.5 ${tone}`}>
             <h3>{cards.title}</h3>
-            <h1 className="font-bold text-2xl tracking-wide items-center flex">
+            <h1 className="font-medium text-2xl tracking-wide items-center flex">
               {cards.title === "Revenue" ? (
                 <AmountIcon className="w-6 h-6" strokeWidth={3} />
               ) : (
