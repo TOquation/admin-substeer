@@ -23,7 +23,7 @@ const TrafficByLocation: React.FC<{ className?: string }> = ({
 
       {/* Chart */}
       <div className="w-full flex justify-center items-center h-full">
-        <div className="xl:min-w-[200px] w-[200px] 2xl:w-full h-full">
+        <div className="xl:shrink-0 w-[220px] 2xl:w-full h-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie

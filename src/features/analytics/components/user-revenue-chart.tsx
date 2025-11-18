@@ -59,8 +59,7 @@ const CustomTooltip = ({
 // --------------------------------------
 const UserSubscriptionChart: React.FC<{
   className?: string;
-  title: string;
-}> = ({ className = "", title = "" }) => {
+}> = ({ className = "" }) => {
   const [targetMonth, setTargetMonth] = useState("Jun");
   const [activeMonth, setActiveMonth] = useState("Jun");
 
@@ -88,10 +87,12 @@ const UserSubscriptionChart: React.FC<{
   };
 
   return (
-    <div className={`w-full h-full rounded-2xl bg-[#F9FAFB] p-6 ${className}`}>
+    <div
+      className={`w-full h-[22rem]  xl:h-full rounded-2xl  p-6 ${className}`}
+    >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium text-gray-900">{title}</h2>
+        <h2 className="text-lg font-medium text-gray-900">Revenue Trend</h2>
       </div>
 
       {/* Chart */}

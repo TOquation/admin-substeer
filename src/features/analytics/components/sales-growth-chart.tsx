@@ -17,18 +17,18 @@ import type { TooltipProps } from "recharts";
 // Chart Data
 // --------------------------------------
 const data = [
-  { month: "Jan", thisYear: 4000, lastYear: 8000 },
-  { month: "Feb", thisYear: 12000, lastYear: 11000 },
-  { month: "Mar", thisYear: 18000, lastYear: 16000 },
-  { month: "Apr", thisYear: 13000, lastYear: 20000 },
-  { month: "May", thisYear: 16000, lastYear: 15000 },
-  { month: "Jun", thisYear: 21000, lastYear: 12000 },
-  { month: "Jul", thisYear: 18000, lastYear: 20000 },
-  { month: "Aug", thisYear: 23000, lastYear: 19000 },
-  { month: "Sep", thisYear: 25000, lastYear: 22000 },
-  { month: "Oct", thisYear: 27000, lastYear: 26000 },
-  { month: "Nov", thisYear: 29000, lastYear: 30000 },
-  { month: "Dec", thisYear: 31000, lastYear: 33000 },
+  { month: "Jan", thisYear: 8000, lastYear: 6000 },
+  { month: "Feb", thisYear: 15000, lastYear: 18000 },
+  { month: "Mar", thisYear: 22000, lastYear: 16000 },
+  { month: "Apr", thisYear: 27000, lastYear: 31000 },
+  { month: "May", thisYear: 18000, lastYear: 24000 },
+  { month: "Jun", thisYear: 32000, lastYear: 21000 },
+  { month: "Jul", thisYear: 20000, lastYear: 28000 },
+  { month: "Aug", thisYear: 34000, lastYear: 19000 },
+  { month: "Sep", thisYear: 25000, lastYear: 30000 },
+  { month: "Oct", thisYear: 30000, lastYear: 27000 },
+  { month: "Nov", thisYear: 23000, lastYear: 31000 },
+  { month: "Dec", thisYear: 35000, lastYear: 26000 },
 ];
 
 // --------------------------------------
@@ -57,19 +57,21 @@ const CustomTooltip = ({
 // --------------------------------------
 // Main Chart Component
 // --------------------------------------
-const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
+const SalesGrowthChart: React.FC<{
+  className?: string;
+}> = ({ className = "" }) => {
   const [targetMonth, setTargetMonth] = useState("Jun");
   const [activeMonth, setActiveMonth] = useState("Jun");
 
   const activeData = data.find((d) => d.month === activeMonth);
 
-  // Smooth animation for vertical indicator
+  // Smooth animation for indicator
   useEffect(() => {
     const animation = setTimeout(() => setActiveMonth(targetMonth), 150);
     return () => clearTimeout(animation);
   }, [targetMonth]);
 
-  // Responsive X-axis labels
+  // Responsive month label formatter
   const formatMonthLabel = (month: string) => {
     if (typeof window !== "undefined" && window.innerWidth < 640) {
       return month.charAt(0);
@@ -85,20 +87,10 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
   };
 
   return (
-    <div className="w-full bg-gray-50 h-[22rem] xl:h-full rounded-2xl p-6">
+    <div className={`w-full h-52 rounded-2xl px-3 ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium text-gray-900">User Growth</h2>
-        <div className="flex items-center gap-4 text-sm text-gray-600">
-          <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-[#4B5563]" />
-            Users
-          </div>
-          <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-[#93C5FD]" />
-            Active Users
-          </div>
-        </div>
+        <h2 className="text-lg font-medium text-gray-900">Sales Growth</h2>
       </div>
 
       {/* Chart */}
@@ -108,22 +100,22 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
           onClick={handleChartClick}
           margin={{ top: 20, right: 0, left: -30, bottom: 30 }}
         >
-          {/* Thinner vertical indicator */}
+          {/* Vertical indicator */}
           <ReferenceLine
             x={activeMonth}
-            stroke="#00FF66"
+            stroke="#111827"
             strokeWidth={1}
             ifOverflow="extendDomain"
           />
 
-          {/* Green circle indicator */}
+          {/* Circle indicator */}
           {activeData && (
             <ReferenceDot
               x={activeData.month}
               y={activeData.thisYear}
               r={4.3}
               fill="#fff"
-              stroke="#00FF66"
+              stroke="#111827"
               strokeWidth={2}
               isFront
             />
@@ -144,12 +136,12 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
             tickFormatter={formatMonthLabel}
           />
 
-          {/* Y-Axis with fixed ticks */}
+          {/* Y-Axis */}
           <YAxis
             axisLine={false}
             tickLine={false}
-            domain={[0, 30000]}
-            ticks={[0, 10000, 20000, 30000]} // fixed tick values
+            domain={[0, 40000]}
+            ticks={[0, 10000, 20000, 30000, 40000]}
             tickFormatter={(val) => `${val / 1000}K`}
             tick={{ fill: "#9CA3AF", fontSize: 13 }}
           />
@@ -178,4 +170,4 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
   );
 };
 
-export default SubscriptionChart;
+export default SalesGrowthChart;
