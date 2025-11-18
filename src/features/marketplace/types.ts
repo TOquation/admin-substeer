@@ -1,4 +1,4 @@
-export interface MarketPartnerr {
+export interface MarketPartner {
   label: string;
   url: string;
 }
@@ -9,6 +9,6 @@ export interface MarketCardProps {
   category: string;
   amount: string;
   status: "Active" | "Pending" | "Draft";
-  partners: MarketPartnerr[];
+  partners: MarketPartner[];
   bannerUrl?: string;
 }
