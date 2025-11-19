@@ -1,5 +1,3 @@
-import { Factory } from "lucide-react";
-import { ComponentType } from "react";
 import ActivityTimeline from "./activity-timeline";
 import Image from "next/image";
 

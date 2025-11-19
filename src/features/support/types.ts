@@ -5,7 +5,7 @@ export interface TicketType {
   user: string;
   msgId: string;
   email: string;
-  assignedTo: string;
+  assignedTo?: string;
   content: string[];
   attachments: {
     id: string;

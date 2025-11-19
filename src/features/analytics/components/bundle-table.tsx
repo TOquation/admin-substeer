@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  ArrowUpRight,
-  ArrowDownRight,
-  TrendingUp,
-  TrendingDown,
-} from "lucide-react";
+import { TrendingUp, TrendingDown } from "lucide-react";
 
 type Bundle = {
   id: number;

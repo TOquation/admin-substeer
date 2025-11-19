@@ -1,7 +1,6 @@
 import {
   Activity,
   Clock4,
-  Home,
   TrendingDown,
   TrendingUp,
   TriangleAlert,

@@ -9,8 +9,7 @@ import {
   Pin,
   Star,
 } from "lucide-react";
-import React, { useState } from "react";
-import { NewTicketsProps, TicketType } from "../types";
+import React from "react";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { getPriorityColor, newTickets } from "../data";

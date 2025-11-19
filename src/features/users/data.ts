@@ -1,11 +1,4 @@
-import {
-  Calendar1,
-  Home,
-  Medal,
-  Share,
-  Wallet,
-  WalletMinimal,
-} from "lucide-react";
+import { Calendar1, Medal, Share, Wallet, WalletMinimal } from "lucide-react";
 import {
   ActivityTimelineProps,
   TableFilterProps,

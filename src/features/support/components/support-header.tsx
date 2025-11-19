@@ -1,13 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import {
-  ChevronDown,
-  ChevronLeft,
-  Lightbulb,
-  Calendar,
-  ArrowLeft,
-} from "lucide-react";
+import React from "react";
+import { ChevronDown, Lightbulb, Calendar, ArrowLeft } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,8 +33,8 @@ const SupportHeader = ({
   count,
   filters = [],
 }: SupportHeaderProps) => {
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const router = useRouter();
+
   const handleBack = () => {
     router.back();
   };
@@ -54,6 +48,7 @@ const SupportHeader = ({
           subtitle:
             subtitle || "Here is where you help people who need you the most",
         };
+
       case "tickets-list":
         return {
           title: title || "All Tickets",
@@ -77,6 +72,7 @@ const SupportHeader = ({
                   },
                 ],
         };
+
       case "conversations-list":
         return {
           title: title || "All conversation",
@@ -99,6 +95,7 @@ const SupportHeader = ({
                   },
                 ],
         };
+
       default:
         return { title: "", subtitle: "" };
     }
@@ -121,6 +118,7 @@ const SupportHeader = ({
         >
           <ArrowLeft className="w-6 h-6 text-gray-800" />
         </button>
+
         <div>
           <h1 className="text-lg font-semibold text-gray-900">
             {displayTitle}
@@ -139,12 +137,14 @@ const SupportHeader = ({
           <h1 className="text-lg font-semibold text-gray-900">
             {displayTitle}
           </h1>
+
           {displayCount !== undefined && displayCount > 0 && (
             <span className="flex items-center justify-center w-6 h-6 bg-red-500 text-white text-xs font-semibold rounded-full">
               {displayCount > 9 ? "9+" : displayCount}
             </span>
           )}
         </div>
+
         <p className="text-sm text-gray-500">{displaySubtitle}</p>
       </div>
 
@@ -153,7 +153,7 @@ const SupportHeader = ({
           {displayFilters.map((filter, index) => (
             <DropdownMenu key={index}>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 px-4 py-2 border shadow-none border-gray-300  rounded-full bg-white hover:bg-gray-50 transition-colors text-sm text-gray-700">
+                <button className="flex items-center gap-2 px-4 py-2 border shadow-none border-gray-300 rounded-full bg-white hover:bg-gray-50 transition-colors text-sm text-gray-700">
                   {filter.icon}
                   <span>{filter.label}</span>
                   {filter.options && (
@@ -165,11 +165,7 @@ const SupportHeader = ({
               {filter.options && (
                 <DropdownMenuContent align="start" className="w-48 rounded-lg">
                   {filter.options.map((option, optIndex) => (
-                    <DropdownMenuItem
-                      key={optIndex}
-                      className="cursor-pointer"
-                      onClick={() => setOpenDropdown(null)}
-                    >
+                    <DropdownMenuItem key={optIndex} className="cursor-pointer">
                       {option}
                     </DropdownMenuItem>
                   ))}

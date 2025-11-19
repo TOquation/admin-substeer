@@ -2,8 +2,6 @@
 
 import {
   Home,
-  User2,
-  ChevronUp,
   Users,
   Puzzle,
   Store,
@@ -32,12 +30,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+
 import {
   Collapsible,
   CollapsibleContent,

@@ -1,26 +1,14 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import MarketHeader from "@/features/marketplace/components/marketplace-header";
 import PerformanceCard from "@/features/marketplace/components/performance-card";
 import { SalesGrowth } from "@/features/marketplace/components/sales-growth-chart";
 import { marketCard, marketStatus } from "@/features/marketplace/data";
-import { cn } from "@/lib/utils";
 import { Separator } from "@radix-ui/react-dropdown-menu";
-import {
-  ArrowLeft,
-  ChevronDown,
-  ChevronLeft,
-  ChevronRight,
-  Home,
-  Mail,
-  MoreVertical,
-  Wallet,
-  WalletMinimal,
-} from "lucide-react";
+import { ArrowLeft, Mail, MoreVertical } from "lucide-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import React, { ComponentType } from "react";
+import React from "react";
 
 interface services {
   id: number;

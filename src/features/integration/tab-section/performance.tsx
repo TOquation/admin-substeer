@@ -26,7 +26,7 @@ const Performance = () => {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4">
-        {performanceData.map((performance, index) => {
+        {performanceData.map((performance) => {
           return (
             <div
               className="bg-white p-4 rounded-lg flex flex-col gap-2 text-sm"

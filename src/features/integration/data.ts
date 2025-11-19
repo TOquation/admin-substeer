@@ -1,9 +1,6 @@
 // integration data card
 
-import Integration from "@/app/(dashboard)/integration/page";
 import { IntegralProps, IntegrationCardProps, TabsProps } from "./types";
-import { TabsContentProps } from "@radix-ui/react-tabs";
-
 export const intCard: IntegrationCardProps[] = [
   {
     id: 1,

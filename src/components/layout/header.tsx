@@ -3,19 +3,12 @@
 import {
   Bell,
   History,
-  LogOut,
-  Moon,
   Search,
-  Settings,
-  Sidebar,
   PanelLeft,
   PanelRight,
   SlashSquare,
-  Sun,
-  User,
   Star,
 } from "lucide-react";
-import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 import { Button } from "../ui/button";

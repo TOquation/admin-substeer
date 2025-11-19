@@ -8,6 +8,7 @@ import {
 import { Search, MoreVertical } from "lucide-react";
 import { IntegrationProps } from "../types";
 import { getStatusStyles, integrations } from "../data";
+import Image from "next/image";
 
 const IntegrationsTable = ({
   setOpen,
@@ -93,7 +94,9 @@ const IntegrationsTable = ({
                         <div className="flex items-center gap-2 sm:gap-3">
                           <div className="w-8 h-8 rounded flex items-center justify-center flex-shrink-0">
                             {integration.icon.startsWith("http") ? (
-                              <img
+                              <Image
+                                height={28}
+                                width={28}
                                 src={integration.icon}
                                 alt={integration.service}
                                 className="h-6 w-6 sm:h-7 sm:w-7"

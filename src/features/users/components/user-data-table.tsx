@@ -2,8 +2,6 @@
 
 import React, { useState } from "react";
 import {
-  ChevronUp,
-  ChevronDown,
   MoreVertical,
   ChevronLeft,
   ChevronRight,
@@ -84,16 +82,6 @@ export default function UsersDataTable() {
       setSortColumn(column);
       setSortDirection("asc");
     }
-  };
-
-  const SortIcon = ({ column }: { column: string }) => {
-    if (sortColumn !== column)
-      return <ChevronUp className="w-3.5 h-3.5 text-gray-400" />;
-    return sortDirection === "asc" ? (
-      <ChevronUp className="w-3.5 h-3.5 text-gray-700" />
-    ) : (
-      <ChevronDown className="w-3.5 h-3.5 text-gray-700" />
-    );
   };
 
   const getPageNumbers = () => {

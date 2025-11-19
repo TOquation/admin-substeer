@@ -1,4 +1,4 @@
-import { DollarSign, Home, TrendingDown, TrendingUp } from "lucide-react";
+import { DollarSign } from "lucide-react";
 import { DashboardCardProps } from "./types";
 
 export const dashboardCard: DashboardCardProps[] = [

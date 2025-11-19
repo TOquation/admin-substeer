@@ -1,4 +1,4 @@
-import React, { ComponentType } from "react";
+import React from "react";
 import { activity } from "../data";
 import Image from "next/image";
 

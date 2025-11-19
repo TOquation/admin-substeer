@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { IntegralProps, OverviewProps } from "../types";
+import { OverviewProps } from "../types";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
@@ -82,7 +82,7 @@ const Overview: React.FC<OverviewProps> = ({
               <Separator className="w-full flex-shrink-0" />
 
               <div className="flex-1 min-h-0 overflow-y-auto px-4 pt-4 pb-6 scrollbar-thin">
-                {tabsData.map((tabContent, i) => (
+                {tabsData.map((tabContent) => (
                   <TabsContent
                     key={tabContent.id}
                     value={tabContent.title}

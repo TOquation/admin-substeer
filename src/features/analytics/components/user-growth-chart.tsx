@@ -40,15 +40,16 @@ const CustomTooltip = ({
   label,
 }: TooltipProps<number, string>) => {
   if (!active || !payload?.length) return null;
+
   const thisYearPoint = payload.find((p) => p.dataKey === "thisYear");
 
   return (
-    <div className="bg-white rounded-lg shadow-md px-3 py-1.5">
-      <div className="text-xs text-gray-500">{label}</div>
+    <div className="rounded-lg border border-gray-200 bg-white p-3 shadow-lg">
+      <p className="mb-1 text-sm font-medium text-gray-600">{label}</p>
       {thisYearPoint && (
-        <div className="text-xs font-semibold text-gray-900">
+        <p className="text-lg font-bold text-gray-900">
           {thisYearPoint.value?.toLocaleString()}
-        </div>
+        </p>
       )}
     </div>
   );
@@ -57,7 +58,7 @@ const CustomTooltip = ({
 // --------------------------------------
 // Main Chart Component
 // --------------------------------------
-const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
+const SubscriptionChart: React.FC = () => {
   const [targetMonth, setTargetMonth] = useState("Jun");
   const [activeMonth, setActiveMonth] = useState("Jun");
 
@@ -78,54 +79,53 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
   };
 
   // Handle chart click
-  const handleChartClick = (state: any) => {
+  const handleChartClick = (state: { activeLabel?: string } | null) => {
     if (state?.activeLabel) {
       setTargetMonth(state.activeLabel);
     }
   };
 
   return (
-    <div className="w-full bg-gray-50 h-[22rem] xl:h-full rounded-2xl p-6">
+    <div className="w-full rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium text-gray-900">User Growth</h2>
-        <div className="flex items-center gap-4 text-sm text-gray-600">
-          <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-[#4B5563]" />
-            Users
+      <div className="mb-6 flex items-center justify-between">
+        <h2 className="text-xl font-semibold text-gray-900">User Growth</h2>
+        <div className="flex items-center gap-4 text-sm">
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-full bg-emerald-500"></div>
+            <span className="text-gray-600">Users</span>
           </div>
-          <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-[#93C5FD]" />
-            Active Users
+          <div className="flex items-center gap-2">
+            <div className="h-3 w-3 rounded-full bg-gray-300"></div>
+            <span className="text-gray-600">Active Users</span>
           </div>
         </div>
       </div>
 
       {/* Chart */}
-      <ResponsiveContainer width="100%" height="100%">
+      <ResponsiveContainer width="100%" height={350}>
         <LineChart
           data={data}
+          margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
           onClick={handleChartClick}
-          margin={{ top: 20, right: 0, left: -30, bottom: 30 }}
         >
-          {/* Thinner vertical indicator */}
+          {/* Vertical indicator */}
           <ReferenceLine
             x={activeMonth}
-            stroke="#00FF66"
-            strokeWidth={1}
-            ifOverflow="extendDomain"
+            stroke="#10B981"
+            strokeWidth={2}
+            strokeDasharray="0"
           />
 
-          {/* Green circle indicator */}
+          {/* Green dot */}
           {activeData && (
             <ReferenceDot
-              x={activeData.month}
+              x={activeMonth}
               y={activeData.thisYear}
-              r={4.3}
-              fill="#fff"
-              stroke="#00FF66"
+              r={6}
+              fill="#10B981"
+              stroke="#fff"
               strokeWidth={2}
-              isFront
             />
           )}
 
@@ -138,18 +138,14 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
           {/* X-Axis */}
           <XAxis
             dataKey="month"
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: "#9CA3AF", fontSize: 13 }}
             tickFormatter={formatMonthLabel}
+            tick={{ fill: "#9CA3AF", fontSize: 13 }}
+            axisLine={{ stroke: "#E5E7EB" }}
+            tickLine={false}
           />
 
-          {/* Y-Axis with fixed ticks */}
+          {/* Y-Axis */}
           <YAxis
-            axisLine={false}
-            tickLine={false}
-            domain={[0, 30000]}
-            ticks={[0, 10000, 20000, 30000]} // fixed tick values
             tickFormatter={(val) => `${val / 1000}K`}
             tick={{ fill: "#9CA3AF", fontSize: 13 }}
           />
@@ -158,19 +154,23 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
           <Line
             type="monotone"
             dataKey="lastYear"
-            stroke="#6B7280"
-            strokeWidth={1.8}
+            stroke="#D1D5DB"
+            strokeWidth={2}
             dot={false}
-            strokeDasharray="5 5"
-            opacity={0.4}
+            activeDot={false}
           />
           <Line
             type="monotone"
             dataKey="thisYear"
-            stroke="#111827"
-            strokeWidth={2}
+            stroke="#10B981"
+            strokeWidth={3}
             dot={false}
-            opacity={0.6}
+            activeDot={{
+              r: 6,
+              fill: "#10B981",
+              stroke: "#fff",
+              strokeWidth: 2,
+            }}
           />
         </LineChart>
       </ResponsiveContainer>

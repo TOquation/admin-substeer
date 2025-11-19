@@ -11,7 +11,9 @@ import {
   ReferenceLine,
   ReferenceDot,
 } from "recharts";
+
 import type { TooltipProps } from "recharts";
+import type { CategoricalChartState } from "recharts/types/chart/types";
 
 // --------------------------------------
 // Chart Data
@@ -40,6 +42,7 @@ const CustomTooltip = ({
   label,
 }: TooltipProps<number, string>) => {
   if (!active || !payload?.length) return null;
+
   const thisYearPoint = payload.find((p) => p.dataKey === "thisYear");
 
   return (
@@ -57,9 +60,9 @@ const CustomTooltip = ({
 // --------------------------------------
 // Main Chart Component
 // --------------------------------------
-const SalesGrowthChart: React.FC<{
-  className?: string;
-}> = ({ className = "" }) => {
+const SalesGrowthChart: React.FC<{ className?: string }> = ({
+  className = "",
+}) => {
   const [targetMonth, setTargetMonth] = useState("Jun");
   const [activeMonth, setActiveMonth] = useState("Jun");
 
@@ -79,8 +82,8 @@ const SalesGrowthChart: React.FC<{
     return month;
   };
 
-  // Handle chart click
-  const handleChartClick = (state: any) => {
+  // Handle chart click — fixed type (no more `any`)
+  const handleChartClick = (state: CategoricalChartState | undefined) => {
     if (state?.activeLabel) {
       setTargetMonth(state.activeLabel);
     }

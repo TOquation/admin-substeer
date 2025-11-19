@@ -12,10 +12,7 @@ import { Button } from "@/components/ui/button";
 import {
   Calendar,
   ChevronDown,
-  ChevronDownIcon,
   Grid2X2,
-  Home,
-  Lock,
   Medal,
   Plus,
   SlashIcon,

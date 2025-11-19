@@ -1,4 +1,4 @@
-import { Calendar, ChevronDown, Filter, Share } from "lucide-react";
+import { ChevronDown, Filter, Share } from "lucide-react";
 import React, { ComponentType } from "react";
 
 interface AnalyticFiltersProps {

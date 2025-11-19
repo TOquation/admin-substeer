@@ -7,8 +7,8 @@ interface personalDataProps {
   subtitle: string;
 }
 
-interface jobInfoProps extends personalDataProps {}
-interface contactProps extends personalDataProps {}
+type jobInfoProps = personalDataProps;
+type contactProps = personalDataProps;
 
 const personalData: personalDataProps[] = [
   {

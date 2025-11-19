@@ -8,7 +8,7 @@ import React, { useState } from "react";
 
 const Login = () => {
   const [show, setShow] = useState(false);
-  const [showBanner, setshowBanner] = useState(false);
+  const [showBanner] = useState(false);
   const handleShowPassword = () => {
     setShow(!show);
   };

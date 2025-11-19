@@ -1,5 +1,5 @@
 import { Switch } from "@/components/ui/switch";
-import { FlaskConical, Home, Repeat, Trash } from "lucide-react";
+import { FlaskConical, Repeat, Trash } from "lucide-react";
 import React, { ComponentType } from "react";
 
 interface IntegrationSettingsProps {

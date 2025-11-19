@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import DeveloperCard from "@/features/developer-tools/developer-card";
 import DeveloperHeader from "@/features/developer-tools/developer-header";
 import IntegrationHealth from "@/features/developer-tools/health-info";
-import HealthInfo from "@/features/developer-tools/health-info";
 import RecentLogsTable from "@/features/developer-tools/recent-log-table";
 import { ChevronDown, Send } from "lucide-react";
 import React from "react";

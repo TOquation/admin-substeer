@@ -56,7 +56,7 @@ const OverviewContent: React.FC<OverviewStatusProps> = ({
   return (
     <div className="flex flex-col gap-6 pb-6 lg:pb-10">
       <div className="grid grid-cols-2 gap-6 rounded-xl py-6 bg-white px-4">
-        {overviewStatus.map((status, index) => (
+        {overviewStatus.map((status) => (
           <div key={status.id} className="flex flex-col gap-1">
             <span className="text-gray-600">{status.title}</span>
             <div className="text-sm font-fahkwang font-semibold">

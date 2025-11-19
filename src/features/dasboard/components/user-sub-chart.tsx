@@ -12,6 +12,7 @@ import {
   ReferenceDot,
 } from "recharts";
 import type { TooltipProps } from "recharts";
+import type { CategoricalChartState } from "recharts/types/chart/types";
 
 // --------------------------------------
 // Chart Data
@@ -40,6 +41,7 @@ const CustomTooltip = ({
   label,
 }: TooltipProps<number, string>) => {
   if (!active || !payload?.length) return null;
+
   const thisYearPoint = payload.find((p) => p.dataKey === "thisYear");
 
   return (
@@ -65,13 +67,13 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
 
   const activeData = data.find((d) => d.month === activeMonth);
 
-  // Smooth animation for indicator
+  // Smooth month indicator animation
   useEffect(() => {
-    const animation = setTimeout(() => setActiveMonth(targetMonth), 150);
-    return () => clearTimeout(animation);
+    const timer = setTimeout(() => setActiveMonth(targetMonth), 150);
+    return () => clearTimeout(timer);
   }, [targetMonth]);
 
-  // Responsive month label formatter
+  // Responsive label formatter
   const formatMonthLabel = (month: string) => {
     if (typeof window !== "undefined" && window.innerWidth < 640) {
       return month.charAt(0);
@@ -79,8 +81,11 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
     return month;
   };
 
-  // Handle chart click
-  const handleChartClick = (state: any) => {
+  // --------------------------------------
+  // Handle user clicking on chart
+  // Properly typed (NO ANY)
+  // --------------------------------------
+  const handleChartClick = (state: CategoricalChartState | undefined) => {
     if (state?.activeLabel) {
       setTargetMonth(state.activeLabel);
     }
@@ -93,6 +98,7 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium text-gray-900">Total Users</h2>
+
         <div className="flex items-center gap-4 text-sm text-gray-600">
           <div className="flex items-center gap-1">
             <span className="h-2 w-2 rounded-full bg-[#111827]" />
@@ -168,6 +174,7 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
             strokeDasharray="5 5"
             opacity={0.4}
           />
+
           <Line
             type="monotone"
             dataKey="thisYear"

@@ -19,7 +19,7 @@ const Analytics = () => {
         <AnalyticCard className="" />
 
         <div className="flex gap-3 xl:h-[60vh] flex-col xl:flex-row">
-          <SubscriptionChart className="" />
+          <SubscriptionChart />
           <UserSubscriptionChart className="bg-gray-50" />
         </div>
 

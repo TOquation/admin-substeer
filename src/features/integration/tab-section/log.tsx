@@ -36,7 +36,7 @@ const Log = () => {
       </div>
 
       <div className="space-y-8">
-        {recentActivity.map((recent, index) => {
+        {recentActivity.map((recent) => {
           return (
             <div key={recent.id} className="flex space-x-2 items-start">
               <CircleAlert className="w-4 h-4 text-green-600" />

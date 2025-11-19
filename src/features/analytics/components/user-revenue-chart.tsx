@@ -12,6 +12,7 @@ import {
   ReferenceDot,
 } from "recharts";
 import type { TooltipProps } from "recharts";
+import type { CategoricalChartState } from "recharts/types/chart/types"; // ✅ FIX
 
 // --------------------------------------
 // Chart Data
@@ -57,9 +58,9 @@ const CustomTooltip = ({
 // --------------------------------------
 // Main Chart Component
 // --------------------------------------
-const UserSubscriptionChart: React.FC<{
-  className?: string;
-}> = ({ className = "" }) => {
+const UserSubscriptionChart: React.FC<{ className?: string }> = ({
+  className = "",
+}) => {
   const [targetMonth, setTargetMonth] = useState("Jun");
   const [activeMonth, setActiveMonth] = useState("Jun");
 
@@ -79,17 +80,15 @@ const UserSubscriptionChart: React.FC<{
     return month;
   };
 
-  // Handle chart click
-  const handleChartClick = (state: any) => {
+  // Handle chart click — FIXED TYPE
+  const handleChartClick = (state: CategoricalChartState | undefined) => {
     if (state?.activeLabel) {
       setTargetMonth(state.activeLabel);
     }
   };
 
   return (
-    <div
-      className={`w-full h-[22rem]  xl:h-full rounded-2xl  p-6 ${className}`}
-    >
+    <div className={`w-full h-[22rem] xl:h-full rounded-2xl p-6 ${className}`}>
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium text-gray-900">Revenue Trend</h2>

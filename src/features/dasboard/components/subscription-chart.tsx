@@ -12,6 +12,7 @@ import {
   ReferenceDot,
 } from "recharts";
 import type { TooltipProps } from "recharts";
+import type { CategoricalChartState } from "recharts/types/chart/types"; // ✅ FIX
 
 // --------------------------------------
 // Chart Data
@@ -57,7 +58,7 @@ const CustomTooltip = ({
 // --------------------------------------
 // Main Chart Component
 // --------------------------------------
-const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
+const SubscriptionChart: React.FC<{ className: string }> = () => {
   const [targetMonth, setTargetMonth] = useState("Jun");
   const [activeMonth, setActiveMonth] = useState("Jun");
 
@@ -77,28 +78,26 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
     return month;
   };
 
-  // Handle chart click
-  const handleChartClick = (state: any) => {
+  // Handle chart click — TYPE FIXED
+  const handleChartClick = (state: CategoricalChartState | undefined) => {
     if (state?.activeLabel) {
       setTargetMonth(state.activeLabel);
     }
   };
 
   return (
-    <div className="w-full h-[420px] rounded-2xl bg-[#F9FAFB] p-6">
+    <div className="w-full bg-gray-50 h-[22rem] xl:h-full rounded-2xl p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-medium text-gray-900">
-          Subscription Activity
-        </h2>
+        <h2 className="text-lg font-medium text-gray-900">User Growth</h2>
         <div className="flex items-center gap-4 text-sm text-gray-600">
           <div className="flex items-center gap-1">
             <span className="h-2 w-2 rounded-full bg-[#4B5563]" />
-            This year
+            Users
           </div>
           <div className="flex items-center gap-1">
             <span className="h-2 w-2 rounded-full bg-[#93C5FD]" />
-            Last year
+            Active Users
           </div>
         </div>
       </div>
@@ -151,7 +150,7 @@ const SubscriptionChart: React.FC<{ className: string }> = ({ className }) => {
             axisLine={false}
             tickLine={false}
             domain={[0, 30000]}
-            ticks={[0, 10000, 20000, 30000]} // fixed tick values
+            ticks={[0, 10000, 20000, 30000]}
             tickFormatter={(val) => `${val / 1000}K`}
             tick={{ fill: "#9CA3AF", fontSize: 13 }}
           />

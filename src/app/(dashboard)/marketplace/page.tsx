@@ -1,6 +1,5 @@
 import MarketCard from "@/features/marketplace/components/market-place-card";
 import MarketHeader from "@/features/marketplace/components/marketplace-header";
-import { marketCard } from "@/features/marketplace/data";
 import React from "react";
 
 const MarketPlace = () => {
