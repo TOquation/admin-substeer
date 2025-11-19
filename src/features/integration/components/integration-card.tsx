@@ -27,13 +27,13 @@ const IntegrationCard = () => {
               key={integrate.id}
               className={`rounded-2xl px-6 py-3 space-y-1 ${integrate.bgColor} w-full`}
             >
-              <h3 className={`text-sm ${integrate.titleColor} font-semibold`}>
+              <h3 className={`text-sm ${integrate.titleColor} font-medium`}>
                 {integrate.title}
               </h3>
 
               {integrate.subtitle.toString().includes("/") ? (
                 <p className="tracking-widest">
-                  <span className="font-semibold text-2xl">
+                  <span className="font-medium text-2xl">
                     {integrate.submain}
                   </span>
 
@@ -43,11 +43,11 @@ const IntegrationCard = () => {
                   </span>
                 </p>
               ) : integrate.subtitle.toLocaleString().length > 3 ? (
-                <p className="font-semibold text-2xl tracking-wide">
+                <p className="font-medium text-2xl tracking-wide">
                   {integrate.subtitle.toLocaleString()}
                 </p>
               ) : (
-                <p className="font-semibold text-2xl tracking-widest">
+                <p className="font-medium text-2xl tracking-widest">
                   {integrate.subtitle}
                 </p>
               )}
