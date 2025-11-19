@@ -97,7 +97,7 @@ const contacts: contactProps[] = [
 
 const ProfileContent = () => {
   return (
-    <div className="bg-zinc-50 h-screen rounded-xl p-4 flex flex-col pb-4">
+    <div className="bg-zinc-50 min-h-screen rounded-xl p-4 flex flex-col pb-4">
       {/* personal data */}
       <div className="bg-white p-4 rounded-xl">
         <h1 className="font-medium text-neutral-600 mb-2">Personal Data</h1>

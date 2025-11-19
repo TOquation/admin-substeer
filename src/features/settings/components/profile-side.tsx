@@ -35,7 +35,7 @@ const userData: profileSideProps[] = [
 
 const ProfileSide = () => {
   return (
-    <div className="bg-zinc-50 rounded-xl p-4 flex flex-col pb-4">
+    <div className="bg-zinc-50 min-h-screen rounded-xl p-4 flex flex-col pb-4">
       <div className="flex flex-col items-center">
         <div className="mb-6">
           <Image
