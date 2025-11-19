@@ -12,6 +12,7 @@ import {
   Code2,
   UserCog,
   ChevronRight,
+  Settings,
 } from "lucide-react";
 import {
   Sidebar,
@@ -51,7 +52,7 @@ const menuItems = [
   },
   {
     title: "Users",
-    url: "/users",
+    url: "/user",
     icon: Users,
     subItems: [
       { title: "Free", url: "/user/free" },
@@ -98,6 +99,17 @@ const menuItems = [
     ],
   },
 ];
+
+const settingsItems = {
+  title: "Settings",
+  url: "/settings",
+  icon: Settings,
+  subItems: [
+    { title: "Profile", url: "/settings/profile" },
+    { title: "Notification", url: "/settings/notification" },
+    { title: "Security", url: "/settings/security" },
+  ],
+};
 
 const LeftSidebar = () => {
   const pathname = usePathname();
@@ -263,18 +275,38 @@ const LeftSidebar = () => {
       <SidebarFooter className="bg-white">
         <SidebarMenu>
           <SidebarMenuItem>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
-                  <User2 /> John Doe <ChevronUp className="ml-auto" />
+            <Collapsible
+              defaultOpen={isActiveRoute(settingsItems.url, true)}
+              className="group/collapsible"
+            >
+              <CollapsibleTrigger asChild>
+                <SidebarMenuButton
+                  tooltip={settingsItems.title}
+                  className="w-full"
+                  isActive={isActiveRoute(settingsItems.url, true)}
+                >
+                  <settingsItems.icon className="!w-4 !h-4" />
+                  <span>{settingsItems.title}</span>
+                  <ChevronRight className="ml-auto !w-4 !h-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
                 </SidebarMenuButton>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>Account</DropdownMenuItem>
-                <DropdownMenuItem>Setting</DropdownMenuItem>
-                <DropdownMenuItem>Sign out</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </CollapsibleTrigger>
+              <CollapsibleContent>
+                <SidebarMenuSub>
+                  {settingsItems.subItems.map((subItem) => (
+                    <SidebarMenuSubItem key={subItem.title}>
+                      <SidebarMenuSubButton
+                        asChild
+                        isActive={pathname === subItem.url}
+                      >
+                        <Link href={subItem.url}>
+                          <span>{subItem.title}</span>
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  ))}
+                </SidebarMenuSub>
+              </CollapsibleContent>
+            </Collapsible>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
