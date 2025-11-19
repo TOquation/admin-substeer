@@ -66,7 +66,7 @@ const IntegrationHealth = () => {
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h3 className="text-xl font-medium text-gray-900 mb-2">
+                <h3 className="text-lg font-medium text-gray-900 mb-2">
                   {integration.name}
                 </h3>
                 <span
@@ -82,7 +82,7 @@ const IntegrationHealth = () => {
               </div>
 
               <div className="text-right">
-                <div className="text-xl font-medium  text-gray-900">
+                <div className="text-lg font-medium  text-gray-900">
                   {integration.uptime}%
                 </div>
                 <div className="text-sm text-gray-500 mt-1">Uptime</div>
