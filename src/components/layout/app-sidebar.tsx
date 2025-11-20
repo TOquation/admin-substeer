@@ -86,9 +86,9 @@ const menuItems = [
     url: "/admins",
     icon: UserCog,
     subItems: [
-      { title: "All Admins", url: "/admins/all" },
+      { title: "All Admins", url: "/admins/all-admins" },
       { title: "Roles", url: "/admins/roles" },
-      { title: "Review", url: "/admins/review", badge: 9 },
+      { title: "Review", url: "/admins/reviews", badge: 9 },
     ],
   },
 ];
