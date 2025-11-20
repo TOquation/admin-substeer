@@ -18,12 +18,12 @@ const TrafficByLocation: React.FC<{ className?: string }> = ({
       className={`flex flex-col rounded-2xl h-full bg-[#F9FAFB] p-6 w-full ${className}`}
     >
       <h2 className="mb-4 text-lg font-medium text-gray-900">
-        Traffic by Location
+        Traffic my Location
       </h2>
 
       {/* Chart */}
-      <div className="w-full flex justify-center items-center">
-        <div className="w-[220px] h-[220px]">
+      <div className="w-full flex justify-center items-center h-full">
+        <div className="xl:shrink-0 w-[220px] 2xl:w-full h-full">
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie

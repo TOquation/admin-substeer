@@ -18,18 +18,18 @@ import type { CategoricalChartState } from "recharts/types/chart/types";
 // Chart Data
 // --------------------------------------
 const data = [
-  { month: "Jan", thisYear: 8000, lastYear: 6000 },
-  { month: "Feb", thisYear: 15000, lastYear: 18000 },
-  { month: "Mar", thisYear: 22000, lastYear: 16000 },
-  { month: "Apr", thisYear: 27000, lastYear: 31000 },
-  { month: "May", thisYear: 18000, lastYear: 24000 },
-  { month: "Jun", thisYear: 32000, lastYear: 21000 },
-  { month: "Jul", thisYear: 20000, lastYear: 28000 },
-  { month: "Aug", thisYear: 34000, lastYear: 19000 },
-  { month: "Sep", thisYear: 25000, lastYear: 30000 },
-  { month: "Oct", thisYear: 30000, lastYear: 27000 },
-  { month: "Nov", thisYear: 23000, lastYear: 31000 },
-  { month: "Dec", thisYear: 35000, lastYear: 26000 },
+  { month: "Jan", thisYear: 4000, lastYear: 8000 },
+  { month: "Feb", thisYear: 12000, lastYear: 11000 },
+  { month: "Mar", thisYear: 18000, lastYear: 16000 },
+  { month: "Apr", thisYear: 13000, lastYear: 20000 },
+  { month: "May", thisYear: 16000, lastYear: 15000 },
+  { month: "Jun", thisYear: 21000, lastYear: 12000 },
+  { month: "Jul", thisYear: 18000, lastYear: 20000 },
+  { month: "Aug", thisYear: 23000, lastYear: 19000 },
+  { month: "Sep", thisYear: 25000, lastYear: 22000 },
+  { month: "Oct", thisYear: 27000, lastYear: 26000 },
+  { month: "Nov", thisYear: 29000, lastYear: 30000 },
+  { month: "Dec", thisYear: 31000, lastYear: 33000 },
 ];
 
 // --------------------------------------
@@ -41,7 +41,6 @@ const CustomTooltip = ({
   label,
 }: TooltipProps<number, string>) => {
   if (!active || !payload?.length) return null;
-
   const thisYearPoint = payload.find((p) => p.dataKey === "thisYear");
 
   return (
@@ -59,7 +58,7 @@ const CustomTooltip = ({
 // --------------------------------------
 // Main Chart Component
 // --------------------------------------
-const UserSubscriptionChart: React.FC<{ className?: string }> = ({
+const TotalUserChart: React.FC<{ className?: string }> = ({
   className = "",
 }) => {
   const [targetMonth, setTargetMonth] = useState("Jun");
@@ -67,13 +66,13 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
 
   const activeData = data.find((d) => d.month === activeMonth);
 
-  // Smooth month indicator animation
+  // Smooth animation for vertical indicator
   useEffect(() => {
-    const timer = setTimeout(() => setActiveMonth(targetMonth), 150);
-    return () => clearTimeout(timer);
+    const animation = setTimeout(() => setActiveMonth(targetMonth), 150);
+    return () => clearTimeout(animation);
   }, [targetMonth]);
 
-  // Responsive label formatter
+  // Responsive X-axis labels
   const formatMonthLabel = (month: string) => {
     if (typeof window !== "undefined" && window.innerWidth < 640) {
       return month.charAt(0);
@@ -81,10 +80,7 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
     return month;
   };
 
-  // --------------------------------------
-  // Handle user clicking on chart
-  // Properly typed (NO ANY)
-  // --------------------------------------
+  // Handle chart click — TYPE FIXED
   const handleChartClick = (state: CategoricalChartState | undefined) => {
     if (state?.activeLabel) {
       setTargetMonth(state.activeLabel);
@@ -93,19 +89,18 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
 
   return (
     <div
-      className={`w-full h-[450px] rounded-2xl bg-[#F9FAFB] p-6 ${className}`}
+      className={`w-full h-[22rem] xl:h-full bg-gray-50 rounded-2xl p-6 ${className}`}
     >
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-medium text-gray-900">Total Users</h2>
-
         <div className="flex items-center gap-4 text-sm text-gray-600">
           <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-[#111827]" />
+            <span className="h-2 w-2 rounded-full bg-[#4B5563]" />
             This year
           </div>
           <div className="flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-[#6B7280]" />
+            <span className="h-2 w-2 rounded-full bg-[#93C5FD]" />
             Last year
           </div>
         </div>
@@ -121,7 +116,7 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
           {/* Vertical indicator */}
           <ReferenceLine
             x={activeMonth}
-            stroke="#111827"
+            stroke="#00FF66"
             strokeWidth={1}
             ifOverflow="extendDomain"
           />
@@ -133,7 +128,7 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
               y={activeData.thisYear}
               r={4.3}
               fill="#fff"
-              stroke="#111827"
+              stroke="#00FF66"
               strokeWidth={2}
               isFront
             />
@@ -154,7 +149,7 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
             tickFormatter={formatMonthLabel}
           />
 
-          {/* Y-Axis */}
+          {/* Y-Axis with corrected domain */}
           <YAxis
             axisLine={false}
             tickLine={false}
@@ -174,7 +169,6 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
             strokeDasharray="5 5"
             opacity={0.4}
           />
-
           <Line
             type="monotone"
             dataKey="thisYear"
@@ -189,4 +183,4 @@ const UserSubscriptionChart: React.FC<{ className?: string }> = ({
   );
 };
 
-export default UserSubscriptionChart;
+export default TotalUserChart;

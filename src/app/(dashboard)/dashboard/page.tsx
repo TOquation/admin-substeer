@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import CostBreakDown from "@/features/dasboard/components/cost-breakdown";
 import DashboardCard from "@/features/dasboard/components/dashboard-card";
-import SubscriptionChart from "@/features/dasboard/components/subscription-chart";
+import SubscriptionChart from "@/features/dasboard/components/activity-chart";
 import TrafficByLocation from "@/features/dasboard/components/traffic-chart";
-import UserSubscriptionChart from "@/features/dasboard/components/user-sub-chart";
+import TotalUserChart from "@/features/dasboard/components/total-user-chart";
 import { ChevronDown } from "lucide-react";
 import React from "react";
 
@@ -25,16 +25,15 @@ const Dashboard = () => {
         </Button>
       </div>
 
-      {/* cards */}
-      <div className="mt-4 flex-1 overflow-y-auto grid grid-cols-1 xl:grid-col-6 gap-6 xl:gap-4 w-full items-stretch">
+      <div className="mt-4  overflow-y-auto  grid grid-cols-1 xl:grid-col-6 gap-6 xl:gap-4 w-full ">
         <DashboardCard className="col-span-6" />
-        <div className="flex flex-col xl:flex-row col-span-6 gap-6 xl:gap-4 justify-between items-stretch">
+        <div className="flex xl:h-[60vh] flex-col xl:flex-row col-span-6 gap-6 xl:gap-4 ">
           <CostBreakDown />
           <SubscriptionChart className="" />
         </div>
 
-        <div className="flex flex-col xl:flex-row col-span-6 xl:gap-4 gap-6 justify-between h-full items-stretch">
-          <UserSubscriptionChart className="xl:w-[60%]" />
+        <div className="flex xl:h-[80vh]  flex-col xl:flex-row col-span-6 xl:gap-4 gap-6 justify-between h-full items-stretch">
+          <TotalUserChart className="xl:w-[60%] " />
           <TrafficByLocation className="xl:w-[40%]" />
         </div>
       </div>

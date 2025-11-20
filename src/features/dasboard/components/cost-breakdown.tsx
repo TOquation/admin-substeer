@@ -61,7 +61,7 @@ const CostBreakDown: React.FC<{ className?: string }> = ({
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={formattedData}
-            margin={{ top: 10, right: 10, left: -30, bottom: 20 }}
+            margin={{ top: 10, right: 10, left: -30, bottom: 42 }}
             barCategoryGap="20%"
           >
             <XAxis

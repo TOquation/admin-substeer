@@ -1,14 +1,14 @@
 import AnalyticCard from "@/features/analytics/components/analytic-card";
 import AnalyticHeader from "@/features/analytics/components/analytic-header";
 import SubscriptionBreakdown from "@/features/analytics/components/subscription-breakdown";
-import SubscriptionChart from "@/features/analytics/components/user-growth-chart";
 import TrafficByLocation from "@/features/analytics/components/traffic-chart";
-import UserSubscriptionChart from "@/features/analytics/components/user-revenue-chart";
 import React from "react";
 import MarketCard from "@/features/analytics/components/market-card";
 import AnalyticPerformanceCard from "@/features/analytics/components/analytic-performance";
 import BundleTable from "@/features/analytics/components/bundle-table";
 import SalesGrowthChart from "@/features/analytics/components/sales-growth-chart";
+import GrowthChart from "@/features/analytics/components/growth-chart";
+import RevenueChart from "@/features/analytics/components/revenue-chart";
 
 const Analytics = () => {
   return (
@@ -19,8 +19,8 @@ const Analytics = () => {
         <AnalyticCard className="" />
 
         <div className="flex gap-3 xl:h-[60vh] flex-col xl:flex-row">
-          <SubscriptionChart />
-          <UserSubscriptionChart className="bg-gray-50" />
+          <GrowthChart className="bg-gray-50" />
+          <RevenueChart className="bg-gray-50" />
         </div>
 
         <div className="flex xl:flex-row xl:h-[80vh] flex-col gap-3">
