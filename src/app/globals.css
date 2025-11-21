@@ -137,8 +137,16 @@ html {
 }
 
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 1.5px !important;
+  height: 3px;
+}
+.my-scroll-container::-webkit-scrollbar {
+  display: none;
+}
+
+.my-scroll-container {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 ::-webkit-scrollbar-track {
@@ -148,9 +156,9 @@ html {
 ::-webkit-scrollbar-thumb {
   background-color: #888;
   border-radius: 10px;
-  height: 25px !important; /* <-- controls visible thumb size */
-  min-height: 25px !important; /* <-- keeps it short */
-  max-height: 25px !important; /* <-- prevents it from growing */
+  height: 10px !important;
+  min-height: 10px !important;
+  max-height: 10px !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
