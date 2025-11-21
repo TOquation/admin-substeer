@@ -1,6 +1,7 @@
 "use client";
 
-import DynamicHeader from "@/features/admins/all-admins/shared/dynamic-header";
+import AllAdminTable from "@/features/admins/all-admins/components/all-admin-table";
+import DynamicHeader from "@/features/admins/shared/dynamic-header";
 import React from "react";
 
 const page = () => {
@@ -14,6 +15,10 @@ const page = () => {
         actionLabel="Add Admin"
         onAction={() => console.log("Add Admin clicked")}
       />
+
+      <div className="flex-1 overflow-y-auto">
+        <AllAdminTable />
+      </div>
     </div>
   );
 };

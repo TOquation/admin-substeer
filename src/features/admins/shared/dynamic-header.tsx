@@ -49,14 +49,20 @@ const DynamicHeader = ({
       {/* RIGHT SIDE */}
       <div className="flex items-center gap-3">
         {showFilter && (
-          <Button variant="outline" className="rounded-full gap-2">
+          <Button
+            variant="outline"
+            className="rounded-full gap-2 font-normal shadow-none border-gray-400 cursor-pointer text-neutral-600"
+          >
             <Filter size={18} />
             Filter
           </Button>
         )}
 
         {showExport && (
-          <Button variant="outline" className="rounded-full gap-2">
+          <Button
+            variant="outline"
+            className="rounded-full gap-2 font-normal shadow-none cursor-pointer border-gray-400 text-neutral-600"
+          >
             <Upload size={18} />
             Export
           </Button>
@@ -64,11 +70,11 @@ const DynamicHeader = ({
 
         {actionLabel && (
           <Button
-            className="bg-black text-white rounded-full px-6 hover:bg-black/90"
+            className="bg-neutral-800 text-green-400 rounded-full cursor-pointer px-4 shadow-none hover:bg-black/90"
             onClick={onAction}
           >
             <span>
-              <Plus className="w-4 h-4" />
+              <Plus className="w-6 h-6" />
             </span>
             {actionLabel}
           </Button>

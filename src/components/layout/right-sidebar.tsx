@@ -40,6 +40,11 @@ const notifications: NotificationProps[] = [
     subtitle: "12 hours ago",
     icon: Bug,
   },
+  {
+    title: "You fixed a bug",
+    subtitle: "12 hours ago",
+    icon: Bug,
+  },
 ];
 
 const health: HealthProps[] = [
