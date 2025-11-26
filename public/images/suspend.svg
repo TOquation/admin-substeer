@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-labelledby="titleDesc">
+  <title id="titleDesc">Suspended status icon</title>
+
+  <!-- outer pale ring -->
+  <circle cx="60" cy="60" r="56" fill="#FFF9F0" />
+  <!-- second ring -->
+  <circle cx="60" cy="60" r="44" fill="#FFF1DF" />
+  <!-- third ring -->
+  <circle cx="60" cy="60" r="32" fill="#FFE0B8" />
+  <!-- inner dark circle -->
+  <circle cx="60" cy="60" r="20" fill="#BF6B00" />
+  <!-- inner border ring -->
+  <circle cx="60" cy="60" r="20" fill="none" stroke="#FFEDCC" stroke-width="2"/>
+
+  <!-- Pause symbol: two rounded vertical bars -->
+  <g fill="#FFF9F0">
+    <rect x="50" y="48" width="4.8" height="24" rx="1.2" />
+    <rect x="65.2" y="48" width="4.8" height="24" rx="1.2" />
+  </g>
+</svg>
