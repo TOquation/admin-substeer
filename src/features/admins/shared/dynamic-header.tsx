@@ -33,10 +33,10 @@ const DynamicHeader = ({
           <Button
             variant="outline"
             size="icon"
-            className="rounded-full"
+            className="rounded-full border border-gray-400 cursor-pointer hover:bg-transparent"
             onClick={onBack}
           >
-            <ArrowLeft size={20} />
+            <ArrowLeft className="!w-6 !h-6" size={60} />
           </Button>
         )}
 
