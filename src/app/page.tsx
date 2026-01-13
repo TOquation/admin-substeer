@@ -1,9 +1,9 @@
+import { redirect } from "next/navigation";
+
 const Homepage = () => {
-  return (
-    <div className="">
-      <h1 className="3xl:bg-green-600">good one</h1>
-    </div>
-  );
+  redirect("/login");
+
+  return null;
 };
 
 export default Homepage;

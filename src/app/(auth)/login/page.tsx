@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Login = () => {
@@ -12,6 +13,7 @@ const Login = () => {
   const handleShowPassword = () => {
     setShow(!show);
   };
+  const router = useRouter();
   return (
     <div>
       {showBanner ? (
@@ -47,6 +49,7 @@ const Login = () => {
                     className="py-5 px-3 rounded-full focus-visible:outline-none  focus-visible:ring-0 focus:ring-0 border border-gray-400 shadow-none"
                   />
                 </div>
+
                 <div className="relative">
                   <Input
                     type={show ? "text" : "password"}
@@ -68,6 +71,7 @@ const Login = () => {
                     />
                   )}
                 </div>
+
                 <div className="flex justify-between items-center">
                   <label className="flex gap-1.5 items-center text-sm">
                     <span>
@@ -80,6 +84,16 @@ const Login = () => {
                     Forgot password?
                   </button>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    router.push("/dashboard");
+                  }}
+                  className="rounded-full text-center cursor-pointer w-full font-roboto bg-green-400 text-sm hover:bg-green-500 ease-in-out duration-100 py-2.5"
+                >
+                  Log in
+                </button>
               </div>
             </form>
           </div>
@@ -91,7 +105,7 @@ const Login = () => {
               Lets get you started!
             </h1>
           </div>
-          <div className="absolute left-[50%] -translate-x-1/2 top-[20%] space-y-12">
+          <div className="absolute left-[50%] -translate-x-1/2 top-[20%] space-y-8">
             {/* subster logo */}
             <div className="flex justify-center">
               <Image
@@ -156,6 +170,16 @@ const Login = () => {
                       Forgot password?
                     </button>
                   </div>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      router.push("/dashboard");
+                    }}
+                    className="rounded-full text-center cursor-pointer w-full font-roboto bg-green-400 text-sm hover:bg-green-500 ease-in-out duration-100 py-2.5"
+                  >
+                    Log in
+                  </button>
                 </div>
               </form>
             </div>
