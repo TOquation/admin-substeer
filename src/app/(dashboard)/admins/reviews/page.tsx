@@ -31,7 +31,7 @@ const Reviews = () => {
               <div className="w-[80px] lg:w-[10%] text-sm"></div>
             </div>
 
-            {reviewCard.map((card, i) => (
+            {reviewCard.map((card) => (
               <div
                 key={card.id}
                 className="flex items-center bg-neutral-100 py-4 px-4 rounded-sm"
