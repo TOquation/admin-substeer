@@ -10,12 +10,14 @@ const page = () => {
   return (
     <div className="p-4 h-[calc(100vh-4.5rem)] flex flex-col overflow-hidden">
       <DynamicHeader
-        title="All Admin"
-        subtitle="Manage admins"
+        title="Roles"
+        subtitle="Manage roles or create roles"
         showFilter
         showExport
+        showBack
         actionLabel="Add Admin"
         onAction={() => router.push(`/admins/add-admin`)}
+        onBack={() => router.back()}
       />
 
       <div className="flex-1 overflow-y-auto">
