@@ -5,15 +5,114 @@ import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Login = () => {
   const [show, setShow] = useState(false);
-  const [showBanner] = useState(false);
+  const [showBanner, setShowBanner] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [errors, setErrors] = useState({ email: "", password: "" });
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkPreviousLogin = () => {
+      const cachedEmail = localStorage.getItem("cachedEmail");
+      const cachedPassword = localStorage.getItem("cachedPassword");
+      const hasLoggedInBefore = localStorage.getItem("hasLoggedInBefore");
+
+      if (hasLoggedInBefore === "true") {
+        setShowBanner(false);
+
+        if (cachedEmail && cachedPassword) {
+          setEmail(cachedEmail);
+          setPassword(cachedPassword);
+          setRememberMe(true);
+        }
+      } else {
+        // First time user - show banner
+        setShowBanner(true);
+      }
+    };
+
+    checkPreviousLogin();
+  }, []);
+
   const handleShowPassword = () => {
     setShow(!show);
   };
-  const router = useRouter();
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // Form validation
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = { email: "", password: "" };
+
+    // Email validation
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+      isValid = false;
+    } else if (!validateEmail(email)) {
+      newErrors.email = "Please enter a valid email address";
+      isValid = false;
+    }
+
+    // Password validation
+    if (!password.trim()) {
+      newErrors.password = "Password is required";
+      isValid = false;
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters";
+      isValid = false;
+    }
+
+    setErrors(newErrors);
+    return isValid;
+  };
+
+  // Handle form submission
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Validate form
+    if (!validateForm()) {
+      return;
+    }
+
+    localStorage.setItem("hasLoggedInBefore", "true");
+
+    if (rememberMe) {
+      localStorage.setItem("cachedEmail", email);
+      localStorage.setItem("cachedPassword", password);
+    } else {
+      localStorage.removeItem("cachedEmail");
+      localStorage.removeItem("cachedPassword");
+    }
+
+    // Navigate to dashboard
+    router.push("/dashboard");
+  };
+
+  // Clear error when user starts typing
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    if (errors.email) {
+      setErrors({ ...errors, email: "" });
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    if (errors.password) {
+      setErrors({ ...errors, password: "" });
+    }
+  };
+
   return (
     <div>
       {showBanner ? (
@@ -40,56 +139,84 @@ const Login = () => {
               </p>
             </div>
 
-            <form action="">
+            <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div className="">
                   <Input
+                    required
                     type="email"
                     placeholder="Email"
-                    className="py-5 px-3 rounded-full focus-visible:outline-none  focus-visible:ring-0 focus:ring-0 border border-gray-400 shadow-none"
+                    value={email}
+                    onChange={handleEmailChange}
+                    className={`py-5 px-3 rounded-full focus-visible:outline-none focus-visible:ring-0 focus:ring-0 border shadow-none ${
+                      errors.email ? "border-red-500" : "border-gray-400"
+                    }`}
                   />
+                  {errors.email && (
+                    <p className="text-red-500 text-xs mt-1 ml-4">
+                      {errors.email}
+                    </p>
+                  )}
                 </div>
 
-                <div className="relative">
-                  <Input
-                    type={show ? "text" : "password"}
-                    placeholder="Password"
-                    className="py-5 px-3 rounded-full focus:ring-0 focus:outline-none border border-gray-400 focus-visible:ring-0 shadow-none"
-                  />
+                <div className="">
+                  <div className="relative">
+                    <Input
+                      required
+                      type={show ? "text" : "password"}
+                      placeholder="Password"
+                      value={password}
+                      onChange={handlePasswordChange}
+                      className={`py-5 px-3 rounded-full focus:ring-0 focus:outline-none border focus-visible:ring-0 shadow-none ${
+                        errors.password ? "border-red-500" : "border-gray-400"
+                      }`}
+                    />
 
-                  {show ? (
-                    <Eye
-                      onClick={() => handleShowPassword()}
-                      className="absolute top-1/2 -translate-y-1/2 right-3 w-5 h-5"
-                      strokeWidth={1}
-                    />
-                  ) : (
-                    <EyeOff
-                      onClick={() => handleShowPassword()}
-                      className="absolute top-1/2 -translate-y-1/2 right-3 w-5 h-5"
-                      strokeWidth={1}
-                    />
+                    {show ? (
+                      <Eye
+                        onClick={handleShowPassword}
+                        className="absolute top-1/2 -translate-y-1/2 right-3 w-5 h-5 cursor-pointer"
+                        strokeWidth={1}
+                      />
+                    ) : (
+                      <EyeOff
+                        onClick={handleShowPassword}
+                        className="absolute top-1/2 -translate-y-1/2 right-3 w-5 h-5 cursor-pointer"
+                        strokeWidth={1}
+                      />
+                    )}
+                  </div>
+                  {errors.password && (
+                    <p className="text-red-500 text-xs mt-1 ml-4">
+                      {errors.password}
+                    </p>
                   )}
                 </div>
 
                 <div className="flex justify-between items-center">
                   <label className="flex gap-1.5 items-center text-sm">
                     <span>
-                      <Checkbox className="w-4 h-4 rounded-none border border-gray-400 data-[state=checked]:border-green-200 data-[state=checked]:bg-green-400 cursor-pointer hover:border-green-400" />
+                      <Checkbox
+                        checked={rememberMe}
+                        onCheckedChange={(checked) =>
+                          setRememberMe(checked as boolean)
+                        }
+                        className="w-4 h-4 rounded-none border border-gray-400 data-[state=checked]:border-green-200 data-[state=checked]:bg-green-400 cursor-pointer hover:border-green-400"
+                      />
                     </span>
                     <span>Remember me</span>
                   </label>
 
-                  <button className="text-sm cursor-pointer text-indigo-700">
+                  <button
+                    type="button"
+                    className="text-sm cursor-pointer text-indigo-700"
+                  >
                     Forgot password?
                   </button>
                 </div>
 
                 <button
-                  type="button"
-                  onClick={() => {
-                    router.push("/dashboard");
-                  }}
+                  type="submit"
                   className="rounded-full text-center cursor-pointer w-full font-roboto bg-green-400 text-sm hover:bg-green-500 ease-in-out duration-100 py-2.5"
                 >
                   Log in
@@ -128,54 +255,84 @@ const Login = () => {
                 </p>
               </div>
 
-              <form action="">
+              <form onSubmit={handleSubmit}>
                 <div className="space-y-4">
                   <div className="">
                     <Input
+                      required
                       type="email"
                       placeholder="Email"
-                      className="py-5 px-3 rounded-full focus-visible:outline-none  focus-visible:ring-0 focus:ring-0 border border-gray-400 shadow-none"
+                      value={email}
+                      onChange={handleEmailChange}
+                      className={`py-5 px-3 rounded-full focus-visible:outline-none focus-visible:ring-0 focus:ring-0 border shadow-none ${
+                        errors.email ? "border-red-500" : "border-gray-400"
+                      }`}
                     />
-                  </div>
-                  <div className="relative">
-                    <Input
-                      type={show ? "text" : "password"}
-                      placeholder="Password"
-                      className="py-5 px-3 rounded-full focus:ring-0 focus:outline-none border border-gray-400 focus-visible:ring-0 shadow-none"
-                    />
-
-                    {show ? (
-                      <Eye
-                        onClick={() => handleShowPassword()}
-                        className="absolute top-1/2 -translate-y-1/2 right-3 w-5 h-5"
-                        strokeWidth={1}
-                      />
-                    ) : (
-                      <EyeOff
-                        onClick={() => handleShowPassword()}
-                        className="absolute top-1/2 -translate-y-1/2 right-3 w-5 h-5"
-                        strokeWidth={1}
-                      />
+                    {errors.email && (
+                      <p className="text-red-500 text-xs mt-1 ml-4">
+                        {errors.email}
+                      </p>
                     )}
                   </div>
+
+                  <div className="">
+                    <div className="relative">
+                      <Input
+                        required
+                        type={show ? "text" : "password"}
+                        placeholder="Password"
+                        value={password}
+                        onChange={handlePasswordChange}
+                        className={`py-5 px-3 rounded-full focus:ring-0 focus:outline-none border focus-visible:ring-0 shadow-none ${
+                          errors.password ? "border-red-500" : "border-gray-400"
+                        }`}
+                      />
+
+                      {show ? (
+                        <Eye
+                          onClick={handleShowPassword}
+                          className="absolute top-1/2 -translate-y-1/2 right-3 w-5 h-5 cursor-pointer"
+                          strokeWidth={1}
+                        />
+                      ) : (
+                        <EyeOff
+                          onClick={handleShowPassword}
+                          className="absolute top-1/2 -translate-y-1/2 right-3 w-5 h-5 cursor-pointer"
+                          strokeWidth={1}
+                        />
+                      )}
+                    </div>
+                    {errors.password && (
+                      <p className="text-red-500 text-xs mt-1 ml-4">
+                        {errors.password}
+                      </p>
+                    )}
+                  </div>
+
                   <div className="flex justify-between items-center">
                     <label className="flex gap-1.5 items-center text-sm">
                       <span>
-                        <Checkbox className="w-4 h-4 rounded-none border border-gray-400 data-[state=checked]:border-green-200 data-[state=checked]:bg-green-400 cursor-pointer hover:border-green-400" />
+                        <Checkbox
+                          checked={rememberMe}
+                          onCheckedChange={(checked) =>
+                            setRememberMe(checked as boolean)
+                          }
+                          className="w-4 h-4 rounded-none border border-gray-400 data-[state=checked]:border-green-200 data-[state=checked]:bg-green-400 cursor-pointer hover:border-green-400"
+                        />
                       </span>
                       <span>Remember me</span>
                     </label>
 
-                    <button className="text-sm cursor-pointer text-indigo-700">
+                    <button
+                      type="button"
+                      className="text-sm cursor-pointer text-indigo-700"
+                    >
                       Forgot password?
                     </button>
                   </div>
 
                   <button
-                    type="button"
-                    onClick={() => {
-                      router.push("/dashboard");
-                    }}
+                    type="submit"
                     className="rounded-full text-center cursor-pointer w-full font-roboto bg-green-400 text-sm hover:bg-green-500 ease-in-out duration-100 py-2.5"
                   >
                     Log in

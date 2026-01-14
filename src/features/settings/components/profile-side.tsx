@@ -1,37 +1,6 @@
 import Image from "next/image";
 import React from "react";
-
-interface profileSideProps {
-  title: string;
-  subtitle: string;
-}
-
-const userData: profileSideProps[] = [
-  {
-    title: "Employee ID ",
-    subtitle: "Colab12345",
-  },
-  {
-    title: "Role",
-    subtitle: "Marketing",
-  },
-  {
-    title: "Gender",
-    subtitle: "Male",
-  },
-  {
-    title: "Date of birth",
-    subtitle: "10th May 2000",
-  },
-  {
-    title: "Hire date",
-    subtitle: "09th May 2022",
-  },
-  {
-    title: "Job Type",
-    subtitle: "Contract",
-  },
-];
+import { userData } from "../data";
 
 const ProfileSide = () => {
   return (
