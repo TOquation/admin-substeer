@@ -107,18 +107,16 @@ const settingsItems = {
 const LeftSidebar = () => {
   const pathname = usePathname();
 
-  // Helper function to check if a route is active
+  //if a route is active
   const isActiveRoute = (url: string, hasSubItems?: boolean) => {
     if (url === "/") {
       return pathname === "/";
     }
-    if (hasSubItems) {
-      return pathname.startsWith(url);
-    }
-    return pathname === url;
+    // For all routes (with or without subitems), check if pathname starts with the url
+    return pathname.startsWith(url);
   };
 
-  // Helper to check if submenu item is active (including sub-pages)
+  //if submenu item is active (including sub-pages)
   const isSubMenuActive = (url: string) => {
     return pathname.startsWith(url);
   };
