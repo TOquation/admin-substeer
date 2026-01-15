@@ -17,6 +17,7 @@ const Reviews = () => {
         showFilter
         showExport
         actionLabel="Add Admin"
+        onAction={() => router.push(`/admins/add-admin`)}
       />
 
       <div className="mt-1 pb-6 overflow-y-auto">

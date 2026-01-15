@@ -26,6 +26,7 @@ const ProfileReview = ({ params }: { params: Promise<{ id: string }> }) => {
         showExport
         showBack
         actionLabel="Add Admin"
+        onAction={() => router.push(`/admins/add-admin`)}
         onBack={() => router.back()}
       />
 
