@@ -5,8 +5,8 @@ import AdminDeatails from "@/features/admins/review/components/admin-detail";
 import AdminPanel from "@/features/admins/review/components/admin-panel";
 import DynamicHeader from "@/features/admins/shared/dynamic-header";
 import { cn } from "@/lib/utils";
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { useState, Suspense } from "react";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
 
 type View = "Personal data" | "Job Information";
 

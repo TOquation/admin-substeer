@@ -5,7 +5,6 @@ import { reviewCard } from "@/features/admins/data";
 import DynamicHeader from "@/features/admins/shared/dynamic-header";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import React from "react";
 
 const Reviews = () => {
   const router = useRouter();
