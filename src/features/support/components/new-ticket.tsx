@@ -9,7 +9,7 @@ import {
   Pin,
   Star,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { getPriorityColor, newTickets } from "../data";
@@ -49,8 +49,35 @@ const getStatusColor = (status: string) => {
 
 const NewItems = () => {
   const router = useRouter();
+  const [starredTickets, setStarredTickets] = useState<Set<number>>(new Set());
+  const [pinnedTickets, setPinnedTickets] = useState<Set<number>>(new Set());
+
   const handleTicket = (id: number) => {
     router.push(`/support/new-tickets/ticket-details?id=${id}`);
+  };
+
+  const toggleStar = (id: number) => {
+    setStarredTickets((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
+  };
+
+  const togglePin = (id: number) => {
+    setPinnedTickets((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(id)) {
+        newSet.delete(id);
+      } else {
+        newSet.add(id);
+      }
+      return newSet;
+    });
   };
 
   return (
@@ -186,22 +213,40 @@ const NewItems = () => {
                 className="text-sm grid grid-cols-3 col-span-2 relative w-full h-full"
               >
                 {/* Star + separator */}
-                <div className="relative flex items-center justify-center w-full h-full">
-                  <Star className="w-5 h-5" />
+                <button
+                  onClick={() => toggleStar(ticket.id)}
+                  className="relative flex items-center justify-center w-full h-full hover:bg-gray-200 transition-colors"
+                >
+                  <Star
+                    className={`w-5 h-5 ${
+                      starredTickets.has(ticket.id)
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "text-gray-600"
+                    }`}
+                  />
                   <Separator
                     orientation="vertical"
                     className="absolute top-0 bottom-0 right-0 bg-gray-300 w-[1px]"
                   />
-                </div>
+                </button>
 
                 {/* Pin + separator */}
-                <div className="relative flex items-center justify-center w-full h-full">
-                  <Pin className="w-5 h-5" />
+                <button
+                  onClick={() => togglePin(ticket.id)}
+                  className="relative flex items-center justify-center w-full h-full hover:bg-gray-200 transition-colors"
+                >
+                  <Pin
+                    className={`w-5 h-5 ${
+                      pinnedTickets.has(ticket.id)
+                        ? "fill-gray-600 text-gray-600"
+                        : "text-gray-600"
+                    }`}
+                  />
                   <Separator
                     orientation="vertical"
                     className="absolute top-0 bottom-0 right-0 bg-gray-300 w-[1px]"
                   />
-                </div>
+                </button>
 
                 {/* More */}
                 <div className="flex items-center justify-center w-full h-full">
