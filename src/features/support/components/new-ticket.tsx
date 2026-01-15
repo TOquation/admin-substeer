@@ -238,7 +238,7 @@ const NewItems = () => {
                   <Pin
                     className={`w-5 h-5 ${
                       pinnedTickets.has(ticket.id)
-                        ? "fill-gray-500 text-gray-500"
+                        ? "fill-gray-600 text-gray-600"
                         : "text-gray-600"
                     }`}
                   />
