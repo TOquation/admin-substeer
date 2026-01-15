@@ -11,6 +11,7 @@ interface DynamicHeaderProps {
   actionLabel?: string;
   onBack?: () => void;
   onAction?: () => void;
+  children?: React.ReactNode;
 }
 
 const DynamicHeader = ({
@@ -22,6 +23,7 @@ const DynamicHeader = ({
   actionLabel,
   onBack,
   onAction,
+  children,
 }: DynamicHeaderProps) => {
   return (
     <div className="flex items-center justify-between w-full">
@@ -65,6 +67,8 @@ const DynamicHeader = ({
             Export
           </Button>
         )}
+
+        {children}
 
         {actionLabel && (
           <Button

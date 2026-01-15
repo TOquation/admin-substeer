@@ -22,7 +22,6 @@ const ProfileReview = ({ params }: { params: Promise<{ id: string }> }) => {
       <DynamicHeader
         title="Review"
         subtitle="Manage invited admins"
-        showFilter
         showExport
         showBack
         actionLabel="Add Admin"

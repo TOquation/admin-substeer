@@ -3,21 +3,77 @@
 import { Button } from "@/components/ui/button";
 import { reviewCard } from "@/features/admins/data";
 import DynamicHeader from "@/features/admins/shared/dynamic-header";
+import ReviewFilters from "@/features/admins/review/components/review-filters";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState, useMemo } from "react";
+
+// Helper function to parse "jan 5th 2021" format
+const parseSubmittedDate = (dateStr: string): Date => {
+  // Remove ordinal indicators (st, nd, rd, th)
+  const cleaned = dateStr.replace(/(\d+)(st|nd|rd|th)/i, "$1");
+
+  // Parse the cleaned date
+  const date = new Date(cleaned);
+
+  return date;
+};
 
 const Reviews = () => {
   const router = useRouter();
+  const [filters, setFilters] = useState<{
+    dateFrom?: string;
+    dateTo?: string;
+  }>({});
+
+  const filteredCards = useMemo(() => {
+    if (!filters.dateFrom && !filters.dateTo) return reviewCard;
+
+    return reviewCard.filter((card) => {
+      // Parse the date from format "jan 5th 2021"
+      const submittedDate = parseSubmittedDate(card.submittedOn);
+
+      // Skip if date is invalid
+      if (isNaN(submittedDate.getTime())) {
+        return true; // Keep the card if we can't parse the date
+      }
+
+      // Reset time to compare dates only
+      submittedDate.setHours(0, 0, 0, 0);
+
+      if (filters.dateFrom) {
+        const fromDate = new Date(filters.dateFrom);
+        fromDate.setHours(0, 0, 0, 0);
+
+        if (submittedDate < fromDate) {
+          return false;
+        }
+      }
+
+      if (filters.dateTo) {
+        const toDate = new Date(filters.dateTo);
+        toDate.setHours(23, 59, 59, 999);
+
+        if (submittedDate > toDate) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [filters]);
+
   return (
     <div className="p-4 h-[calc(100vh-4.5rem)] flex flex-col overflow-hidden">
       <DynamicHeader
         title="Review"
         subtitle="Manage invited admins"
-        showFilter
         showExport
         actionLabel="Add Admin"
         onAction={() => router.push(`/admins/add-admin`)}
-      />
+      >
+        <ReviewFilters onFilterChange={setFilters} />
+      </DynamicHeader>
 
       <div className="mt-1 pb-6 overflow-y-auto">
         <div className="overflow-x-auto">
@@ -31,49 +87,55 @@ const Reviews = () => {
               <div className="w-[80px] lg:w-[10%] text-sm"></div>
             </div>
 
-            {reviewCard.map((card) => (
-              <div
-                key={card.id}
-                className="flex items-center bg-neutral-100 py-4 px-4 rounded-sm"
-              >
-                {/* img + name */}
-                <div className="flex items-center gap-3 w-[280px] min-w-[280px] lg:min-w-0 lg:w-[33%]">
-                  <Image
-                    src={card.imgSrc}
-                    alt="admin-pix"
-                    width={32}
-                    height={32}
-                    className="rounded-full object-cover flex-shrink-0"
-                  />
-                  <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
-                    {card.name}
-                  </p>
-                </div>
-
-                {/* email */}
-                <div className="w-[280px] min-w-[280px] lg:min-w-0 lg:w-[33%]">
-                  <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis text-cyan-600">
-                    {card.email}
-                  </p>
-                </div>
-
-                {/* submitted on */}
-                <div className="w-[160px] min-w-[160px] lg:min-w-0 lg:w-[24%]">
-                  <p className="text-sm whitespace-nowrap text-neutral-500">
-                    {card.submittedOn}
-                  </p>
-                </div>
-
-                <div className="w-[80px] min-w-[80px] lg:min-w-0 lg:w-[10%] flex justify-end">
-                  <Button
-                    onClick={() => router.push(`/admins/reviews/${card.id}`)}
-                    className="rounded-full text-xs h-7.5 px-3 cursor-pointer text-green-400"
-                  >
-                    view profile
-                  </Button>
-                </div>
+            {filteredCards.length === 0 ? (
+              <div className="text-center py-8 text-neutral-500">
+                No admins found for the selected date range
               </div>
-            ))}
+            ) : (
+              filteredCards.map((card) => (
+                <div
+                  key={card.id}
+                  className="flex items-center bg-neutral-100 py-4 px-4 rounded-sm"
+                >
+                  {/* img + name */}
+                  <div className="flex items-center gap-3 w-[280px] min-w-[280px] lg:min-w-0 lg:w-[33%]">
+                    <Image
+                      src={card.imgSrc}
+                      alt="admin-pix"
+                      width={32}
+                      height={32}
+                      className="rounded-full object-cover flex-shrink-0"
+                    />
+                    <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis">
+                      {card.name}
+                    </p>
+                  </div>
+
+                  {/* email */}
+                  <div className="w-[280px] min-w-[280px] lg:min-w-0 lg:w-[33%]">
+                    <p className="text-sm whitespace-nowrap overflow-hidden text-ellipsis text-cyan-600">
+                      {card.email}
+                    </p>
+                  </div>
+
+                  {/* submitted on */}
+                  <div className="w-[160px] min-w-[160px] lg:min-w-0 lg:w-[24%]">
+                    <p className="text-sm whitespace-nowrap text-neutral-500">
+                      {card.submittedOn}
+                    </p>
+                  </div>
+
+                  <div className="w-[80px] min-w-[80px] lg:min-w-0 lg:w-[10%] flex justify-end">
+                    <Button
+                      onClick={() => router.push(`/admins/reviews/${card.id}`)}
+                      className="rounded-full text-xs h-7.5 px-3 cursor-pointer text-green-400"
+                    >
+                      view profile
+                    </Button>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
