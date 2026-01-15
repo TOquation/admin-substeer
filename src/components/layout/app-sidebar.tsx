@@ -1,16 +1,16 @@
 "use client";
 
 import {
-  Home,
   Users,
   Puzzle,
   Store,
-  HeadphonesIcon,
+  Headphones,
   BarChart3,
   Code2,
   UserCog,
   ChevronRight,
   Settings,
+  LayoutGrid,
 } from "lucide-react";
 import {
   Sidebar,
@@ -41,7 +41,7 @@ const menuItems = [
   {
     title: "Dashboard",
     url: "/dashboard",
-    icon: Home,
+    icon: LayoutGrid,
   },
   {
     title: "Users",
@@ -65,7 +65,7 @@ const menuItems = [
   {
     title: "Support",
     url: "/support",
-    icon: HeadphonesIcon,
+    icon: Headphones,
     subItems: [
       { title: "New Message", url: "/support/new-message", badge: 20 },
       { title: "New Tickets", url: "/support/new-tickets", badge: 20 },
@@ -118,6 +118,11 @@ const LeftSidebar = () => {
     return pathname === url;
   };
 
+  // Helper to check if submenu item is active (including sub-pages)
+  const isSubMenuActive = (url: string) => {
+    return pathname.startsWith(url);
+  };
+
   return (
     <Sidebar collapsible="icon" className="border-r">
       <SidebarHeader
@@ -166,29 +171,23 @@ const LeftSidebar = () => {
             {/* Menu Items */}
             <div className="space-y-2">
               {/* Overview */}
-              <Link
-                href="/overview"
-                className="flex items-center gap-2 text-gray-900 py-1 hover:bg-gray-100 rounded-md transition-colors"
-              >
-                <div className="w-2 h-2 rounded-full bg-green-400 shrink-0"></div>
-                <span className="text-sm font-medium">Overview</span>
-              </Link>
+              <div className="flex items-center gap-2 text-black py-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-300 shrink-0"></div>
+                <span className="text-sm">Marketplace</span>
+              </div>
 
               {/* Projects */}
-              <Link
-                href="/projects"
-                className="flex items-center gap-2 text-gray-900 py-1 hover:bg-gray-100 rounded-md transition-colors"
-              >
-                <div className="w-2 h-2 rounded-full bg-green-400 shrink-0"></div>
-                <span className="text-sm font-medium">Projects</span>
-              </Link>
+              <div className="flex items-center gap-2 text-black py-1">
+                <div className="w-1.5 h-1.5 rounded-full bg-green-300 shrink-0"></div>
+                <span className="text-sm">Admins</span>
+              </div>
             </div>
           </div>
         </SidebarGroup>
 
         {/* Main Menu */}
         <SidebarGroup className="group-data-[collapsible=icon]:mt-2">
-          <SidebarGroupLabel className="text-xs text-gray-400 uppercase mb-2 group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel className="text-xs text-black/40 uppercase mb-2 group-data-[collapsible=icon]:hidden">
             Menu
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -201,25 +200,26 @@ const LeftSidebar = () => {
                     defaultOpen={isActiveRoute(item.url, true)}
                     className="group/collapsible"
                   >
-                    <SidebarMenuItem>
-                      <CollapsibleTrigger asChild>
+                    <SidebarMenuItem className="">
+                      <CollapsibleTrigger className="" asChild>
                         <SidebarMenuButton
                           tooltip={item.title}
-                          className="w-full"
+                          className="w-full hover:bg-transparent data-[state=open]:bg-green-50 data-[state=open]:text-black group-data-[collapsible=icon]:data-[state=open]:bg-transparent"
                           isActive={isActiveRoute(item.url, true)}
                         >
+                          <ChevronRight className="!w-4 !h-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
                           <item.icon className="!w-4 !h-4" />
                           <span>{item.title}</span>
-                          <ChevronRight className="ml-auto !w-4 !h-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
                       <CollapsibleContent>
-                        <SidebarMenuSub>
+                        <SidebarMenuSub className="ml-8">
                           {item.subItems.map((subItem) => (
                             <SidebarMenuSubItem key={subItem.title}>
                               <SidebarMenuSubButton
                                 asChild
-                                isActive={pathname === subItem.url}
+                                isActive={isSubMenuActive(subItem.url)}
+                                className="data-[active=true]:bg-neutral-800 data-[active=true]:text-green-400"
                               >
                                 <Link
                                   href={subItem.url}
@@ -227,7 +227,7 @@ const LeftSidebar = () => {
                                 >
                                   <span>{subItem.title}</span>
                                   {subItem.badge && (
-                                    <span className="ml-auto  !h-6 inline-flex !w-6 items-center justify-center rounded-full bg-red-500  text-xs font-medium text-white">
+                                    <span className="ml-auto !h-5 inline-flex !w-5 items-center justify-center rounded-full bg-red-500 text-[10px] font-medium text-white">
                                       {subItem.badge > 9 ? "9+" : subItem.badge}
                                     </span>
                                   )}
@@ -246,11 +246,7 @@ const LeftSidebar = () => {
                       asChild
                       tooltip={item.title}
                       isActive={isActiveRoute(item.url)}
-                      className={
-                        isActiveRoute(item.url)
-                          ? "bg-gray-900 text-white hover:bg-gray-900 hover:text-white"
-                          : ""
-                      }
+                      className="hover:bg-transparent data-[active=true]:bg-neutral-800 data-[active=true]:text-green-400"
                     >
                       <Link href={item.url}>
                         <item.icon className="!w-4 !h-4" />
@@ -278,18 +274,19 @@ const LeftSidebar = () => {
                   className="w-full"
                   isActive={isActiveRoute(settingsItems.url, true)}
                 >
+                  <ChevronRight className="!w-4 !h-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
                   <settingsItems.icon className="!w-4 !h-4" />
                   <span>{settingsItems.title}</span>
-                  <ChevronRight className="ml-auto !w-4 !h-4 transition-transform group-data-[state=open]/collapsible:rotate-90" />
                 </SidebarMenuButton>
               </CollapsibleTrigger>
               <CollapsibleContent>
-                <SidebarMenuSub>
+                <SidebarMenuSub className="ml-8">
                   {settingsItems.subItems.map((subItem) => (
                     <SidebarMenuSubItem key={subItem.title}>
                       <SidebarMenuSubButton
                         asChild
-                        isActive={pathname === subItem.url}
+                        isActive={isSubMenuActive(subItem.url)}
+                        className="data-[active=true]:bg-neutral-800 data-[active=true]:text-green-400"
                       >
                         <Link href={subItem.url}>
                           <span>{subItem.title}</span>

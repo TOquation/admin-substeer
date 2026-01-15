@@ -83,10 +83,10 @@ const AdminDeatails = ({ view }: { view: string }) => {
           </div>
           {/* cta */}
           <div className="flex items-center gap-3 mt-8 justify-end">
-            <Button className="cursor-pointer text-xs bg-red-600">
+            <Button className="cursor-pointer text-zinc-100 text-xs bg-red-600">
               Decline
             </Button>
-            <Button className="cursor-pointer text-xs bg-green-600">
+            <Button className="cursor-pointer text-zinc-100 text-xs bg-green-600">
               Approve Profile
             </Button>
           </div>
@@ -116,10 +116,10 @@ const AdminDeatails = ({ view }: { view: string }) => {
           </div>
           {/* cta */}
           <div className="flex items-center gap-3 mt-8 justify-end">
-            <Button className="cursor-pointer text-xs bg-red-600">
+            <Button className="cursor-pointer text-xs text-zinc-100 bg-red-600">
               Decline
             </Button>
-            <Button className="cursor-pointer text-xs bg-green-600">
+            <Button className="cursor-pointer text-xs text-zinc-100 bg-green-600">
               Approve Profile
             </Button>
           </div>

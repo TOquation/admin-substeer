@@ -66,9 +66,7 @@ const Reviews = () => {
 
                 <div className="w-[80px] min-w-[80px] lg:min-w-0 lg:w-[10%] flex justify-end">
                   <Button
-                    onClick={() =>
-                      router.push(`./profile-review?id=${card.id}`)
-                    }
+                    onClick={() => router.push(`/admins/reviews/${card.id}`)}
                     className="rounded-full text-xs h-7.5 px-3 cursor-pointer text-green-400"
                   >
                     view profile
