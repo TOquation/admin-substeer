@@ -38,7 +38,7 @@ const DeveloperTool = () => {
               />
             </div>
 
-            <Button className="py-6 rounded-2xl w-28 flex gap-2 text-green-400 text-sm cursor-pointer">
+            <Button className="py-6 rounded-2xl w-28 flex gap-2 text-[#04FB43] bg-black hover:bg-[#04FB43] hover:text-black text-sm cursor-pointer">
               <span>Send</span>
               <Send />
             </Button>

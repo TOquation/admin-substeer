@@ -1,4 +1,3 @@
-// ticket-item.tsx
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -9,7 +8,7 @@ import {
   Pin,
   Star,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { getPriorityColor, newTickets } from "../data";
@@ -47,12 +46,26 @@ const getStatusColor = (status: string) => {
   }
 };
 
-const NewItems = () => {
+interface NewItemsProps {
+  filterPriority: "All" | "High" | "Medium" | "Low";
+  filterStatus: "All" | "Open" | "In-Progress" | "Resolved" | "Closed";
+  filterRead: "All" | "Read" | "Unread";
+  sortDate: "Oldest" | "Newest";
+}
+
+const NewItems = ({
+  filterPriority,
+  filterStatus,
+  filterRead,
+  sortDate,
+}: NewItemsProps) => {
   const router = useRouter();
   const [starredTickets, setStarredTickets] = useState<Set<number>>(new Set());
   const [pinnedTickets, setPinnedTickets] = useState<Set<number>>(new Set());
+  const [readTickets, setReadTickets] = useState<Set<number>>(new Set());
 
   const handleTicket = (id: number) => {
+    setReadTickets((prev) => new Set(prev).add(id));
     router.push(`/support/new-tickets/ticket-details?id=${id}`);
   };
 
@@ -80,184 +93,233 @@ const NewItems = () => {
     });
   };
 
+  // Filter and sort tickets
+  const filteredAndSortedTickets = useMemo(() => {
+    let filtered = [...newTickets];
+
+    // Filter by priority
+    if (filterPriority !== "All") {
+      filtered = filtered.filter(
+        (ticket) => ticket.priority === filterPriority
+      );
+    }
+
+    // Filter by status
+    if (filterStatus !== "All") {
+      filtered = filtered.filter((ticket) => ticket.status === filterStatus);
+    }
+
+    // Filter by read/unread
+    if (filterRead === "Read") {
+      filtered = filtered.filter((ticket) => readTickets.has(ticket.id));
+    } else if (filterRead === "Unread") {
+      filtered = filtered.filter((ticket) => !readTickets.has(ticket.id));
+    }
+
+    // Sort by date (we'll use ticket ID as proxy for date since no date field exists)
+    const sorted = [...filtered].sort((a, b) => {
+      if (sortDate === "Newest") {
+        return b.id - a.id;
+      } else {
+        return a.id - b.id;
+      }
+    });
+
+    return sorted;
+  }, [filterPriority, filterStatus, filterRead, sortDate, readTickets]);
+
   return (
     <div className="py-4 font-fredoka">
       {/* List */}
       <div className="space-y-4 overflow-y-auto pb-12 max-h-[calc(90vh-8.5rem)]">
-        {newTickets.map((ticket, index) => (
-          <div
-            key={index}
-            onClick={() => handleTicket(ticket.id)}
-            className="flex flex-col bg-gray-50 pt-4 border-l-black border-l-6 rounded-l-sm  cursor-pointer hover:bg-gray-100 transition-colors"
-          >
-            <div className="flex items-center flex-1 gap-3 pl-2.5 pr-4 ">
-              <Checkbox
-                className="border-gray-500 cursor-pointer"
-                onClick={(e) => e.stopPropagation()}
-              />
-
-              <div className="flex items-center flex-1 gap-6">
-                <div className="place-content-center grid text-green-400 font-semibold bg-black rounded-sm h-10 w-10 text-lg">
-                  {getNews(ticket.user)}
-                </div>
-
-                <div className="flex flex-col flex-1">
-                  <h2 className="space-x-4 text-sm">
-                    <span className="text-indigo-600 font-semibold">
-                      {ticket.title}
-                    </span>
-                    <span className="text-gray-400">{ticket.msgId}</span>
-                  </h2>
-
-                  <div className="flex items-center space-x-6 text-xs text-gray-400">
-                    <p className="inline-flex items-center space-x-1">
-                      <MessageSquare className="h-3 w-3" />
-                      <span>{ticket.user}</span>
-                    </p>
-
-                    <div className="h-[0.35rem] w-[0.35rem] rounded-full bg-gray-400" />
-
-                    <p>{ticket.duration}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <Separator className="h-1.5 bg-gray-300 mt-3" />
-            <div className="pl-2.5 pr-4 grid grid-cols-6 ">
-              {/* column-1 */}
-              <div className="text-sm py-3 relative">
-                <div className="flex flex-col absolute left-8">
-                  <span className="text-xs text-gray-500">Status</span>
-                  <div className="flex items-center gap-1">
-                    <div
-                      className={`h-2 w-2 rounded-full ${
-                        getStatusColor(ticket.status).dot
-                      }`}
-                    ></div>
-                    <span className={`${getStatusColor(ticket.status).text}`}>
-                      {ticket.status}
-                    </span>
-                  </div>
-                </div>
-                <Separator
-                  orientation="vertical"
-                  className="w-1 h-full bg-gray-300 absolute top-0 bottom-0 right-0"
-                />
-              </div>
-
-              {/* column 2 */}
-              <div className="text-sm flex justify-center w-full relative">
-                <div className="flex flex-col py-3">
-                  <span className="text-xs text-gray-500">Assigned to:</span>
-                  <p className="flex gap-1 items-center">
-                    <span>{ticket.assignedTo}</span>
-                    <span>
-                      <ChevronDown className="w-4 h-4" />
-                    </span>
-                  </p>
-                  <Separator
-                    orientation="vertical"
-                    className="w-1 h-full bg-gray-300 absolute top-0 bottom-0 right-0"
-                  />
-                </div>
-              </div>
-
-              {/* column-3 */}
-              <div className="text-sm flex justify-center w-full relative">
-                <div className="flex flex-col py-3">
-                  <span className="text-xs text-gray-500">Priority:</span>
-                  <div className={`flex items-center `}>
-                    <div
-                      className={`h-2.5 w-2.5 rounded-xs ${
-                        getPriorityColor(ticket.priority).dot
-                      }`}
-                    ></div>
-                    <span
-                      className={`ml-1.5 ${
-                        getPriorityColor(ticket.priority).text
-                      }`}
-                    >
-                      {ticket.priority}
-                    </span>
-                    <span>
-                      <ChevronDown className="h-4 w-4" />
-                    </span>
-                  </div>
-                  <Separator
-                    orientation="vertical"
-                    className="w-1 h-full bg-gray-300 absolute top-0 bottom-0 right-0"
-                  />
-                </div>
-              </div>
-
-              {/* column-4 */}
-              <div className="text-sm flex justify-center w-full relative">
-                <div className="flex flex-col py-3">
-                  <span className="text-xs text-gray-500">Category</span>
-                  <div className="flex gap-1 items-center">
-                    <span>Sales</span>
-                    <span>
-                      <ChevronDown className="w-4 h-4 text-gray-900" />
-                    </span>
-                  </div>
-                  <Separator
-                    orientation="vertical"
-                    className="w-1 h-full bg-gray-300 absolute top-0 bottom-0 right-0"
-                  />
-                </div>
-              </div>
-
-              {/* column-5 */}
-              <div
-                onClick={(e) => e.stopPropagation()}
-                className="text-sm grid grid-cols-3 col-span-2 relative w-full h-full"
-              >
-                {/* Star + separator */}
-                <button
-                  onClick={() => toggleStar(ticket.id)}
-                  className="relative flex items-center justify-center w-full h-full hover:bg-gray-200 transition-colors"
-                >
-                  <Star
-                    className={`w-5 h-5 ${
-                      starredTickets.has(ticket.id)
-                        ? "fill-yellow-400 text-yellow-400"
-                        : "text-gray-600"
-                    }`}
-                  />
-                  <Separator
-                    orientation="vertical"
-                    className="absolute top-0 bottom-0 right-0 bg-gray-300 w-[1px]"
-                  />
-                </button>
-
-                {/* Pin + separator */}
-                <button
-                  onClick={() => togglePin(ticket.id)}
-                  className="relative flex items-center justify-center w-full h-full hover:bg-gray-200 transition-colors"
-                >
-                  <Pin
-                    className={`w-5 h-5 ${
-                      pinnedTickets.has(ticket.id)
-                        ? "fill-gray-600 text-gray-600"
-                        : "text-gray-600"
-                    }`}
-                  />
-                  <Separator
-                    orientation="vertical"
-                    className="absolute top-0 bottom-0 right-0 bg-gray-300 w-[1px]"
-                  />
-                </button>
-
-                {/* More */}
-                <div className="flex items-center justify-center w-full h-full">
-                  <div className="border-[1.5px] p-0.5 border-gray-900 rounded-full">
-                    <MoreHorizontal className="w-5 h-5" />
-                  </div>
-                </div>
-              </div>
-            </div>
+        {filteredAndSortedTickets.length === 0 ? (
+          <div className="text-center py-12 text-gray-500">
+            No tickets found with current filters
           </div>
-        ))}
+        ) : (
+          filteredAndSortedTickets.map((ticket, index) => (
+            <div
+              key={index}
+              onClick={() => handleTicket(ticket.id)}
+              className={`flex flex-col bg-gray-50 pt-4 border-l-black border-l-6 rounded-l-sm cursor-pointer hover:bg-gray-100 transition-colors ${
+                !readTickets.has(ticket.id) ? "bg-blue-50" : ""
+              }`}
+            >
+              <div className="flex items-center flex-1 gap-3 pl-2.5 pr-4">
+                <Checkbox
+                  className="border-gray-500 cursor-pointer"
+                  onClick={(e) => e.stopPropagation()}
+                />
+
+                <div className="flex items-center flex-1 gap-6">
+                  <div className="place-content-center grid text-green-400 font-semibold bg-black rounded-sm h-10 w-10 text-lg">
+                    {getNews(ticket.user)}
+                  </div>
+
+                  <div className="flex flex-col flex-1">
+                    <h2 className="space-x-4 text-sm">
+                      <span
+                        className={`font-semibold ${
+                          !readTickets.has(ticket.id)
+                            ? "text-indigo-700"
+                            : "text-indigo-600"
+                        }`}
+                      >
+                        {ticket.title}
+                      </span>
+                      <span className="text-gray-400">{ticket.msgId}</span>
+                    </h2>
+
+                    <div className="flex items-center space-x-6 text-xs text-gray-400">
+                      <p className="inline-flex items-center space-x-1">
+                        <MessageSquare className="h-3 w-3" />
+                        <span>{ticket.user}</span>
+                      </p>
+
+                      <div className="h-[0.35rem] w-[0.35rem] rounded-full bg-gray-400" />
+
+                      <p>{ticket.duration}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <Separator className="h-1.5 bg-gray-300 mt-3" />
+              <div className="pl-2.5 pr-4 grid grid-cols-6">
+                {/* column-1 */}
+                <div className="text-sm py-3 relative">
+                  <div className="flex flex-col absolute left-8">
+                    <span className="text-xs text-gray-500">Status</span>
+                    <div className="flex items-center gap-1">
+                      <div
+                        className={`h-2 w-2 rounded-full ${
+                          getStatusColor(ticket.status).dot
+                        }`}
+                      ></div>
+                      <span className={`${getStatusColor(ticket.status).text}`}>
+                        {ticket.status}
+                      </span>
+                    </div>
+                  </div>
+                  <Separator
+                    orientation="vertical"
+                    className="w-1 h-full bg-gray-300 absolute top-0 bottom-0 right-0"
+                  />
+                </div>
+
+                {/* column 2 */}
+                <div className="text-sm flex justify-center w-full relative">
+                  <div className="flex flex-col py-3">
+                    <span className="text-xs text-gray-500">Assigned to:</span>
+                    <p className="flex gap-1 items-center">
+                      <span>{ticket.assignedTo}</span>
+                      <span>
+                        <ChevronDown className="w-4 h-4" />
+                      </span>
+                    </p>
+                    <Separator
+                      orientation="vertical"
+                      className="w-1 h-full bg-gray-300 absolute top-0 bottom-0 right-0"
+                    />
+                  </div>
+                </div>
+
+                {/* column-3 */}
+                <div className="text-sm flex justify-center w-full relative">
+                  <div className="flex flex-col py-3">
+                    <span className="text-xs text-gray-500">Priority:</span>
+                    <div className={`flex items-center`}>
+                      <div
+                        className={`h-2.5 w-2.5 rounded-xs ${
+                          getPriorityColor(ticket.priority).dot
+                        }`}
+                      ></div>
+                      <span
+                        className={`ml-1.5 ${
+                          getPriorityColor(ticket.priority).text
+                        }`}
+                      >
+                        {ticket.priority}
+                      </span>
+                      <span>
+                        <ChevronDown className="h-4 w-4" />
+                      </span>
+                    </div>
+                    <Separator
+                      orientation="vertical"
+                      className="w-1 h-full bg-gray-300 absolute top-0 bottom-0 right-0"
+                    />
+                  </div>
+                </div>
+
+                {/* column-4 */}
+                <div className="text-sm flex justify-center w-full relative">
+                  <div className="flex flex-col py-3">
+                    <span className="text-xs text-gray-500">Category</span>
+                    <div className="flex gap-1 items-center">
+                      <span>Sales</span>
+                      <span>
+                        <ChevronDown className="w-4 h-4 text-gray-900" />
+                      </span>
+                    </div>
+                    <Separator
+                      orientation="vertical"
+                      className="w-1 h-full bg-gray-300 absolute top-0 bottom-0 right-0"
+                    />
+                  </div>
+                </div>
+
+                {/* column-5 */}
+                <div
+                  onClick={(e) => e.stopPropagation()}
+                  className="text-sm grid grid-cols-3 col-span-2 relative w-full h-full"
+                >
+                  {/* Star + separator */}
+                  <button
+                    onClick={() => toggleStar(ticket.id)}
+                    className="relative flex items-center justify-center w-full h-full hover:bg-gray-200 transition-colors"
+                  >
+                    <Star
+                      className={`w-5 h-5 ${
+                        starredTickets.has(ticket.id)
+                          ? "fill-yellow-400 text-yellow-400"
+                          : "text-gray-600"
+                      }`}
+                    />
+                    <Separator
+                      orientation="vertical"
+                      className="absolute top-0 bottom-0 right-0 bg-gray-300 w-[1px]"
+                    />
+                  </button>
+
+                  {/* Pin + separator */}
+                  <button
+                    onClick={() => togglePin(ticket.id)}
+                    className="relative flex items-center justify-center w-full h-full hover:bg-gray-200 transition-colors"
+                  >
+                    <Pin
+                      className={`w-5 h-5 ${
+                        pinnedTickets.has(ticket.id)
+                          ? "fill-gray-600 text-gray-600"
+                          : "text-gray-600"
+                      }`}
+                    />
+                    <Separator
+                      orientation="vertical"
+                      className="absolute top-0 bottom-0 right-0 bg-gray-300 w-[1px]"
+                    />
+                  </button>
+
+                  {/* More */}
+                  <div className="flex items-center justify-center w-full h-full">
+                    <div className="border-[1.5px] p-0.5 border-gray-900 rounded-full">
+                      <MoreHorizontal className="w-5 h-5" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );

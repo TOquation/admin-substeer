@@ -172,7 +172,7 @@ const BundleDetail = () => {
 
             {/* right-side */}
             <div className="flex items-center  gap-6">
-              <button className="flex  items-center justify-center gap-2 bg-black text-[#00FF66] hover:bg-green-400 hover:text-black px-4 py-2.5 cursor-pointer rounded-full  transition">
+              <button className="flex  items-center justify-center gap-2 bg-black text-[#00FF66] hover:bg-[#04FB43] hover:text-black px-4 py-2.5 cursor-pointer rounded-full  transition">
                 <Mail className="w-4 h-4" />
                 <span className="text-xs font-medium">Edit</span>
               </button>
@@ -181,7 +181,7 @@ const BundleDetail = () => {
                 <DropdownMenuTrigger asChild>
                   <button
                     onClick={(e) => e.stopPropagation()}
-                    className="bg-black text-[#00FF66] hover:bg-green-400 hover:text-black cursor-pointer p-2.5 rounded-full transition"
+                    className="bg-black text-[#00FF66] hover:bg-[#04FB43] hover:text-black cursor-pointer p-2.5 rounded-full transition"
                   >
                     <MoreVertical className="w-4 h-4" />
                   </button>

@@ -70,7 +70,7 @@ export function SuccessDialog({
 
           <Button
             onClick={handleContinue}
-            className="rounded-lg px-12 py-6 bg-neutral-900 text-[#31FC65] hover:bg-neutral-800 font-medium"
+            className="rounded-lg px-12 py-6 bg-black hover:text-black text-[#04FB43] hover:bg-[#04FB43] font-medium transition shadow-none"
           >
             {buttonText}
           </Button>

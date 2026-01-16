@@ -101,7 +101,7 @@ const MarketHeader = ({
           {/* cta */}
           <div
             onClick={handleAddNew}
-            className="px-3 py-1.5 bg-black text-green-500 hover:text-black hover:bg-green-500 rounded-full flex gap-2 items-center cursor-pointer transition-all duration-300 ease-in-out"
+            className="px-3 py-1.5 bg-black text-[#04FB43] hover:text-black hover:bg-[#04FB43] rounded-full flex gap-2 items-center cursor-pointer transition-all duration-300 ease-in-out"
           >
             <Plus className="w-5 h-5" />
             <span>Add New Bundle</span>
@@ -113,11 +113,11 @@ const MarketHeader = ({
         <div className="flex items-center space-x-4">
           <Button
             variant="ghost"
-            className="rounded-full px-4 py-1 hover:bg-green-400 transition-all duration-300 ease-in-out cursor-pointer"
+            className="rounded-full px-4 py-1 hover:bg-[#04FB43] transition-all duration-300 ease-in-out cursor-pointer"
           >
             Save for Draft
           </Button>
-          <Button className="rounded-full px-4 py-1 text-green-400 hover:bg-green-400 hover:text-black transition-all duration-300 ease-in-out cursor-pointer">
+          <Button className="rounded-full px-4 py-1 text-[#04FB43] hover:bg-[#04FB43] hover:text-black transition-all duration-300 ease-in-out cursor-pointer">
             Submit for Review
           </Button>
         </div>

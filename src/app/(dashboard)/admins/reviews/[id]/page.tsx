@@ -44,7 +44,7 @@ const ProfileReview = ({ params }: { params: Promise<{ id: string }> }) => {
               className={cn(
                 "cursor-pointer rounded-full text-[0.9rem] px-4 py-1",
                 view === "Personal data"
-                  ? "bg-neutral-800 text-green-400"
+                  ? "bg-black text-[#04FB43]"
                   : "bg-green-50 font-[300]"
               )}
             >
@@ -55,7 +55,7 @@ const ProfileReview = ({ params }: { params: Promise<{ id: string }> }) => {
               className={cn(
                 "cursor-pointer  rounded-full text-[0.9rem] px-4 py-1",
                 view === "Job Information"
-                  ? "bg-neutral-800 text-green-400"
+                  ? "bg-black text-[#04FB43]"
                   : "bg-green-50 font-[300]"
               )}
             >

@@ -1,13 +1,14 @@
-// ticket-item.tsx
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
 import { MessageSquare } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { TicketType } from "../types";
 
 interface TicketItemsProps {
   onSelect: (ticket: TicketType) => void;
+  filterStatus: "All" | "Read" | "Unread";
+  sortDate: "Oldest" | "Newest";
 }
 
 const getInitials = (name: string) => name.charAt(0).toUpperCase();
@@ -96,15 +97,52 @@ const initialTickets: TicketType[] = [
   },
 ];
 
-const TicketItems = ({ onSelect }: TicketItemsProps) => {
+// Add unique IDs to tickets for tracking
+const ticketsWithIds = initialTickets.map((ticket, index) => ({
+  ...ticket,
+  id: `ticket-${index}`,
+}));
+
+const TicketItems = ({
+  onSelect,
+  filterStatus,
+  sortDate,
+}: TicketItemsProps) => {
   const [masterChecked, setMasterChecked] = useState(false);
   const [checkedItems, setCheckedItems] = useState<boolean[]>(
-    Array(initialTickets.length).fill(false)
+    Array(ticketsWithIds.length).fill(false)
   );
+  const [readTickets, setReadTickets] = useState<Set<string>>(new Set());
+
+  // Filter and sort tickets
+  const filteredAndSortedTickets = useMemo(() => {
+    let filtered = [...ticketsWithIds];
+
+    // Filter by read/unread status
+    if (filterStatus === "Read") {
+      filtered = filtered.filter((ticket) => readTickets.has(ticket.id));
+    } else if (filterStatus === "Unread") {
+      filtered = filtered.filter((ticket) => !readTickets.has(ticket.id));
+    }
+
+    // Sort by date (using msgId as proxy since no timestamp exists)
+    const sorted = [...filtered].sort((a, b) => {
+      const numA = parseInt(a.msgId.split("-")[1]);
+      const numB = parseInt(b.msgId.split("-")[1]);
+
+      if (sortDate === "Newest") {
+        return numB - numA;
+      } else {
+        return numA - numB;
+      }
+    });
+
+    return sorted;
+  }, [filterStatus, sortDate, readTickets]);
 
   const handleMasterToggle = (checked: boolean) => {
     setMasterChecked(checked);
-    setCheckedItems(Array(initialTickets.length).fill(checked));
+    setCheckedItems(Array(filteredAndSortedTickets.length).fill(checked));
   };
 
   const handleItemToggle = (index: number, checked: boolean) => {
@@ -118,6 +156,12 @@ const TicketItems = ({ onSelect }: TicketItemsProps) => {
       const allChecked = updated.every((x) => x === true);
       setMasterChecked(allChecked);
     }
+  };
+
+  const handleTicketClick = (ticket: (typeof ticketsWithIds)[0]) => {
+    // Mark ticket as read
+    setReadTickets((prev) => new Set(prev).add(ticket.id));
+    onSelect(ticket);
   };
 
   return (
@@ -138,52 +182,74 @@ const TicketItems = ({ onSelect }: TicketItemsProps) => {
 
       {/* List */}
       <div className="space-y-4 overflow-y-auto pb-12 max-h-[calc(90vh-8.5rem)]">
-        {initialTickets.map((ticket, index) => (
-          <div
-            key={index}
-            onClick={() => onSelect(ticket)}
-            className="flex bg-gray-50 py-4 border-l-black border-l-6 rounded-l-sm pl-2.5 pr-4 justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors"
-          >
-            <div className="flex items-center flex-1 gap-3">
-              <Checkbox
-                className="border-gray-500 cursor-pointer"
-                checked={checkedItems[index]}
-                onCheckedChange={(checked: boolean) =>
-                  handleItemToggle(index, checked)
-                }
-                onClick={(e) => e.stopPropagation()}
-              />
+        {filteredAndSortedTickets.length === 0 ? (
+          <div className="text-center py-12 text-gray-500">
+            No conversations found with current filters
+          </div>
+        ) : (
+          filteredAndSortedTickets.map((ticket, index) => {
+            const isUnread = !readTickets.has(ticket.id);
 
-              <div className="flex items-center flex-1 gap-6">
-                <div className="place-content-center grid text-green-400 font-semibold bg-black rounded-sm h-10 w-10 text-lg">
-                  {getInitials(ticket.user)}
-                </div>
+            return (
+              <div
+                key={ticket.id}
+                onClick={() => handleTicketClick(ticket)}
+                className={`flex bg-gray-50 py-4 border-l-black border-l-6 rounded-l-sm pl-2.5 pr-4 justify-between items-center cursor-pointer hover:bg-gray-100 transition-colors ${
+                  isUnread ? "bg-blue-50" : ""
+                }`}
+              >
+                <div className="flex items-center flex-1 gap-3">
+                  <Checkbox
+                    className="border-gray-500 cursor-pointer"
+                    checked={checkedItems[index]}
+                    onCheckedChange={(checked: boolean) =>
+                      handleItemToggle(index, checked)
+                    }
+                    onClick={(e) => e.stopPropagation()}
+                  />
 
-                <div className="flex flex-col flex-1">
-                  <h2 className="space-x-4 text-sm">
-                    <span className="text-indigo-600 font-semibold">
-                      {ticket.title}
-                    </span>
-                    <span className="text-gray-400">{ticket.msgId}</span>
-                  </h2>
+                  <div className="flex items-center flex-1 gap-6">
+                    <div className="place-content-center grid text-green-400 font-semibold bg-black rounded-sm h-10 w-10 text-lg">
+                      {getInitials(ticket.user)}
+                    </div>
 
-                  <div className="flex items-center space-x-6 text-xs text-gray-400">
-                    <p className="inline-flex items-center space-x-1">
-                      <MessageSquare className="h-3 w-3" />
-                      <span>{ticket.user}</span>
-                    </p>
+                    <div className="flex flex-col flex-1">
+                      <h2 className="space-x-4 text-sm">
+                        <span
+                          className={`font-semibold ${
+                            isUnread ? "text-indigo-700" : "text-indigo-600"
+                          }`}
+                        >
+                          {ticket.title}
+                        </span>
+                        <span className="text-gray-400">{ticket.msgId}</span>
+                      </h2>
 
-                    <div className="h-[0.35rem] w-[0.35rem] rounded-full bg-gray-400" />
+                      <div className="flex items-center space-x-6 text-xs text-gray-400">
+                        <p className="inline-flex items-center space-x-1">
+                          <MessageSquare className="h-3 w-3" />
+                          <span>{ticket.user}</span>
+                        </p>
 
-                    <p>{ticket.duration}</p>
+                        <div className="h-[0.35rem] w-[0.35rem] rounded-full bg-gray-400" />
+
+                        <p>{ticket.duration}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
 
-            <p className="text-red-600 text-sm">New</p>
-          </div>
-        ))}
+                <p
+                  className={`text-sm ${
+                    isUnread ? "text-red-600" : "text-green-600"
+                  }`}
+                >
+                  {isUnread ? "New" : "Read"}
+                </p>
+              </div>
+            );
+          })
+        )}
       </div>
     </div>
   );

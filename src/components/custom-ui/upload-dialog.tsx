@@ -137,11 +137,11 @@ export function UploadDialog({
             }`}
           >
             <div className="relative">
-              <div className="w-20 h-20 bg-green-400 rounded-full flex items-center justify-center">
+              <div className="w-20 h-20 bg-[#90FDAC] rounded-full flex items-center justify-center">
                 <FileText className="w-10 h-10 text-neutral-900" />
               </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-600 rounded-full flex items-center justify-center border-4 border-green-50">
-                <Plus className="w-4 h-4 text-white" />
+              <div className="absolute bottom-3 right-3 w-7 h-7 bg-black rounded-full flex items-center justify-center border-4 border-[#90FDAC]">
+                <Plus className="w-4 h-4 text-[#90FDAC]" />
               </div>
             </div>
 

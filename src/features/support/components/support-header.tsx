@@ -1,29 +1,24 @@
 "use client";
 
 import React from "react";
-import { ChevronDown, Lightbulb, Calendar, ArrowLeft } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { ArrowLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
+import SupportFilters from "./support-filters";
 
 type HeaderVariant = "ticket-detail" | "tickets-list" | "conversations-list";
-
-interface FilterButton {
-  label: string;
-  icon?: React.ReactNode;
-  options?: string[];
-}
 
 interface SupportHeaderProps {
   variant?: HeaderVariant;
   title?: string;
   subtitle?: string;
   count?: number;
-  filters?: FilterButton[];
+  showFilters?: boolean;
+  onPriorityChange?: (priority: "All" | "High" | "Medium" | "Low") => void;
+  onStatusChange?: (
+    status: "All" | "Open" | "In-Progress" | "Resolved" | "Closed"
+  ) => void;
+  onFilterChange?: (filter: "All" | "Read" | "Unread") => void;
+  onDateChange?: (date: "Oldest" | "Newest") => void;
 }
 
 const SupportHeader = ({
@@ -31,7 +26,11 @@ const SupportHeader = ({
   title,
   subtitle,
   count,
-  filters = [],
+  showFilters = true,
+  onPriorityChange = () => {},
+  onStatusChange = () => {},
+  onFilterChange = () => {},
+  onDateChange = () => {},
 }: SupportHeaderProps) => {
   const router = useRouter();
 
@@ -54,23 +53,6 @@ const SupportHeader = ({
           title: title || "All Tickets",
           subtitle: subtitle || "help people who need you the most",
           count: count !== undefined ? count : 9,
-          filters:
-            filters.length > 0
-              ? filters
-              : [
-                  { label: "Priority", options: ["High", "Medium", "Low"] },
-                  { label: "Filter", options: ["Open", "Closed", "Pending"] },
-                  {
-                    label: "Status",
-                    icon: <Lightbulb className="w-4 h-4" />,
-                    options: ["New", "In Progress", "Resolved"],
-                  },
-                  {
-                    label: "Date",
-                    icon: <Calendar className="w-4 h-4" />,
-                    options: ["Today", "This Week", "This Month"],
-                  },
-                ],
         };
 
       case "conversations-list":
@@ -79,21 +61,6 @@ const SupportHeader = ({
           subtitle:
             subtitle || "Here is where you help people who need you the most",
           count: count !== undefined ? count : 99,
-          filters:
-            filters.length > 0
-              ? filters
-              : [
-                  {
-                    label: "Status",
-                    icon: <Lightbulb className="w-4 h-4" />,
-                    options: ["Active", "Archived", "Waiting"],
-                  },
-                  {
-                    label: "Date",
-                    icon: <Calendar className="w-4 h-4" />,
-                    options: ["Today", "This Week", "This Month"],
-                  },
-                ],
         };
 
       default:
@@ -105,7 +72,6 @@ const SupportHeader = ({
   const displayTitle = title || content.title;
   const displaySubtitle = subtitle || content.subtitle;
   const displayCount = count !== undefined ? count : content.count;
-  const displayFilters = filters.length > 0 ? filters : content.filters || [];
 
   // Ticket Detail Header (with back button)
   if (variant === "ticket-detail") {
@@ -148,32 +114,13 @@ const SupportHeader = ({
         <p className="text-sm text-gray-500">{displaySubtitle}</p>
       </div>
 
-      {displayFilters.length > 0 && (
-        <div className="flex items-center gap-3 font-fredoka">
-          {displayFilters.map((filter, index) => (
-            <DropdownMenu key={index}>
-              <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 px-4 py-2 border shadow-none border-gray-300 rounded-full bg-white hover:bg-gray-50 transition-colors text-sm text-gray-700">
-                  {filter.icon}
-                  <span>{filter.label}</span>
-                  {filter.options && (
-                    <ChevronDown className="w-4 h-4 text-gray-500" />
-                  )}
-                </button>
-              </DropdownMenuTrigger>
-
-              {filter.options && (
-                <DropdownMenuContent align="start" className="w-48 rounded-lg">
-                  {filter.options.map((option, optIndex) => (
-                    <DropdownMenuItem key={optIndex} className="cursor-pointer">
-                      {option}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              )}
-            </DropdownMenu>
-          ))}
-        </div>
+      {showFilters && (
+        <SupportFilters
+          onPriorityChange={onPriorityChange}
+          onStatusChange={onStatusChange}
+          onFilterChange={onFilterChange}
+          onDateChange={onDateChange}
+        />
       )}
     </div>
   );

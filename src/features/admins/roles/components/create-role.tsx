@@ -72,7 +72,7 @@ export function CreateRoleDialog({
             <Button
               type="submit"
               disabled={!roleName.trim()}
-              className="rounded-lg px-8 py-5 bg-neutral-900 text-[#04FB43] hover:bg-neutral-800 shadow-none"
+              className="rounded-lg px-8 py-5 bg-black hover:text-black text-[#04FB43] hover:bg-[#04FB43] shadow-none"
             >
               Create
             </Button>
