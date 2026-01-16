@@ -11,26 +11,6 @@ import {
 import { ChevronLeft, Lock, OctagonAlert, OctagonX, X } from "lucide-react";
 import { PermissionList } from "./permissions";
 import { AdminTableProps } from "../../types";
-import { adminDataTable } from "../../data";
-
-// interface AdminTableProps {
-//   id: number;
-//   imgSrc: string;
-//   name: string;
-//   role: string;
-//   email: string;
-//   status: "Active" | "Suspended";
-
-//   // OPTIONAL FIELDS ADDED BASED ON YOUR UI
-//   phoneNumber?: string;
-//   username?: string;
-//   employeeId?: string;
-//   region?: string;
-//   departments?: string[];
-//   location?: string;
-//   timeZone?: string;
-//   language?: string;
-// }
 
 interface AdminCtaProps {
   id: number;
@@ -60,98 +40,6 @@ const adminCta: AdminCtaProps[] = [
   },
 ];
 
-// const adminDataTable: AdminTableProps[] = [
-//   {
-//     id: 93890,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "Director",
-//     email: "VonRueden@gmail.com",
-//     status: "Active",
-
-//     phoneNumber: "+234 7061548319",
-//     username: "nadine",
-//     employeeId: "Colab12345",
-//     region: "Nigeria Lagos",
-//     departments: ["Visual Designer", "Interaction Designer"],
-//     location: "Africa/Lagos",
-//     timeZone: "11:50PM GMT+4",
-//     language: "English",
-//   },
-//   {
-//     id: 93891,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "CEO",
-//     email: "VonRueden@gmail.com",
-//     status: "Suspended",
-//   },
-//   {
-//     id: 93892,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "4 Permission",
-//     email: "VonRueden@gmail.com",
-//     status: "Suspended",
-//   },
-//   {
-//     id: 93893,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "IT",
-//     email: "VonRueden@gmail.com",
-//     status: "Suspended",
-//   },
-//   {
-//     id: 93894,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "Support",
-//     email: "VonRueden@gmail.com",
-//     status: "Active",
-//   },
-//   {
-//     id: 93895,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "Support",
-//     email: "VonRueden@gmail.com",
-//     status: "Suspended",
-//   },
-//   {
-//     id: 93896,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "Marketing",
-//     email: "VonRueden@gmail.com",
-//     status: "Suspended",
-//   },
-//   {
-//     id: 93897,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "Marketing",
-//     email: "VonRueden@gmail.com",
-//     status: "Active",
-//   },
-//   {
-//     id: 93898,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "CEO",
-//     email: "VonRueden@gmail.com",
-//     status: "Active",
-//   },
-//   {
-//     id: 93899,
-//     imgSrc: "/images/activity-2.png",
-//     name: "Nadine Bradtke",
-//     role: "Director",
-//     email: "VonRueden@gmail.com",
-//     status: "Suspended",
-//   },
-// ];
-
 const StatusBadge = ({
   status,
   className,
@@ -177,7 +65,11 @@ const StatusBadge = ({
   );
 };
 
-const AllAdminTable = () => {
+interface AllAdminTableProps {
+  admins: AdminTableProps[];
+}
+
+const AllAdminTable = ({ admins }: AllAdminTableProps) => {
   const [selectedAdmin, setSelectedAdmin] = useState<AdminTableProps | null>(
     null
   );
@@ -211,11 +103,11 @@ const AllAdminTable = () => {
             </tr>
           </thead>
           <tbody>
-            {adminDataTable.map((admin) => (
+            {admins.map((admin) => (
               <tr
                 onClick={() => handleAdminInfo(admin)}
                 key={admin.id}
-                className="border-b border-gray-200 bg-zinc-50 cursor-pointer transition-colors"
+                className="border-b border-gray-200 bg-zinc-50 cursor-pointer transition-colors hover:bg-zinc-100"
               >
                 <td className="py-4 pr-4 pl-2 text-sm text-gray-500">
                   #{admin.id}

@@ -1,5 +1,6 @@
 "use client";
 import DynamicHeader from "@/features/admins/shared/dynamic-header";
+import RolesFilter from "@/features/admins/roles/components/roles-filter";
 import React, { useMemo, useState } from "react";
 import { ChevronRight, Users, UserCog } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -14,10 +15,13 @@ interface RoleData {
   adminsCount: number;
 }
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const [customRoles, setCustomRoles] = useState<string[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [filters, setFilters] = useState<{
+    sortBy: "name" | "date" | "rolesCount" | "adminsCount";
+  }>({ sortBy: "name" });
 
   const roles: RoleData[] = useMemo(() => {
     const roleCounts = adminDataTable.reduce((acc, admin) => {
@@ -48,12 +52,33 @@ const page = () => {
         day: "numeric",
         year: "numeric",
       }),
-      rolesCount: 0, // New custom roles start with 0
+      rolesCount: 0,
       adminsCount: totalAdmins,
     }));
 
     return [...adminRoles, ...customRoleObjects];
   }, [customRoles]);
+
+  const sortedRoles = useMemo(() => {
+    const rolesCopy = [...roles];
+
+    switch (filters.sortBy) {
+      case "name":
+        return rolesCopy.sort((a, b) => a.name.localeCompare(b.name));
+      case "date":
+        return rolesCopy.sort((a, b) => {
+          const dateA = new Date(a.createdDate);
+          const dateB = new Date(b.createdDate);
+          return dateB.getTime() - dateA.getTime();
+        });
+      case "rolesCount":
+        return rolesCopy.sort((a, b) => b.rolesCount - a.rolesCount);
+      case "adminsCount":
+        return rolesCopy.sort((a, b) => b.adminsCount - a.adminsCount);
+      default:
+        return rolesCopy;
+    }
+  }, [roles, filters.sortBy]);
 
   const handleCreateRole = (roleName: string) => {
     const roleExists = roles.some(
@@ -74,15 +99,16 @@ const page = () => {
       <DynamicHeader
         title="Roles"
         subtitle="Manage roles or create roles"
-        showFilter
         showExport
         actionLabel="Create Roles"
         onAction={() => setIsDialogOpen(true)}
-      />
+      >
+        <RolesFilter onFilterChange={setFilters} />
+      </DynamicHeader>
 
       <div className="flex-1 overflow-y-auto">
         <div className="space-y-2 mt-4">
-          {roles.map((role) => (
+          {sortedRoles.map((role) => (
             <div
               key={role.id}
               onClick={() => handleRoleClick(role.id)}
@@ -132,4 +158,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
