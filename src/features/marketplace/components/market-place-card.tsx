@@ -1,29 +1,47 @@
 "use client";
 
 import React from "react";
-import { marketCard, marketStatus } from "../data";
+import { marketStatus } from "../data";
+import { MarketCardProps } from "../types";
 import { MoreVertical } from "lucide-react";
 import Image from "next/image";
 import { useDualSidebar } from "@/contexts/dual-sidebar-context";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 
-const MarketCard = () => {
+interface MarketCardComponentProps {
+  filteredCards?: MarketCardProps[];
+}
+
+const MarketCard = ({ filteredCards }: MarketCardComponentProps) => {
   const { leftOpen, rightOpen } = useDualSidebar();
   const router = useRouter();
+
   const handleMarketCard = (id: number) => {
     router.push(`/marketplace/bundle-details?id=${id}`);
   };
+
+  // If no filtered cards provided, show empty state
+  if (!filteredCards || filteredCards.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <p className="text-gray-500 text-lg">
+          No bundles found matching your filters
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div
       className={cn(
         "grid grid-cols-1 md:grid-cols-2 gap-4",
         !rightOpen || !leftOpen
-          ? " md:grid-cols-2 lg:grid-cols-3  xl:grid-cols-4"
+          ? "md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
           : "md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
       )}
     >
-      {marketCard.map((market) => {
+      {filteredCards.map((market) => {
         return (
           <div
             onClick={() => handleMarketCard(market.id)}
@@ -98,22 +116,21 @@ const MarketCard = () => {
                 <div className="text-xs text-gray-500 leading-tight">
                   <p className="font-normal font-fredoka">Partner/Source:</p>
                   <p className="flex items-center gap-1 font-fredoka">
-                    {market.partners.map((label, index) => (
-                      <span key={label.label}>
+                    {market.partners.map((partner, index) => (
+                      <span key={partner.label}>
                         {index === market.partners.length - 1
-                          ? label.label
-                          : `${label.label}, `}
+                          ? partner.label
+                          : `${partner.label}, `}
                       </span>
                     ))}
                   </p>
                 </div>
 
                 <div className="flex items-center gap-0.5">
-                  {market.partners.map((url, index) => (
-                    <div key={url.label}>
+                  {market.partners.map((partner, index) => (
+                    <div key={partner.label}>
                       <Image
-                        key={index}
-                        src={url.url}
+                        src={partner.url}
                         alt={`logo_${index + 1}`}
                         height={12}
                         width={12}

@@ -5,6 +5,13 @@ import React from "react";
 import { mockUsers, StatusStyles, userProfileData } from "../data";
 import { Mail, MoreVertical } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const UserProfile = () => {
   const searchParams = useSearchParams();
@@ -87,9 +94,24 @@ const UserProfile = () => {
           <span className="text-sm font-medium">Mail User</span>
         </button>
 
-        <button className="bg-black text-[#00FF66] cursor-pointer p-3 rounded-full hover:bg-gray-900 transition">
-          <MoreVertical className="w-4 h-4" />
-        </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="bg-black text-[#00FF66] cursor-pointer p-3 rounded-full hover:bg-gray-900 transition">
+              <MoreVertical className="w-4 h-4" />
+            </button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuItem
+              className="text-[#FE9B0E] focus:text-[#FE9B0E] cursor-pointer"
+              onClick={() => {
+                console.log("Suspend user:", user.id);
+              }}
+            >
+              Suspend
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );

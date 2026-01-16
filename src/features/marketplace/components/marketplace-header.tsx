@@ -9,28 +9,30 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
-import {
-  Calendar,
-  ChevronDown,
-  Grid2X2,
-  Medal,
-  Plus,
-  SlashIcon,
-} from "lucide-react";
+import { Plus, SlashIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { ComponentType } from "react";
+import MarketFilters from "./market-filters";
 
 const MarketHeader = ({
   title,
   subtitle,
   Icon,
   breadcrums,
+  onCategoryChange,
+  onStatusChange,
+  onSortChange,
+  categories,
 }: {
   title: string;
   subtitle: string;
   Icon?: ComponentType<{ className: string; strokeWidth: number }>;
   breadcrums?: string;
+  onCategoryChange?: (category: string) => void;
+  onStatusChange?: (status: "All" | "Active" | "Pending" | "Draft") => void;
+  onSortChange?: (sort: "Oldest" | "Newest") => void;
+  categories?: string[];
 }) => {
   const router = useRouter();
   const handleBack = () => {
@@ -40,6 +42,7 @@ const MarketHeader = ({
   const handleAddNew = () => {
     router.push("/marketplace/new-bundle");
   };
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center space-x-2">
@@ -86,25 +89,14 @@ const MarketHeader = ({
 
       {!Icon && title === "Market Place" ? (
         <div className="gap-12 flex items-center">
-          <div className="flex items-center gap-4">
-            {[
-              { id: 1, title: "Category", icon: Grid2X2 },
-              { id: 2, title: "Status", icon: Medal },
-              { id: 3, title: "Date", icon: Calendar },
-            ].map((filter) => {
-              const Icon = filter.icon;
-              return (
-                <div
-                  key={filter.id}
-                  className="flex gap-2 cursor-pointer border border-gray-400 rounded-full items-center py-1.5 px-2.5 text-gray-500"
-                >
-                  <Icon className="w-4 h-4" />
-                  <span className="text-sm text-gray-500">{filter.title}</span>
-                  <ChevronDown className="w-4 h-4" />
-                </div>
-              );
-            })}
-          </div>
+          {onCategoryChange && onStatusChange && onSortChange && categories && (
+            <MarketFilters
+              onCategoryChange={onCategoryChange}
+              onStatusChange={onStatusChange}
+              onSortChange={onSortChange}
+              categories={categories}
+            />
+          )}
 
           {/* cta */}
           <div
@@ -118,7 +110,7 @@ const MarketHeader = ({
       ) : Icon && title === "Bundle Details" ? (
         ""
       ) : (
-        <div className=" flex items-center space-x-4">
+        <div className="flex items-center space-x-4">
           <Button
             variant="ghost"
             className="rounded-full px-4 py-1 hover:bg-green-400 transition-all duration-300 ease-in-out cursor-pointer"
