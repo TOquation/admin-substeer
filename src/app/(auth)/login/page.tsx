@@ -106,15 +106,15 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen px-4 py-8 mt-[2rem] md:flex md:items-center md:justify-center">
+    <div className="min-h-screen flex items-start  justify-center px-4 py-8">
       {showBanner ? (
-        <div className="w-full max-w-lg mx-auto space-y-8 md:space-y-12">
+        <div className="w-full max-w-lg space-y-8 md:space-y-12">
           <div className="flex justify-center">
             <Image
               src="/images/logo-text.svg"
               alt="subster-logo"
-              width={120}
-              height={120}
+              width={140}
+              height={140}
             />
           </div>
 
@@ -222,13 +222,13 @@ const Login = () => {
               Lets get you started!
             </h1>
           </div>
-          <div className="w-full max-w-lg mx-auto space-y-6 md:space-y-8 px-4">
+          <div className="w-full max-w-lg mx-auto space-y-6 md:space-y-8 mt-24 px-4">
             <div className="flex justify-center">
               <Image
                 src="/images/logo-text.svg"
                 alt="subster-logo"
-                width={120}
-                height={120}
+                width={140}
+                height={140}
               />
             </div>
 
