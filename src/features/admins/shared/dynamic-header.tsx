@@ -72,7 +72,7 @@ const DynamicHeader = ({
 
         {actionLabel && (
           <Button
-            className="bg-neutral-800 text-green-400 rounded-full cursor-pointer px-4 shadow-none hover:bg-black/90"
+            className="bg-black text-[#04FB43] hover:bg-[#04FB43] hover:text-black rounded-full cursor-pointer px-4 shadow-none"
             onClick={onAction}
           >
             <span>

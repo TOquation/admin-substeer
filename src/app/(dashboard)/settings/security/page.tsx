@@ -25,7 +25,7 @@ const Security = () => {
             </div>
           </div>
           <Button
-            className="px-4 py-2 rounded-xl text-green-400 cursor-pointer"
+            className="px-4 py-2 rounded-xl text-[#04FB43] bg-black hover:bg-[#04FB43] hover:text-black cursor-pointer"
             size="lg"
           >
             save changes

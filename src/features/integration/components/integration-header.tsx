@@ -176,7 +176,7 @@ const IntegrationHeader: React.FC<{
 
         <div
           onClick={handleAddIntegration}
-          className="flex items-center gap-1 cursor-pointer sm:py-2 sm:px-4 py-2 px-2 rounded-full text-green-400 bg-black"
+          className="flex items-center gap-1 cursor-pointer sm:py-2 sm:px-4 py-2 px-2 rounded-full hover:bg-[#04FB43] hover:text-black transition text-[#04FB43] bg-black"
         >
           {subtitle_2 ? (
             <div className="flex items-center gap-2">

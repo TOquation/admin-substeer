@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,15 +8,25 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { ChevronDown, SlashIcon } from "lucide-react";
+import { SlashIcon, Share } from "lucide-react";
 import Link from "next/link";
-import React from "react";
-import { tableFilter } from "../data";
+import UserFilters from "./user-filters";
 
-const UserHeader: React.FC<{ title: string; subtitle: string }> = ({
+interface UserHeaderProps {
+  title: string;
+  subtitle: string;
+  onStatusChange: (
+    status: "All" | "Active" | "Inactive" | "Pending" | "Suspended"
+  ) => void;
+  onSortChange: (sort: "Oldest" | "Newest") => void;
+}
+
+const UserHeader = ({
   title,
   subtitle,
-}) => {
+  onStatusChange,
+  onSortChange,
+}: UserHeaderProps) => {
   return (
     <div>
       <div className="flex justify-between items-center pr-4">
@@ -45,28 +57,17 @@ const UserHeader: React.FC<{ title: string; subtitle: string }> = ({
         </div>
 
         <div className="flex gap-4 items-center">
-          {tableFilter.map((filter, index) => {
-            return (
-              <div
-                key={filter.id}
-                className={`flex justify-center items-center border border-gray-400 rounded-full px-2 py-1.5 gap-2 cursor-pointer ${
-                  index === tableFilter.length - 1 ? "ml-6" : ""
-                }`}
-              >
-                <span>
-                  <filter.icon className="w-3 h-3" />
-                </span>
-                <span className="text-xs">{filter.title}</span>
-                <span>
-                  {filter.title === "Export" ? (
-                    ""
-                  ) : (
-                    <ChevronDown className="h-3 w-3" />
-                  )}
-                </span>
-              </div>
-            );
-          })}
+          <UserFilters
+            onStatusChange={onStatusChange}
+            onSortChange={onSortChange}
+          />
+
+          <div className="flex justify-center items-center border border-gray-400 rounded-full px-2 py-1.5 gap-2 cursor-pointer ml-6">
+            <span>
+              <Share className="w-3 h-3" />
+            </span>
+            <span className="text-xs">Export</span>
+          </div>
         </div>
       </div>
     </div>

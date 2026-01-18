@@ -9,6 +9,13 @@ import { ArrowLeft, Mail, MoreVertical } from "lucide-react";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import React from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 interface services {
   id: number;
@@ -165,14 +172,30 @@ const BundleDetail = () => {
 
             {/* right-side */}
             <div className="flex items-center  gap-6">
-              <button className="flex  items-center justify-center gap-2 bg-black text-[#00FF66] px-4 py-2.5 cursor-pointer rounded-full hover:bg-gray-900 transition">
+              <button className="flex  items-center justify-center gap-2 bg-black text-[#00FF66] hover:bg-[#04FB43] hover:text-black px-4 py-2.5 cursor-pointer rounded-full  transition">
                 <Mail className="w-4 h-4" />
                 <span className="text-xs font-medium">Edit</span>
               </button>
 
-              <button className="bg-black text-[#00FF66] cursor-pointer p-2.5 rounded-full hover:bg-gray-900 transition">
-                <MoreVertical className="w-4 h-4" />
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button
+                    onClick={(e) => e.stopPropagation()}
+                    className="bg-black text-[#00FF66] hover:bg-[#04FB43] hover:text-black cursor-pointer p-2.5 rounded-full transition"
+                  >
+                    <MoreVertical className="w-4 h-4" />
+                  </button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="end" className="w-40">
+                  <DropdownMenuItem className="text-gray-700 focus:text-gray-700 cursor-pointer">
+                    Pause Bundle
+                  </DropdownMenuItem>
+                  <DropdownMenuItem className="text-red-600 focus:text-red-600 cursor-pointer">
+                    Delete Bundle
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         </div>

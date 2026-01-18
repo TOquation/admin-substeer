@@ -128,7 +128,7 @@ const Reviews = () => {
                   <div className="w-[80px] min-w-[80px] lg:min-w-0 lg:w-[10%] flex justify-end">
                     <Button
                       onClick={() => router.push(`/admins/reviews/${card.id}`)}
-                      className="rounded-full text-xs h-7.5 px-3 cursor-pointer text-green-400"
+                      className="rounded-full text-xs h-7.5 px-3 cursor-pointer bg-black hover:bg-[#04FB43] hover:text-black text-[#04FB43]"
                     >
                       view profile
                     </Button>

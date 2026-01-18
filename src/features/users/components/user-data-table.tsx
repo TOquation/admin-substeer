@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   MoreVertical,
   ChevronLeft,
@@ -30,19 +30,59 @@ import { useRouter } from "next/navigation";
 import { mockUsers, StatusStyles } from "../data";
 import Image from "next/image";
 
-export default function UsersDataTable() {
+interface UsersDataTableProps {
+  userType: "free" | "subscriber";
+  filterStatus: "All" | "Active" | "Inactive" | "Pending" | "Suspended";
+  sortOrder: "Oldest" | "Newest";
+}
+
+export default function UsersDataTable({
+  userType,
+  filterStatus,
+  sortOrder,
+}: UsersDataTableProps) {
   const [selectedUsers, setSelectedUsers] = useState<Set<string>>(new Set());
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [sortColumn, setSortColumn] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
 
-  const totalRows = 140;
+  const router = useRouter();
+
+  // Filter and sort users
+  const filteredAndSortedUsers = useMemo(() => {
+    // Filter by status
+    let filtered =
+      filterStatus === "All"
+        ? mockUsers
+        : mockUsers.filter((user) => user.status === filterStatus);
+
+    // Sort by date
+    const sorted = [...filtered].sort((a, b) => {
+      const dateA = new Date(a.joinedDate);
+      const dateB = new Date(b.joinedDate);
+
+      if (sortOrder === "Newest") {
+        return dateB.getTime() - dateA.getTime();
+      } else {
+        return dateA.getTime() - dateB.getTime();
+      }
+    });
+
+    return sorted;
+  }, [filterStatus, sortOrder]);
+
+  const totalRows = filteredAndSortedUsers.length;
   const totalPages = Math.ceil(totalRows / rowsPerPage);
 
   const startIndex = (currentPage - 1) * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  const paginatedUsers = mockUsers.slice(startIndex, endIndex);
+  const paginatedUsers = filteredAndSortedUsers.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  React.useEffect(() => {
+    setCurrentPage(1);
+  }, [filterStatus, sortOrder]);
 
   // Dynamic spacing based on rows per page
   const getRowSpacing = () => {
@@ -114,15 +154,18 @@ export default function UsersDataTable() {
 
     return pages;
   };
-  const router = useRouter();
 
   const handleUserProfile = (id: string) => {
-    router.push(`/user/free/profile?id=${id}`);
+    if (userType === "subscriber") {
+      router.push(`/user/subscribers/profile?id=${id}`);
+    } else {
+      router.push(`/user/free/profile?id=${id}`);
+    }
   };
 
   return (
-    <div className="w-full  flex flex-col overflow-hidden">
-      <div className="overflow-x-auto  flex-1">
+    <div className="w-full flex flex-col overflow-hidden">
+      <div className="overflow-x-auto flex-1">
         <div className="inline-block min-w-full align-middle">
           {/* Fixed Header */}
           <div className="overflow-hidden border-t border-b border-gray-200">
@@ -195,104 +238,111 @@ export default function UsersDataTable() {
               className="overflow-y-auto custom-scroll"
               style={{ maxHeight: "calc(90vh - 220px)" }}
             >
-              <table className="min-w-full">
-                <tbody className="bg-white">
-                  {paginatedUsers.map((user, index) => (
-                    <tr
-                      onClick={() => handleUserProfile(user.id)}
-                      key={user.id}
-                      className={`hover:bg-gray-50 transition-colors cursor-pointer ${
-                        index !== paginatedUsers.length - 1
-                          ? "border-b border-gray-200"
-                          : ""
-                      }`}
-                    >
-                      <td className={`w-10 px-4 ${getRowSpacing()}`}>
-                        <Checkbox
-                          className="cursor-pointer border border-gray-800"
-                          onClick={(e) => e.stopPropagation()}
-                          checked={selectedUsers.has(user.id)}
-                          onCheckedChange={() => toggleSelectUser(user.id)}
-                        />
-                      </td>
-                      <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[240px]`}
+              {paginatedUsers.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">
+                  No users found with status: {filterStatus}
+                </div>
+              ) : (
+                <table className="min-w-full">
+                  <tbody className="bg-white">
+                    {paginatedUsers.map((user, index) => (
+                      <tr
+                        onClick={() => handleUserProfile(user.id)}
+                        key={user.id}
+                        className={`hover:bg-gray-50 transition-colors cursor-pointer ${
+                          index !== paginatedUsers.length - 1
+                            ? "border-b border-gray-200"
+                            : ""
+                        }`}
                       >
-                        <div className="flex items-center gap-3 ">
-                          <div>
-                            <Image
-                              src={user?.imgUrl || "/images/man.png"}
-                              alt="user"
-                              height={32}
-                              width={32}
-                              className="rounded-full"
-                              unoptimized
-                            />
-                          </div>
-                          <div>
-                            <div className="text-[13px] font-medium text-gray-900">
-                              {user.name}
-                            </div>
-                            <div className="text-[12px] text-gray-500">
-                              {user.email}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap  min-w-[110px]`}
-                      >
-                        <span
-                          className={`inline-flex px-2.5 py-0.5 text-[11px] font-medium rounded-sm ${StatusStyles(
-                            user.status
-                          )}`}
+                        <td className={`w-10 px-4 ${getRowSpacing()}`}>
+                          <Checkbox
+                            className="cursor-pointer border border-gray-800"
+                            onClick={(e) => e.stopPropagation()}
+                            checked={selectedUsers.has(user.id)}
+                            onCheckedChange={() => toggleSelectUser(user.id)}
+                          />
+                        </td>
+                        <td
+                          className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[240px]`}
                         >
-                          {user.status}
-                        </span>
-                      </td>
-                      <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-center text-gray-900s min-w-[120px]`}
-                      >
-                        {user.subscriptions}
-                      </td>
-                      <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-900 min-w-[130px]`}
-                      >
-                        {user.joinedDate}
-                      </td>
-                      <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-500 min-w-[110px]`}
-                      >
-                        {user.lastActive}
-                      </td>
-                      <td
-                        className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-500 min-w-[70px]`}
-                      >
-                        <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7"
-                            >
-                              <MoreVertical className="h-3.5 w-3.5" />
-                            </Button>
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent align="end">
-                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                            <DropdownMenuItem>View details</DropdownMenuItem>
-                            <DropdownMenuItem>Edit user</DropdownMenuItem>
-                            <DropdownMenuSeparator />
-                            <DropdownMenuItem className="text-red-600">
-                              Delete user
-                            </DropdownMenuItem>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          <div className="flex items-center gap-3">
+                            <div>
+                              <Image
+                                src={user?.imgUrl || "/images/man.png"}
+                                alt="user"
+                                height={32}
+                                width={32}
+                                className="rounded-full"
+                                unoptimized
+                              />
+                            </div>
+                            <div>
+                              <div className="text-[13px] font-medium text-gray-900">
+                                {user.name}
+                              </div>
+                              <div className="text-[12px] text-gray-500">
+                                {user.email}
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td
+                          className={`px-5 ${getRowSpacing()} whitespace-nowrap min-w-[110px]`}
+                        >
+                          <span
+                            className={`inline-flex px-2.5 py-0.5 text-[11px] font-medium rounded-sm ${StatusStyles(
+                              user.status
+                            )}`}
+                          >
+                            {user.status}
+                          </span>
+                        </td>
+                        <td
+                          className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-center text-gray-900 min-w-[120px]`}
+                        >
+                          {user.subscriptions}
+                        </td>
+                        <td
+                          className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-900 min-w-[130px]`}
+                        >
+                          {user.joinedDate}
+                        </td>
+                        <td
+                          className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-500 min-w-[110px]`}
+                        >
+                          {user.lastActive}
+                        </td>
+                        <td
+                          className={`px-5 ${getRowSpacing()} whitespace-nowrap text-[13px] text-gray-500 min-w-[70px]`}
+                        >
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                variant="ghost"
+                                size="icon"
+                                className="h-7 w-7"
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                <MoreVertical className="h-3.5 w-3.5" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel></DropdownMenuLabel>
+                              <DropdownMenuItem>Open Profile</DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={(e) => e.stopPropagation()}
+                              >
+                                Send Email
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </ScrollBar>
         </div>

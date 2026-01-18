@@ -25,24 +25,17 @@ const AdminInvite = () => {
     files.forEach((file) => {
       console.log(`- ${file.name} (${(file.size / 1024).toFixed(2)} KB)`);
     });
-    // Handle file upload logic here
-
-    // Show success dialog after upload
     setIsSuccessDialogOpen(true);
   };
 
   const handleSendInvitation = () => {
     console.log("Sending invitation to:", emailAddress);
-    // Handle send invitation logic here
 
-    // Show success dialog after sending
     setIsSuccessDialogOpen(true);
   };
 
   const handleSuccessContinue = () => {
-    // Handle continue action
     console.log("Continue clicked");
-    // Reset form or navigate somewhere
     setEmailAddress("");
   };
 
@@ -116,7 +109,7 @@ const AdminInvite = () => {
           <Button
             onClick={handleSendInvitation}
             disabled={!emailAddress.trim()}
-            className="w-full rounded-lg py-6 bg-neutral-900 text-green-400 hover:bg-neutral-800 font-medium"
+            className="w-full rounded-lg py-6 bg-neutral-900 text-[#04FB43] hover:bg-[#04FB43] hover:text-black font-medium"
           >
             Send Invitation
           </Button>

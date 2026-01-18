@@ -5,6 +5,13 @@ import React from "react";
 import { mockUsers, StatusStyles, userProfileData } from "../data";
 import { Mail, MoreVertical } from "lucide-react";
 import { useSearchParams } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const UserProfile = () => {
   const searchParams = useSearchParams();
@@ -82,14 +89,29 @@ const UserProfile = () => {
 
       {/* user cta */}
       <div className="flex items-center justify-center gap-6 w-full pt-3 pr-2">
-        <button className="flex flex-1 items-center justify-center gap-2 bg-black text-[#00FF66] px-5 py-3 cursor-pointer rounded-full hover:bg-gray-900 transition">
+        <button className="flex flex-1 items-center justify-center gap-2 bg-black text-[#00FF66] px-5 py-3 cursor-pointer rounded-full hover:bg-[#04FB43] hover:text-black transition">
           <Mail className="w-4 h-4" />
           <span className="text-sm font-medium">Mail User</span>
         </button>
 
-        <button className="bg-black text-[#00FF66] cursor-pointer p-3 rounded-full hover:bg-gray-900 transition">
-          <MoreVertical className="w-4 h-4" />
-        </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="bg-black text-[#00FF66] cursor-pointer p-3 rounded-full hover:bg-[#04FB43] hover:text-black  transition">
+              <MoreVertical className="w-4 h-4" />
+            </button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end" className="w-40">
+            <DropdownMenuItem
+              className="text-[#FE9B0E] focus:text-[#FE9B0E] cursor-pointer"
+              onClick={() => {
+                console.log("Suspend user:", user.id);
+              }}
+            >
+              Suspend User
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
