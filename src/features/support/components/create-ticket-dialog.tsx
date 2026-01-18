@@ -18,7 +18,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Search } from "lucide-react";
-import Image from "next/image";
 import { useState } from "react";
 
 interface CreateTicketDialogProps {
@@ -31,7 +30,6 @@ interface CreateTicketDialogProps {
   }) => void;
 }
 
-// Mock team members data
 const teamMembers = [
   { id: "1", name: "Ms. Chris Jakubowski", avatar: "/avatars/chris.jpg" },
   { id: "2", name: "Francisco Lang", avatar: "/avatars/francisco.jpg" },
@@ -65,7 +63,6 @@ export function CreateTicketDialog({
         assignTo,
         priority,
       });
-      // Reset form
       setTicketName("");
       setAssignTo("");
       setPriority("");
@@ -98,7 +95,6 @@ export function CreateTicketDialog({
         </DialogHeader>
 
         <div className="grid gap-4 py-6">
-          {/* Ticket Name */}
           <Input
             id="ticket-name"
             name="ticketName"
@@ -108,16 +104,13 @@ export function CreateTicketDialog({
             className="rounded-full h-[3.5rem] border-gray-400 border-[1.5px] px-6 text-base text-gray-700 placeholder:text-gray-400 focus-visible:ring-0 shadow-none"
           />
 
-          {/* Assign To & Priority Row */}
           <div className="flex gap-3">
-            {/* Assign To Select */}
             <Select value={assignTo} onValueChange={handleAssignToChange}>
               <SelectTrigger className="shadow-none cursor-pointer py-[1.60rem] border-[1.5px] border-gray-400 flex-1 text-gray-500 font-fredoka text-base rounded-full px-6 flex items-center justify-between focus-visible:ring-0">
                 <SelectValue placeholder="Assign to" />
               </SelectTrigger>
 
               <SelectContent className="p-0 bg-white rounded-3xl">
-                {/* Search Input */}
                 <div className="sticky top-0 z-10 px-2 pb-2 pt-2 bg-white">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
@@ -131,7 +124,6 @@ export function CreateTicketDialog({
                   </div>
                 </div>
 
-                {/* Members List */}
                 <div className="max-h-40 overflow-y-auto">
                   {filteredMembers.length > 0 ? (
                     filteredMembers.map((member) => (
@@ -159,7 +151,6 @@ export function CreateTicketDialog({
               </SelectContent>
             </Select>
 
-            {/* Priority Select */}
             <Select value={priority} onValueChange={setPriority}>
               <SelectTrigger className="shadow-none cursor-pointer py-[1.60rem] border-gray-400 border-[1.5px] flex-1 text-gray-500 font-fredoka text-base rounded-full px-6 flex items-center justify-between focus-visible:ring-0">
                 <SelectValue placeholder="Priority" />

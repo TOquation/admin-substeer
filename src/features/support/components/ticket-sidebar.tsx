@@ -33,11 +33,6 @@ interface Sla {
   }[];
 }
 
-/** ----------------------------------------------------
- *  FIX:
- *  Only allow DROPDOWN for specific keys that are safe:
- *  status | priority | assignedTo
- * ---------------------------------------------------- */
 type DropdownKeys = "status" | "priority" | "assignedTo";
 
 interface TicketDropdown {

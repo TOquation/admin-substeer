@@ -20,7 +20,6 @@ const Poster = ({ selected }: PosterProps) => {
     priority: string;
   }) => {
     console.log("Creating ticket:", ticket);
-    // Handle ticket creation logic here
   };
 
   if (!selected) {

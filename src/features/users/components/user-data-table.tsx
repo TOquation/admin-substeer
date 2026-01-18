@@ -49,15 +49,12 @@ export default function UsersDataTable({
 
   const router = useRouter();
 
-  // Filter and sort users
   const filteredAndSortedUsers = useMemo(() => {
-    // Filter by status
     let filtered =
       filterStatus === "All"
         ? mockUsers
         : mockUsers.filter((user) => user.status === filterStatus);
 
-    // Sort by date
     const sorted = [...filtered].sort((a, b) => {
       const dateA = new Date(a.joinedDate);
       const dateB = new Date(b.joinedDate);
@@ -79,16 +76,14 @@ export default function UsersDataTable({
   const endIndex = startIndex + rowsPerPage;
   const paginatedUsers = filteredAndSortedUsers.slice(startIndex, endIndex);
 
-  // Reset to page 1 when filters change
   React.useEffect(() => {
     setCurrentPage(1);
   }, [filterStatus, sortOrder]);
 
-  // Dynamic spacing based on rows per page
   const getRowSpacing = () => {
     if (rowsPerPage === 5) return "py-4";
     if (rowsPerPage === 8) return "py-4";
-    return "py-3"; // for 10
+    return "py-3";
   };
 
   const getHeaderSpacing = () => {

@@ -97,7 +97,6 @@ const initialTickets: TicketType[] = [
   },
 ];
 
-// Add unique IDs to tickets for tracking
 const ticketsWithIds = initialTickets.map((ticket, index) => ({
   ...ticket,
   id: `ticket-${index}`,
@@ -114,18 +113,15 @@ const TicketItems = ({
   );
   const [readTickets, setReadTickets] = useState<Set<string>>(new Set());
 
-  // Filter and sort tickets
   const filteredAndSortedTickets = useMemo(() => {
     let filtered = [...ticketsWithIds];
 
-    // Filter by read/unread status
     if (filterStatus === "Read") {
       filtered = filtered.filter((ticket) => readTickets.has(ticket.id));
     } else if (filterStatus === "Unread") {
       filtered = filtered.filter((ticket) => !readTickets.has(ticket.id));
     }
 
-    // Sort by date (using msgId as proxy since no timestamp exists)
     const sorted = [...filtered].sort((a, b) => {
       const numA = parseInt(a.msgId.split("-")[1]);
       const numB = parseInt(b.msgId.split("-")[1]);
@@ -159,7 +155,6 @@ const TicketItems = ({
   };
 
   const handleTicketClick = (ticket: (typeof ticketsWithIds)[0]) => {
-    // Mark ticket as read
     setReadTickets((prev) => new Set(prev).add(ticket.id));
     onSelect(ticket);
   };

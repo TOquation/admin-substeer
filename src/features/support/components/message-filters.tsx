@@ -22,7 +22,6 @@ const MessageFilters = ({
 
   return (
     <>
-      {/* Status Filter */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <div className="flex justify-center items-center border border-gray-400 rounded-full px-2 py-1.5 gap-2 cursor-pointer">

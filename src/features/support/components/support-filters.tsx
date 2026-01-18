@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Calendar,
-  Lightbulb,
-  Filter,
-  TrendingUp,
-  ChevronDown,
-} from "lucide-react";
+import { Calendar, ChevronDown, Medal } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -46,7 +40,6 @@ const SupportFilters = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-2 px-4 py-2 border shadow-none border-gray-300 rounded-full bg-white hover:bg-gray-50 transition-colors text-sm text-gray-700">
-            <TrendingUp className="w-4 h-4" />
             <span>Priority</span>
             <ChevronDown className="w-4 h-4 text-gray-500" />
           </button>
@@ -68,7 +61,6 @@ const SupportFilters = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-2 px-4 py-2 border shadow-none border-gray-300 rounded-full bg-white hover:bg-gray-50 transition-colors text-sm text-gray-700">
-            <Filter className="w-4 h-4" />
             <span>Filter</span>
             <ChevronDown className="w-4 h-4 text-gray-500" />
           </button>
@@ -90,7 +82,7 @@ const SupportFilters = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-2 px-4 py-2 border shadow-none border-gray-300 rounded-full bg-white hover:bg-gray-50 transition-colors text-sm text-gray-700">
-            <Lightbulb className="w-4 h-4" />
+            <Medal className="w-4 h-4" />
             <span>Status</span>
             <ChevronDown className="w-4 h-4 text-gray-500" />
           </button>

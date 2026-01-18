@@ -8,7 +8,7 @@ import {
   Pin,
   Star,
 } from "lucide-react";
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { Separator } from "@/components/ui/separator";
 import { useRouter } from "next/navigation";
 import { getPriorityColor, newTickets } from "../data";
@@ -93,30 +93,25 @@ const NewItems = ({
     });
   };
 
-  // Filter and sort tickets
   const filteredAndSortedTickets = useMemo(() => {
     let filtered = [...newTickets];
 
-    // Filter by priority
     if (filterPriority !== "All") {
       filtered = filtered.filter(
         (ticket) => ticket.priority === filterPriority
       );
     }
 
-    // Filter by status
     if (filterStatus !== "All") {
       filtered = filtered.filter((ticket) => ticket.status === filterStatus);
     }
 
-    // Filter by read/unread
     if (filterRead === "Read") {
       filtered = filtered.filter((ticket) => readTickets.has(ticket.id));
     } else if (filterRead === "Unread") {
       filtered = filtered.filter((ticket) => !readTickets.has(ticket.id));
     }
 
-    // Sort by date (we'll use ticket ID as proxy for date since no date field exists)
     const sorted = [...filtered].sort((a, b) => {
       if (sortDate === "Newest") {
         return b.id - a.id;
