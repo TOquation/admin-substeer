@@ -106,19 +106,19 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-start  justify-center px-4 py-8">
+    <div className="min-h-screen flex items-start  justify-center  py-12 md:py-8">
       {showBanner ? (
         <div className="w-full max-w-lg space-y-8 md:space-y-12">
           <div className="flex justify-center">
             <Image
               src="/images/logo-text.svg"
               alt="subster-logo"
-              width={140}
-              height={140}
+              width={120}
+              height={120}
             />
           </div>
 
-          <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-6 py-6 md:px-8 md:py-8">
+          <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-3  py-6 sm:px-8 md:py-8">
             <div className="text-center space-y-4 mb-6">
               <h1 className="font-bold text-base md:text-lg font-inter">
                 <span className="">Welcome back</span> <br />{" "}
@@ -222,17 +222,17 @@ const Login = () => {
               Lets get you started!
             </h1>
           </div>
-          <div className="w-full max-w-lg mx-auto space-y-6 md:space-y-8 mt-24 px-4">
+          <div className="w-full max-w-lg mx-auto space-y-6 md:space-y-8 mt-24 px-3">
             <div className="flex justify-center">
               <Image
                 src="/images/logo-text.svg"
                 alt="subster-logo"
-                width={140}
-                height={140}
+                width={120}
+                height={120}
               />
             </div>
 
-            <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-6 py-6 md:px-8 md:py-8">
+            <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-3  py-6 sm:px-8 md:py-8">
               <div className="text-center space-y-4 mb-6">
                 <h1 className="font-bold text-base md:text-lg font-inter">
                   <span className="">Welcome back</span> <br />{" "}
