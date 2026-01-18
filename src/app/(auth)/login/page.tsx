@@ -114,9 +114,9 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex items-center justify-center px-4 py-8">
       {showBanner ? (
-        <div className="absolute left-[50%] -translate-x-1/2 top-[10%] space-y-12">
+        <div className="w-full max-w-lg space-y-8 md:space-y-12">
           {/* subster logo */}
           <div className="flex justify-center">
             <Image
@@ -128,9 +128,9 @@ const Login = () => {
           </div>
 
           {/* login-form */}
-          <div className="bg-green-50 rounded-[1.5rem] min-h-40 max-w-lg px-8 py-8">
-            <div className=" text-center space-y-4 mb-6">
-              <h1 className=" font-bold text-lg font-inter">
+          <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-6 py-6 md:px-8 md:py-8">
+            <div className="text-center space-y-4 mb-6">
+              <h1 className="font-bold text-base md:text-lg font-inter">
                 <span className="">Welcome back</span> <br />{" "}
                 <span>to Substeer Admin</span>
               </h1>
@@ -226,13 +226,13 @@ const Login = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <div className="fixed top-0 w-full bg-[url('/images/banner.svg')] bg-cover bg-no-repeat bg-center h-20 flex justify-center items-center">
-            <h1 className="text-white text-2xl font-fredoka ">
+        <div className="w-full">
+          <div className="fixed top-0 left-0 right-0 w-full bg-[url('/images/banner.svg')] bg-cover bg-no-repeat bg-center h-20 flex justify-center items-center z-10">
+            <h1 className="text-white text-xl md:text-2xl font-fredoka">
               Lets get you started!
             </h1>
           </div>
-          <div className="absolute left-[50%] -translate-x-1/2 top-[20%] space-y-8">
+          <div className="w-full max-w-lg mx-auto space-y-6 md:space-y-8 mt-24">
             {/* subster logo */}
             <div className="flex justify-center">
               <Image
@@ -244,9 +244,9 @@ const Login = () => {
             </div>
 
             {/* login-form */}
-            <div className="bg-green-50 rounded-[1.5rem] min-h-40 max-w-lg px-8 py-8">
-              <div className=" text-center space-y-4 mb-6">
-                <h1 className=" font-bold text-lg font-inter">
+            <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-4 py-6 md:px-8 md:py-8">
+              <div className="text-center space-y-4 mb-6">
+                <h1 className="font-bold text-base md:text-lg font-inter">
                   <span className="">Welcome back</span> <br />{" "}
                   <span>to Substeer Admin</span>
                 </h1>
