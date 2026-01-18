@@ -31,7 +31,6 @@ const Login = () => {
           setRememberMe(true);
         }
       } else {
-        // First time user - show banner
         setShowBanner(true);
       }
     };
@@ -48,12 +47,10 @@ const Login = () => {
     return emailRegex.test(email);
   };
 
-  // Form validation
   const validateForm = () => {
     let isValid = true;
     const newErrors = { email: "", password: "" };
 
-    // Email validation
     if (!email.trim()) {
       newErrors.email = "Email is required";
       isValid = false;
@@ -62,7 +59,6 @@ const Login = () => {
       isValid = false;
     }
 
-    // Password validation
     if (!password.trim()) {
       newErrors.password = "Password is required";
       isValid = false;
@@ -75,11 +71,9 @@ const Login = () => {
     return isValid;
   };
 
-  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form
     if (!validateForm()) {
       return;
     }
@@ -94,11 +88,9 @@ const Login = () => {
       localStorage.removeItem("cachedPassword");
     }
 
-    // Navigate to dashboard
     router.push("/dashboard");
   };
 
-  // Clear error when user starts typing
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     if (errors.email) {
@@ -114,10 +106,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-8">
+    <div className="min-h-screen px-4 py-8 mt-[2rem] md:flex md:items-center md:justify-center">
       {showBanner ? (
-        <div className="w-full max-w-lg space-y-8 md:space-y-12">
-          {/* subster logo */}
+        <div className="w-full max-w-lg mx-auto space-y-8 md:space-y-12">
           <div className="flex justify-center">
             <Image
               src="/images/logo-text.svg"
@@ -127,7 +118,6 @@ const Login = () => {
             />
           </div>
 
-          {/* login-form */}
           <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-6 py-6 md:px-8 md:py-8">
             <div className="text-center space-y-4 mb-6">
               <h1 className="font-bold text-base md:text-lg font-inter">
@@ -232,8 +222,7 @@ const Login = () => {
               Lets get you started!
             </h1>
           </div>
-          <div className="w-full max-w-lg mx-auto space-y-6 md:space-y-8 mt-24">
-            {/* subster logo */}
+          <div className="w-full max-w-lg mx-auto space-y-6 md:space-y-8 px-4">
             <div className="flex justify-center">
               <Image
                 src="/images/logo-text.svg"
@@ -243,8 +232,7 @@ const Login = () => {
               />
             </div>
 
-            {/* login-form */}
-            <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-4 py-6 md:px-8 md:py-8">
+            <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-6 py-6 md:px-8 md:py-8">
               <div className="text-center space-y-4 mb-6">
                 <h1 className="font-bold text-base md:text-lg font-inter">
                   <span className="">Welcome back</span> <br />{" "}
