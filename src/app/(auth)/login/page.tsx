@@ -31,7 +31,6 @@ const Login = () => {
           setRememberMe(true);
         }
       } else {
-        // First time user - show banner
         setShowBanner(true);
       }
     };
@@ -48,12 +47,10 @@ const Login = () => {
     return emailRegex.test(email);
   };
 
-  // Form validation
   const validateForm = () => {
     let isValid = true;
     const newErrors = { email: "", password: "" };
 
-    // Email validation
     if (!email.trim()) {
       newErrors.email = "Email is required";
       isValid = false;
@@ -62,7 +59,6 @@ const Login = () => {
       isValid = false;
     }
 
-    // Password validation
     if (!password.trim()) {
       newErrors.password = "Password is required";
       isValid = false;
@@ -75,11 +71,9 @@ const Login = () => {
     return isValid;
   };
 
-  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate form
     if (!validateForm()) {
       return;
     }
@@ -94,11 +88,9 @@ const Login = () => {
       localStorage.removeItem("cachedPassword");
     }
 
-    // Navigate to dashboard
     router.push("/dashboard");
   };
 
-  // Clear error when user starts typing
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     if (errors.email) {
@@ -114,10 +106,9 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen flex items-start  justify-center  py-12 md:py-8">
       {showBanner ? (
-        <div className="absolute left-[50%] -translate-x-1/2 top-[10%] space-y-12">
-          {/* subster logo */}
+        <div className="w-full max-w-lg space-y-8 md:space-y-12">
           <div className="flex justify-center">
             <Image
               src="/images/logo-text.svg"
@@ -127,10 +118,9 @@ const Login = () => {
             />
           </div>
 
-          {/* login-form */}
-          <div className="bg-green-50 rounded-[1.5rem] min-h-40 max-w-lg px-8 py-8">
-            <div className=" text-center space-y-4 mb-6">
-              <h1 className=" font-bold text-lg font-inter">
+          <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-3  py-6 sm:px-8 md:py-8">
+            <div className="text-center space-y-4 mb-6">
+              <h1 className="font-bold text-base md:text-lg font-inter">
                 <span className="">Welcome back</span> <br />{" "}
                 <span>to Substeer Admin</span>
               </h1>
@@ -226,14 +216,13 @@ const Login = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <div className="fixed top-0 w-full bg-[url('/images/banner.svg')] bg-cover bg-no-repeat bg-center h-20 flex justify-center items-center">
-            <h1 className="text-white text-2xl font-fredoka ">
+        <div className="w-full">
+          <div className="fixed top-0 left-0 right-0 w-full bg-[url('/images/banner.svg')] bg-cover bg-no-repeat bg-center h-20 flex justify-center items-center z-10">
+            <h1 className="text-white text-xl md:text-2xl font-fredoka">
               Lets get you started!
             </h1>
           </div>
-          <div className="absolute left-[50%] -translate-x-1/2 top-[20%] space-y-8">
-            {/* subster logo */}
+          <div className="w-full max-w-lg mx-auto space-y-6 md:space-y-8 mt-24 px-3">
             <div className="flex justify-center">
               <Image
                 src="/images/logo-text.svg"
@@ -243,10 +232,9 @@ const Login = () => {
               />
             </div>
 
-            {/* login-form */}
-            <div className="bg-green-50 rounded-[1.5rem] min-h-40 max-w-lg px-8 py-8">
-              <div className=" text-center space-y-4 mb-6">
-                <h1 className=" font-bold text-lg font-inter">
+            <div className="bg-green-50 rounded-[1.5rem] min-h-40 w-full px-3  py-6 sm:px-8 md:py-8">
+              <div className="text-center space-y-4 mb-6">
+                <h1 className="font-bold text-base md:text-lg font-inter">
                   <span className="">Welcome back</span> <br />{" "}
                   <span>to Substeer Admin</span>
                 </h1>
